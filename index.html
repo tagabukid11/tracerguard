@@ -372,6 +372,7 @@
   .fi b{color:#fff;font-weight:700}
   .fi.bad b{color:#FCA5A5}.fi.warn b{color:#FDE68A}
   .fi em{font-style:normal;color:var(--muted)}
+  .mktnote.info{color:#93C5FD;border-color:rgba(96,165,250,.35);background:rgba(96,165,250,.08)}
   .mktnote{padding:8px 12px;border-radius:10px;border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.08)}
 </style>
 </head>
@@ -915,7 +916,11 @@ async function rpc(method, params, tries = 7){
       await sleep(Math.min(8000, ra > 0 ? ra * 1000 : 600 * 2 ** i));
       continue;
     }
-    if (r.status === 401 || r.status === 403) throw new Error('Invalid or non-working API key.');
+    if (r.status === 401) throw new Error('Invalid or non-working API key.');
+    if (r.status === 403){
+      if (i < 1){ slower(); await sleep(900); continue; }
+      const err = new Error('The data provider refused this request (HTTP 403).'); err.code = 403; throw err;
+    }
     if (r.status >= 500){ await sleep(500 * (i + 1)); continue; }
     if (!r.ok) throw new Error('RPC error ' + r.status);
     let j;
@@ -1404,7 +1409,7 @@ async function analyze(mint){
     if (first.length > MAX_EARLY_TX){ first = first.slice(0, MAX_EARLY_TX); res.notes.push(`Too many transactions in the first few slots. Only ${MAX_EARLY_TX} were analyzed.`); }
     setStatus(`Analyzing the first ${first.length} transactions…`);
     const txs = await mapLimit(first, 4, s => rpc('getTransaction', [s.signature, TX_OPTS]));
-    txs.forEach((t, i) => { if (t && t.meta) early.push({slot:first[i].slot, keys:t.transaction.message.accountKeys.map(k => k.pubkey || k), meta:t.meta}); });
+    txs.forEach((t, i) => { if (t && t.meta) early.push({slot:first[i].slot, keys:t.transaction.message.accountKeys.map(k => k.pubkey || k), signers:t.transaction.message.accountKeys.filter(k => k && k.signer).map(k => k.pubkey), meta:t.meta}); });
     if (early.length && early.length < first.length) res.notes.push(`${first.length - early.length} of the first ${first.length} launch transactions could not be read, so bundle and sniper numbers may be slightly low.`);
     res.launchVia = ascSigs ? 'history-asc' : 'history';
   }
@@ -1414,7 +1419,7 @@ async function analyze(mint){
       launchSlot = ascSigs[0].slot; launchTime = ascSigs[0].blockTime;
       const first = ascSigs.filter(s => s.slot <= launchSlot + 3).slice(0, MAX_EARLY_TX);
       const txs = await mapLimit(first, 4, s => rpc('getTransaction', [s.signature, TX_OPTS]));
-      txs.forEach((t, i) => { if (t && t.meta) early.push({slot:first[i].slot, keys:t.transaction.message.accountKeys.map(k => k.pubkey || k), meta:t.meta}); });
+      txs.forEach((t, i) => { if (t && t.meta) early.push({slot:first[i].slot, keys:t.transaction.message.accountKeys.map(k => k.pubkey || k), signers:t.transaction.message.accountKeys.filter(k => k && k.signer).map(k => k.pubkey), meta:t.meta}); });
       if (early.length) res.launchVia = 'history-asc';
     }
   }
@@ -1450,7 +1455,15 @@ async function analyze(mint){
         holdersOf.set(pb.owner, h);
       });
     });
+    // Launch platforms often pay for the creation themselves. In that case the creator is the other wallet
+    // that signed the creation transaction (the mint itself also signs, so it is skipped).
+    const ct = early.find(e => e.signers && e.signers.includes(mint));
+    if (ct && ct.keys[0] === dev){
+      const creator = ct.signers.find(k => k !== dev && k !== mint && isOnCurve(k));
+      if (creator){ res.deployer = dev; dev = creator; }
+    }
     res.dev = dev;
+    if (res.deployer) res.notes.push('A launch platform paid for this token\'s creation. Tracer follows the wallet that signed the creation as the dev.');
     // Remove the bonding curve / pool / any program account. On pump.fun the
     // bonding curve receives 100% of supply in the launch slot.
     const ownerList = [...holdersOf.keys()].filter(o => o !== dev);
@@ -1531,10 +1544,16 @@ async function analyze(mint){
   }
   if (!rows){
     setStatus('Analyzing top holders…');
-    const largest = (await rpc('getTokenLargestAccounts', [mint, {commitment:'confirmed'}])).value;
-    const tVals = await multi(largest.map(x => x.address));
-    rows = largest.map((x, i) => ({owner: tVals[i] && tVals[i].data && tVals[i].data.parsed ? tVals[i].data.parsed.info.owner : '—', acct:x.address, amount: BigInt(x.amount)}));
-    res.holderSource = 'top';
+    try {
+      const largest = (await rpc('getTokenLargestAccounts', [mint, {commitment:'confirmed'}])).value;
+      const tVals = await multi(largest.map(x => x.address));
+      rows = largest.map((x, i) => ({owner: tVals[i] && tVals[i].data && tVals[i].data.parsed ? tVals[i].data.parsed.info.owner : '—', acct:x.address, amount: BigInt(x.amount)}));
+      res.holderSource = 'top';
+    } catch(e){
+      rows = [];
+      res.holderSource = 'none';
+      res.notes.push('The holder list could not be read right now, so holder, pool and supply checks were skipped. Scan again in a minute.');
+    }
   }
   // merge accounts with the same owner
   const merged = new Map(), best = new Map();
@@ -1580,7 +1599,7 @@ async function analyze(mint){
     for (const h of holdersOf.values()) if (!nowOf.has(h.owner)) nowOf.set(h.owner, h.now || 0n);
     res.funding.clusters.forEach(c => { c.held = c.wallets.reduce((x, w) => x + (nowOf.get(w) || 0n), 0n); });
   } catch(e){ res.notes.push('Funding check failed: ' + e.message); }
-  try { setStatus('Checking pool liquidity…'); res.market = await poolLiquidity(res); }
+  try { setStatus('Checking pool liquidity…'); res.market = res.holderSource === 'none' ? {ok:false} : await poolLiquidity(res); }
   catch(e){ res.market = {ok:false}; res.notes.push('Pool liquidity check failed: ' + e.message); }
   try { setStatus('Checking price history…'); res.price = await priceHistory(res); }
   catch(e){ res.price = {ok:false}; res.notes.push('Price history check failed: ' + e.message); }
@@ -1707,7 +1726,7 @@ async function poolLiquidity(res){
   }
   if (!out.pools.length){ if (out.migrated) out.none = true; else out.unknown = true; }
   // live price from the deepest SOL pool, straight from the chain
-  const best = out.pools.filter(x => x.quote === 'SOL' && x.priceSol > 0).sort((a, b) => b.amount - a.amount)[0];
+  const best = out.pools.filter(x => x.quote === 'SOL' && x.priceSol > 0 && (x.kind === 'pump.fun bonding curve' || x.amount >= 1)).sort((a, b) => b.amount - a.amount)[0];
   if (best) out.priceSol = best.priceSol;
   return out;
 }
@@ -1735,6 +1754,7 @@ function rugCheck(res){
     r.devNow = pct(res.devNow || 0n, sup);
     r.devOut = dh ? pct(dh.sold + devSent(res), sup) : 0;
     r.devSold = dh ? Math.min(r.devGot, r.devOut) : Math.max(0, r.devGot - r.devNow);
+    r.devSentPct = dh ? pct(devSent(res), sup) : 0;
     r.devExit = r.devGot >= 0.5 && (r.devNow < 0.01 || r.devOut >= r.devGot * 0.7);
     r.devRebought = dh ? pct(dh.boughtBack || 0n, sup) : 0;
     if (dh){
@@ -1756,7 +1776,13 @@ function rugCheck(res){
   r.insiderSold = r.devSold + r.lbSold;
   r.drop = ph && ph.ok ? ph.drop : null;
   if (m && m.ok){
-    if (m.pools && m.pools.length) r.liqDead = m.liquiditySol < 1 && m.liquidityUsd < 150;
+    // A brand-new pool can start with almost no SOL (one-sided launch curves). It only counts as drained if the price fell too.
+    if (m.pools && m.pools.length){
+      const low = m.liquiditySol < 1 && m.liquidityUsd < 150;
+      const fell = r.drop !== null ? r.drop >= 50 : (r.ageH !== null && r.ageH > 1);
+      r.liqDead = low && fell;
+      r.newPool = low && !fell;
+    }
     else if (m.none && !m.migrated) r.noPool = r.ageH !== null && r.ageH < 168;
   }
   const pulled = r.liqDead || r.noPool;
@@ -1765,13 +1791,13 @@ function rugCheck(res){
   r.devDump = r.devSold >= RUG.rugSellPct;
   const crashed = r.drop !== null && r.drop >= RUG.rugDropPct;
 
-  if (r.devSold > 0 && r.devSold < RUG.smallSellPct) r.reasons.push(`The dev sold ${fmt(r.devSold)} of supply. Small dev sells like this are common.`);
+  if (r.devSold > 0 && r.devSold < RUG.smallSellPct) r.reasons.push(`The dev ${r.devSentPct > r.devSold / 2 ? 'sold or moved' : 'sold'} ${fmt(r.devSold)} of supply. Small dev sells like this are common.`);
   else if (r.devSold >= RUG.smallSellPct) r.reasons.push(`The dev got ${fmt(r.devGot)} of supply and now holds ${fmt(r.devNow)}.`);
   if (r.devRebought >= 0.1 && r.devSold > 0) r.reasons.push(`The dev wallet bought back ${fmt(r.devRebought)} of supply later.`);
   if (r.fastDump) r.reasons.push(r.firstSellMin < 1 ? 'The dev started selling within a minute of launch.' : `The dev started selling ${Math.round(r.firstSellMin)} min after launch.`);
   if (r.lbSold >= 1) r.reasons.push(`Bundle and sniper wallets bought ${fmt(r.lbBought)} and now hold only ${fmt(r.lbNow)}.`);
   if (r.lbMoved >= 0.5) r.reasons.push(`Launch buyers moved ${fmt(r.lbMoved)} of supply to other wallets, which still hold ${fmt(r.lbMovedNow)}. That part counts as still held, not sold.`);
-  if (r.drop !== null && (r.insiderSold >= RUG.smallSellPct || pulled)) r.reasons.push(`The price is down ${Math.round(r.drop)}% from its high.`);
+  if (r.drop !== null && r.drop >= 10 && (r.insiderSold >= RUG.smallSellPct || pulled)) r.reasons.push(`The price is down ${Math.round(r.drop)}% from its high.`);
   if (bigDump && r.drop === null) r.reasons.push('Price history could not be read, so a crash could not be confirmed.');
   if (r.liqDead) r.reasons.push(`The pool has only ${m.liquiditySol.toFixed(2)} SOL${m.liquidityUsd > 0 ? ' + ' + Math.round(m.liquidityUsd) + ' USD' : ''} left.`);
   if (r.noPool) r.reasons.push('No pool holds this token anymore. The liquidity may have been removed.');
@@ -1816,10 +1842,14 @@ function marketCard(res){
   }
   const chg = S.change24 !== null && S.change24 !== undefined
     ? `<i class="${S.change24 >= 0 ? 'up' : 'down'}">${S.change24 >= 0 ? '+' : ''}${S.change24.toFixed(1)}% 24h</i>` : '';
-  const sol = m && m.ok && m.liquiditySol > 0 ? `<i>${m.liquiditySol.toFixed(2)} SOL in pool</i>` : '';
-  const dead = (S.liqUsd !== null && S.liqUsd !== undefined && S.liqUsd < 100) || (m && m.ok && m.liquiditySol < 1);
+  const rg = res.rug || {};
+  const lowSol = m && m.ok && m.liquiditySol < 1;
+  const sol = m && m.ok && m.liquiditySol > 0
+    ? `<i>${m.liquiditySol.toFixed(2)} SOL in pool${lowSol && S.liqUsd > 1000 ? ', the rest is the token itself' : ''}</i>` : '';
+  const dead = !!rg.liqDead;
+  const fresh = !!rg.newPool ? `<p class="mktnote info">New pool: almost no SOL has been traded in yet, so liquidity is mostly the token itself. This is normal right after launch.</p>` : '';
   const deadNote = dead ? `<p class="mktnote">The pool is almost empty, so the price and market cap are close to $0. That is what is left after the sell-off, not a display error.</p>` : '';
-  return deadNote + `<div class="mkt">
+  return deadNote + fresh + `<div class="mkt">
     <div><span>Market cap</span><b>${usd(S.mcap)}</b>${src ? `<i>${src}</i>` : ''}${S.athMcap ? `<i>peak ~${usd(S.athMcap)}</i>` : ''}</div>
     <div><span>Price</span><b>${usdPrice(S.priceUsd)}</b>${chg}</div>
     <div><span>Liquidity</span><b>${usd(S.liqUsd)}</b>${sol}</div>
@@ -1832,7 +1862,7 @@ function findings(flags, level){
   if (!flags.length) return '';
   const hi = t => esc(t).replace(/(\d[\d,]*(?:\.\d+)?\s?%|\d[\d,]*(?:\.\d+)?\s?SOL|\d+\s?(?:min|h|days?)\b)/g, '<b>$1</b>');
   const split = t => t.split(/(?<=[.)])\s+(?=[A-Z0-9])/).map(x => x.replace(/^[\s.,:;]+/, '').trim()).filter(x => x.length > 1);
-  const sev = t => /common|counts as still held|bought back/i.test(t) ? 'info'
+  const sev = t => /common|counts as still held|bought back|launch platform wallet|platform paid/i.test(t) ? 'info'
     : /sell-off|pool has only|no pool|down (?:[7-9]\d|100)%/i.test(t) ? 'bad' : 'warn';
   const LEAD = /^(Major sell-off by launch-block buyers|Large dev sale|Early buyers exited|Worth a closer look:)/;
   const items = [];
@@ -1864,7 +1894,7 @@ function rugSection(res){
     if (dh && dh.firstSell && res.launchTime) rows += row('Dev first sold', r.firstSellMin < 1 ? 'within a minute of launch' : `${Math.round(r.firstSellMin)} min after launch`, r.fastDump ? 'flag' : '');
     if (r.lastExit) rows += row('Dev last sold or sent tokens', ago(r.lastExit), r.devExit ? 'flag' : '');
   }
-  if (r.lbN !== undefined) rows += row(`Launch buyers (${r.lbN} wallets) bought → hold now`, `${fmt(r.lbBought)} → ${fmt(r.lbNow)}`, r.lbExit ? 'flag' : '');
+  if (r.lbN) rows += row(`Launch buyers (${r.lbN} wallets) bought → hold now`, `${fmt(r.lbBought)} → ${fmt(r.lbNow)}`, r.lbExit ? 'flag' : '');
   if (r.lbMoved > 0) rows += row('Launch buyers moved to other wallets → still held there', `${fmt(r.lbMoved)} → ${fmt(r.lbMovedNow)}`, r.lbMovedNow >= 5 ? 'flag' : '');
   if (r.insiderSold > 0) rows += row('Sold by dev + launch buyers', fmt(r.insiderSold), r.insiderSold >= RUG.rugSellPct ? 'flag' : '');
   rows += row('Price vs all-time high', r.drop !== null ? `down ${Math.round(r.drop)}%` : 'not available', r.drop !== null && r.drop >= RUG.rugDropPct ? 'flag' : '');
@@ -1918,8 +1948,13 @@ function score(res){
   }
   if (res.devHistory){
     const others = res.devHistory.list.filter(m => m.mint !== res.mint).length;
-    if (others >= 10) s += 25; else if (others >= 5) s += 20; else if (others >= 2) s += 10;
-    if (others >= 2) flags.push(`The dev wallet created ${others}${res.devHistory.more ? '+' : ''} other tokens.`);
+    res.platformDeployer = others >= 40 && !(res.devBought > 0n);
+    if (res.platformDeployer){
+      flags.push(`This token was deployed by a launch platform wallet that has created ${others}${res.devHistory.more ? '+' : ''} tokens. The person behind this token could not be identified, so the dev checks may not show their wallet.`);
+    } else {
+      if (others >= 10) s += 25; else if (others >= 5) s += 20; else if (others >= 2) s += 10;
+      if (others >= 2) flags.push(`The dev wallet created ${others}${res.devHistory.more ? '+' : ''} other tokens.`);
+    }
     const tOut = res.devHistory.tokenOut || [], sOut = res.devHistory.solOut || [];
     const sentPct = pct(tOut.reduce((x, o) => x + o.amount, 0n), sup);
     if (tOut.length && sentPct > 1){
@@ -1989,7 +2024,7 @@ function score(res){
     flags.unshift('Major sell-off by launch-block buyers. ' + rug.reasons.join(' '));
   } else if (rug.level === 'devdump'){
     s += 15;
-    flags.unshift(`Large dev sale. The dev wallet sold ${fmt(rug.devSold)} of supply. ` + rug.reasons.filter(t => !/^The dev got /.test(t)).join(' '));
+    flags.unshift(`Large dev sale. The dev wallet ${rug.devSentPct > rug.devSold / 2 ? 'sold or moved' : 'sold'} ${fmt(rug.devSold)} of supply. ` + rug.reasons.filter(t => !/^The dev got /.test(t)).join(' '));
   } else if (rug.level === 'exited'){
     s += 10;
     flags.unshift('Early buyers exited. ' + rug.reasons.join(' '));
@@ -2143,7 +2178,8 @@ function render(res){
     bundleSection = `
       <h2>Launch</h2>
       <ul class="facts">
-        <li><span>Deployer (dev)</span><span class="v">${addrLink(res.dev)}</span></li>
+        ${res.deployer ? `<li><span>Paid for by (platform)</span><span class="v">${addrLink(res.deployer)}</span></li>` : ''}
+        <li><span>${res.deployer ? 'Creator (dev)' : res.platformDeployer ? 'Deployer (launch platform)' : 'Deployer (dev)'}</span><span class="v">${addrLink(res.dev)}</span></li>
         <li><span>Dev bought at launch</span><span class="v">${fmt(pct(res.devBought, sup))}</span></li>
         ${devFlow(res)}
         <li><span>Dev still holds</span><span class="v ${devNow > 5 ? 'flag' : ''}">${fmt(devNow)}</span></li>
@@ -2265,14 +2301,25 @@ function drawBubbleMap(res){
     n.sold = n.now === 0n && ref > 0n;
     n.base = Math.sqrt(Math.max(n.p, n.sold ? pct(ref, sup) * 0.25 : 0.05));
   });
-  // scale so all bubbles together fill ~30% of the canvas
-  const area = list.filter(n => n.role !== 'funder').reduce((x, n) => x + Math.PI * n.base * n.base, 0) || 1;
-  const k0 = Math.sqrt(0.30 * W * H / area), rMax = Math.min(W, H) * 0.24;
+  // scale so the wallets (not the pool) fill ~30% of the canvas; a huge pool would otherwise shrink everyone else to dots
+  const poolP = list.filter(n => n.role === 'pool').reduce((x, n) => x + n.p, 0);
+  const sized = list.filter(n => n.role !== 'funder' && n.role !== 'pool');
+  const area = (sized.length ? sized : list.filter(n => n.role !== 'funder')).reduce((x, n) => x + Math.PI * n.base * n.base, 0) || 1;
+  const k0 = Math.sqrt(0.30 * W * H / area), rMax = Math.min(W, H) * (sized.length <= 5 ? 0.10 : 0.20);
+  const maxBase = Math.max(1e-9, ...sized.map(n => n.base));
+  const kk = Math.min(k0, rMax / maxBase);               // keep sizes proportional to each other
+  list.forEach(n => { if (n.role !== 'funder' && n.role !== 'pool') n.r = Math.max(7, n.base * kk); });
+  const bigR = Math.max(0, ...list.filter(n => n.r).map(n => n.r));
   list.forEach((n, i) => {
-    n.r = n.role === 'funder' ? 8 : Math.max(6, Math.min(rMax, n.base * k0));
+    // the pool stays the biggest bubble, but never so big that the wallets turn into dots
+    if (n.role === 'funder') n.r = 8;
+    else if (n.role === 'pool') n.r = Math.min(Math.min(W, H) * 0.30, Math.max(40, bigR * 1.6, sized.length ? 0 : n.base * k0));
     const a = i * 2.39996, d = 25 + 14 * Math.sqrt(i);   // golden-angle spiral start
     n.x = W / 2 + Math.cos(a) * d; n.y = H / 2 + Math.sin(a) * d;
   });
+  info.textContent = poolP >= 50
+    ? `${fmt(poolP)} of the supply is still in the pool, so the pool bubble is kept small and the wallets are sized against each other. Tap a bubble to see the wallet.`
+    : 'Tap a bubble to see the wallet. Purple lines: same first funder. Orange dashed lines: the dev sent tokens or SOL.';
   const byId = new Map(list.map(n => [n.id, n]));
   const L = links.map(([a, b, k]) => [byId.get(a), byId.get(b), k]).filter(x => x[0] && x[1]);
 
@@ -2466,6 +2513,8 @@ $('go').addEventListener('click', async () => {
     const net = e instanceof TypeError && /load failed|failed to fetch|network/i.test(e.message || '');
     setStatus(net
       ? 'Could not reach the Solana network. Check your connection, VPN or content blocker, then try again.'
+      : (e.code === 403 || /HTTP 403/.test(e.message || ''))
+        ? 'The data provider is refusing requests right now. Wait a minute and try again. If it keeps happening, the monthly free limit may be used up.'
       : /429|rate|limit|credits/i.test(e.message || '')
         ? 'Tracer is busy right now. Please try again in a minute.'
         : (e.message || 'Something went wrong. Try again.'), true);
