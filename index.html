@@ -1,0 +1,2435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06050D">
+<title>Tracer – Free Solana token scanner</title>
+<meta name="description" content="Tracer is a free Solana token scanner. See bundled launch buys, snipers, dev sells, hidden wallet transfers, funding links and rug signs before you buy.">
+<meta property="og:title" content="Tracer – Every wallet leaves a trace">
+<meta property="og:description" content="Tracer is a free Solana token scanner. See bundled launch buys, snipers, dev sells, hidden wallet transfers, funding links and rug signs before you buy.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@tracersolana">
+<meta name="twitter:title" content="Tracer – Every wallet leaves a trace">
+<meta name="twitter:description" content="Tracer is a free Solana token scanner. See bundled launch buys, snipers, dev sells, hidden wallet transfers, funding links and rug signs before you buy.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlRyYWNlciBvd2wgbG9nbyI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImJnIiBjeD0iNTAlIiBjeT0iMzglIiByPSI2NSUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyQTFBNUUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDcwNjBGIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib2R5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVCM0ZDNCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyQzFENkIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImlyaXMiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVFRUFENCIvPgogICAgICA8c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjMTRCOEE2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBGNzY2RSIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9Imdsb3ciIHg9Ii01MCUiIHk9Ii01MCUiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiPgogICAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0IiByZXN1bHQ9ImIiLz4KICAgICAgPGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEyOCIgZmlsbD0idXJsKCNiZykiLz4KCiAgPCEtLSB0cmFjZSBwYXRoOiB3YWxsZXRzIGxpbmtlZCB0b2dldGhlciwgdGhlIG93bCBwZXJjaGVzIG9uIGl0IC0tPgogIDxnIGZpbHRlcj0idXJsKCNnbG93KSI+CiAgICA8cG9seWxpbmUgcG9pbnRzPSIyMiwyMDAgNzQsMTg2IDEyOCwxOTggMTgyLDE4NCAyMzQsMTk2IiBmaWxsPSJub25lIiBzdHJva2U9IiNBNzhCRkEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjIwMCIgcj0iOCIgZmlsbD0iI0Y4NzE3MSIvPgogICAgPGNpcmNsZSBjeD0iNzQiIGN5PSIxODYiIHI9IjciIGZpbGw9IiNGQjkyM0MiLz4KICAgIDxjaXJjbGUgY3g9IjE4MiIgY3k9IjE4NCIgcj0iNyIgZmlsbD0iI0ZCQkYyNCIvPgogICAgPGNpcmNsZSBjeD0iMjM0IiBjeT0iMTk2IiByPSI4IiBmaWxsPSIjMkRENEJGIi8+CiAgPC9nPgoKICA8IS0tIGVhciB0dWZ0cyAtLT4KICA8cGF0aCBkPSJNNzAgNzAgTDg2IDMwIEwxMDQgNjYgWiIgZmlsbD0iIzNCMkE4QyIvPgogIDxwYXRoIGQ9Ik0xODYgNzAgTDE3MCAzMCBMMTUyIDY2IFoiIGZpbGw9IiMzQjJBOEMiLz4KCiAgPCEtLSBib2R5IC0tPgogIDxwYXRoIGQ9Ik0xMjggNTAgQyAxODIgNTAgMjAwIDkyIDE5OCAxMzIgQyAxOTYgMTcyIDE2OCAxOTYgMTI4IDE5NiBDIDg4IDE5NiA2MCAxNzIgNTggMTMyIEMgNTYgOTIgNzQgNTAgMTI4IDUwIFoiIGZpbGw9InVybCgjYm9keSkiLz4KICA8IS0tIGJlbGx5IGZlYXRoZXJzIC0tPgogIDxwYXRoIGQ9Ik0xMTAgMTY2IGw2IDYgbDYgLTYgTTEzNCAxNjYgbDYgNiBsNiAtNiBNMTIyIDE4MCBsNiA2IGw2IC02IiBmaWxsPSJub25lIiBzdHJva2U9IiM3QzVDRTAiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CgogIDwhLS0gZXllczogc2Nhbm5lciBsZW5zZXMgLS0+CiAgPGcgZmlsdGVyPSJ1cmwoI2dsb3cpIj4KICAgIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIzMCIgZmlsbD0iIzBCMEExNiIgc3Ryb2tlPSIjQTc4QkZBIiBzdHJva2Utd2lkdGg9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMzAiIGZpbGw9IiMwQjBBMTYiIHN0cm9rZT0iI0E3OEJGQSIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPC9nPgogIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIxOCIgZmlsbD0idXJsKCNpcmlzKSIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMTgiIGZpbGw9InVybCgjaXJpcykiLz4KICA8Y2lyY2xlIGN4PSI5OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjkyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPGNpcmNsZSBjeD0iMTUyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPCEtLSBsZW5zIHRpY2sgbWFya3MgLS0+CiAgPHBhdGggZD0iTTk4IDc0IHY2IE05OCAxMzYgdjYgTTY0IDEwOCBoNiBNMTI2IDEwOCBoNiIgc3Ryb2tlPSIjQzRCNUZEIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gYmVhayAtLT4KICA8cGF0aCBkPSJNMTI4IDEyOCBMMTM4IDE0MCBMMTI4IDE1NCBMMTE4IDE0MCBaIiBmaWxsPSIjRkJCRjI0Ii8+CgogIDwhLS0gZmVldCBvbiB0aGUgdHJhY2UgbGluZSAtLT4KICA8cGF0aCBkPSJNMTEyIDE5NCB2OCBNMTIwIDE5NSB2OCBNMTM2IDE5NSB2OCBNMTQ0IDE5NCB2OCIgc3Ryb2tlPSIjRkJCRjI0IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#06050D; --card:#100E1C; --ink:#ECEAF7; --muted:#9C98B8; --line:#2A2745;
+    --dev:#FB923C; --bundle:#F87171; --sniper:#FBBF24; --pool:#94A3B8; --other:#2DD4BF; --rest:#2B2942; --ok:#34D399;
+    --violet:#8B5CF6; --whale:#F472B6;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    --sans:"Inter",system-ui,"Segoe UI",sans-serif;
+    --disp:"Chakra Petch","Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;min-height:100vh;
+    background:
+      radial-gradient(900px 520px at 50% -120px, rgba(124,58,237,.38), transparent 70%),
+      var(--paper);}
+  #net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .top,main,footer{position:relative;z-index:1}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .top{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--line);background:rgba(10,9,20,.7)}
+  .top img{width:36px;height:36px;border-radius:50%;display:block}
+  .wm{font-family:var(--disp);line-height:1.05}
+  .xlink{margin-left:auto;font:600 14px var(--sans);color:#EDE9FE;text-decoration:none;padding:8px 14px;border:1px solid #6D3FD1;border-radius:99px;background:rgba(109,63,209,.18)}
+  .xlink:hover,.xcta:hover{background:rgba(139,92,246,.35)}
+  .xcta{display:block;text-align:center;margin-top:16px;padding:13px 16px;border-radius:10px;font:600 15px var(--sans);color:#EDE9FE;text-decoration:none;border:1.5px solid #8B5CF6;background:rgba(109,63,209,.22)}
+  footer a{color:#C4B5FD}
+  .wm small{display:block;font-size:11px;color:var(--muted);letter-spacing:.14em}
+  .wm b{font-size:15px;letter-spacing:.06em;color:#C4B5FD}
+  main{max-width:980px;margin:0 auto;padding:26px 18px 40px}
+  .hero{text-align:center;margin-bottom:28px}
+  .logo{width:min(66vw,250px);aspect-ratio:1;border-radius:50%;display:block;margin:0 auto 16px;box-shadow:0 0 70px rgba(139,92,246,.5)}
+  .hero-owl svg{width:100%;height:100%;display:block}
+  .owl-bob{animation:owlbob 4s ease-in-out infinite}
+  @keyframes owlbob{50%{transform:translateY(-2.5px)}}
+  .look{animation:owllook 7s ease-in-out infinite}
+  @keyframes owllook{0%,16%{transform:translate(0,0)}22%,38%{transform:translate(-6px,1px)}44%,60%{transform:translate(6px,1px)}66%,100%{transform:translate(0,0)}}
+  .blink{transform-box:fill-box;transform-origin:center;animation:owlblink 5.5s infinite}
+  @keyframes owlblink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.08)}}
+  .lenses circle{animation:owllens 2.6s ease-in-out infinite}
+  @keyframes owllens{50%{stroke:#DDD6FE}}
+  .node{transform-box:fill-box;transform-origin:center;animation:owlnode 3.2s ease-out infinite}
+  .n2{animation-delay:.8s}.n3{animation-delay:2.4s}.n4{animation-delay:3.05s}
+  @keyframes owlnode{0%{transform:scale(1)}7%{transform:scale(1.45)}22%,100%{transform:scale(1)}}
+  @media (prefers-reduced-motion: reduce){.hero-owl *{animation:none!important}}
+  .title{font:700 clamp(40px,11vw,64px)/1 var(--disp);letter-spacing:.04em;margin:0 0 6px;color:#EDE9FE;text-shadow:0 0 28px rgba(139,92,246,.55)}
+  .tagline{font:600 18px var(--disp);color:#5EEAD4;letter-spacing:.03em;margin:0 0 14px}
+  .lede{max-width:56ch;margin:0 auto 6px;color:var(--ink)}
+  .lede-sub{max-width:56ch;margin:0 auto;color:var(--muted);font-size:14px}
+  .cards{display:grid;gap:18px}
+  @media (min-width:780px){.cards{grid-template-columns:1fr 1fr}}
+  .panel{background:var(--card);border:1.5px solid #6D3FD1;border-radius:14px;padding:20px;box-shadow:0 0 26px rgba(139,92,246,.25)}
+  .ct{font:700 20px var(--disp);letter-spacing:.05em;text-transform:uppercase;margin:0 0 16px}
+  label{display:block;font-weight:500;font-size:14px;color:var(--muted);margin:0 0 6px}
+  input{width:100%;padding:13px 12px;font:15px var(--mono);border:1px solid var(--line);border-radius:8px;background:#0A0914;color:var(--ink)}
+  input::placeholder{color:#6F6B8C}
+  input:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #A78BFA;outline-offset:2px}
+  button.go{margin-top:16px;width:100%;padding:14px;font:700 16px var(--disp);letter-spacing:.06em;text-transform:uppercase;color:#fff;border:0;border-radius:8px;cursor:pointer;
+    background:linear-gradient(90deg,#7C3AED,#0D9488);box-shadow:0 0 22px rgba(45,212,191,.28)}
+  button.go:disabled{opacity:.6;cursor:wait}
+  button.alt{margin-top:10px;width:100%;padding:11px;font:600 14px var(--sans);background:transparent;color:#C4B5FD;border:1px solid #4B3A86;border-radius:8px;cursor:pointer}
+  #status{margin:14px 0 0;font-size:14px;color:var(--muted);min-height:20px}
+  #status.err{color:#F87171;font-weight:600}
+  details.settings{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  details.settings summary{cursor:pointer;font-size:14px;color:var(--muted)}
+  details.settings .hint{font-size:13px;color:var(--muted);margin:8px 0 0}
+  details.settings .hint a{color:#C4B5FD}
+  details.settings input{margin-top:10px}
+  .empty{color:var(--muted);font-size:14px;margin:0}
+  .rs{display:grid;grid-template-columns:1fr 56px 74px;gap:8px;align-items:center;width:100%;padding:10px 6px;font:inherit;color:inherit;text-align:left;background:transparent;border:0;border-top:1px solid var(--line)}
+  button.rs{cursor:pointer}
+  button.rs:hover{background:rgba(139,92,246,.12)}
+  .rs.head{border-top:0;padding-top:0;font-size:13px;color:var(--muted)}
+  .rs .c{display:flex;justify-content:center}
+  .rs.head .c{display:block;text-align:center}
+  .tk b{display:block;font-weight:600}
+  .tk em{font:12px var(--mono);color:var(--muted);font-style:normal}
+  .rl{font-weight:600}
+  .rl.incomplete{color:#FBBF24}.rl.low{color:#34D399}.rl.medium{color:#FBBF24}.rl.high{color:#F87171}
+  #out:not(:empty){margin-top:22px;background:var(--card);border:1.5px solid #6D3FD1;border-radius:14px;padding:20px;box-shadow:0 0 26px rgba(139,92,246,.25)}
+  .verdict{border-left:8px solid var(--ok);padding:4px 0 4px 16px;margin-bottom:20px}
+  .verdict.mid{border-color:var(--sniper)}
+  .verdict.high{border-color:var(--bundle)}
+  .verdict .tok{font-family:var(--mono);font-size:13px;color:var(--muted);word-break:break-all}
+  .verdict .word{font:700 clamp(26px,7vw,36px)/1.1 var(--disp);margin:2px 0}
+  .verdict .score{font-family:var(--mono);font-size:14px;color:var(--muted)}
+  #out h2{font:600 17px var(--disp);letter-spacing:.03em;margin:28px 0 10px}
+  .bar{display:flex;height:34px;border-radius:8px;overflow:hidden;background:var(--rest);border:1px solid var(--line)}
+  .bar span{display:block;height:100%;min-width:0}
+  .legend{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+  .legend li{display:flex;align-items:center;gap:10px;font-size:14px}
+  .legend i{width:14px;height:14px;border-radius:3px;flex:none}
+  .legend b{margin-left:auto;font-family:var(--mono);font-weight:500}
+  .facts{list-style:none;margin:0;padding:0}
+  .facts li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;justify-content:space-between;font-size:15px}
+  .facts li:last-child{border-bottom:0}
+  .facts .v{font-family:var(--mono);text-align:right;flex:none}
+  .flag{color:#F87171;font-weight:600}
+  .good{color:#34D399;font-weight:600}
+  .rows{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0C0B17}
+  .row{display:grid;grid-template-columns:1fr 78px 78px;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:13px;align-items:center}
+  .row:last-child{border-bottom:0}
+  .row.head{background:#1B1830;font-weight:600}
+  .row .n{text-align:right;font-family:var(--mono)}
+  .addr{font-family:var(--mono);color:#C4B5FD;text-decoration:none;border-bottom:1px dotted #6D5FB0}
+  .tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:99px;color:#0B0A14;margin-left:6px;font-family:var(--sans);font-weight:600;vertical-align:1px}
+  .notes{font-size:13px;color:var(--muted)}
+  .notes p{margin:0 0 8px}
+  .mkt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 18px}
+  @media (min-width:780px){.mkt{grid-template-columns:repeat(4,1fr)}}
+  .mkt div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+  .mkt span{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .mkt b{display:block;font:600 19px var(--mono);color:var(--ink);overflow-wrap:anywhere}
+  .mkt i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);margin-top:3px}
+  .mkt i.up{color:#34D399}.mkt i.down{color:#F87171}
+  .outbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-4px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+  .outbar span{font:600 15px var(--disp);color:var(--muted);letter-spacing:.03em}
+  .closeres{background:transparent;color:#C4B5FD;border:1px solid #4B3A86;border-radius:8px;padding:8px 12px;font:600 14px var(--sans);cursor:pointer;flex:none}
+  .closeres:hover,.closeres-bottom:hover{border-color:#8B5CF6;color:#EDE9FE}
+  .closeres-bottom{margin-top:22px}
+  .demo{background:rgba(251,191,36,.12);border:1px solid #8A6D1F;color:#FCD34D;border-radius:8px;padding:10px 12px;margin-bottom:18px;font-size:14px}
+  details.more{margin-top:10px}
+  details.more summary{cursor:pointer;color:#C4B5FD;font-size:14px;padding:6px 0}
+  details.more .rows{margin-top:8px}
+  .bmap{border:1px solid var(--line);border-radius:10px;background:#0C0B17;overflow:hidden}
+  .bmap svg{display:block;width:100%;height:auto;touch-action:manipulation}
+  .bmap circle.n{cursor:pointer;stroke:#0C0B17;stroke-width:1.5}
+  .bmap circle.n.sold{fill:transparent!important;stroke-width:1.5;stroke-dasharray:3 3}
+  .bmap circle.n.sel{stroke:#fff;stroke-width:3}
+  .bmap circle.n:focus{outline:none}
+  .bmap circle.n:focus-visible{outline:none;stroke:#A78BFA;stroke-width:3}
+  .bmap line{stroke:#8B5CF6;stroke-opacity:.55;stroke-width:1.4}
+  .bmap line.dv{stroke:#FB923C;stroke-opacity:.8;stroke-dasharray:5 4}
+  .bmap line.hi{stroke:#C4B5FD;stroke-opacity:1;stroke-width:2.2}
+  .bmap text{font:600 11px var(--mono);fill:#0B0A14;pointer-events:none;text-anchor:middle;dominant-baseline:central}
+  .bmap-info{padding:12px;border-top:1px solid var(--line);font-size:14px;min-height:48px;color:var(--muted)}
+  .bmap-info b{color:var(--ink)}
+  .bmap-key{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+  .bmap-key i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+  .bmap-key i.ring{background:transparent!important;border:1.5px dashed var(--bundle)}
+  .story{margin-top:34px;max-width:68ch}
+  .story h2{font:700 22px var(--disp);letter-spacing:.03em;margin:0 0 10px}
+  .story h3{font:700 18px var(--disp);letter-spacing:.03em;margin:22px 0 8px}
+  .story p{margin:0 0 12px;color:#CFCBE6}
+  .hoot{display:flex;gap:16px;align-items:center;margin-top:20px;padding:16px;background:var(--card);border:1.5px solid #6D3FD1;border-radius:14px;box-shadow:0 0 26px rgba(139,92,246,.2)}
+  .hoot-img{width:84px;height:84px;border-radius:50%;flex:none}
+  .hoot h3{margin:0 0 4px}
+  .hoot p{margin:0;font-size:15px}
+  .token{margin-top:22px;padding:18px;border-radius:14px;border:1.5px solid #2DD4BF;background:linear-gradient(160deg,rgba(45,212,191,.10),rgba(109,63,209,.12));box-shadow:0 0 30px rgba(45,212,191,.12)}
+  .token h3{margin:0 0 8px;font:700 22px var(--disp);letter-spacing:.03em;color:#5EEAD4}
+  .token p{margin:0 0 10px}
+  .token .soon{color:var(--muted);font-size:15px}
+  .token .ca{display:flex;gap:8px;align-items:center;margin:12px 0}
+  .token code{flex:1;min-width:0;overflow-wrap:anywhere;font:13px var(--mono);padding:10px 12px;border-radius:8px;background:#0B0A16;border:1px solid var(--line);color:#EDE9FE}
+  .token .ca .alt{width:auto;flex:none;padding:10px 14px;margin:0}
+  .token .go{margin:4px 0 12px}
+  .tlinks{display:flex;gap:10px;flex-wrap:wrap}
+  .tlinks a{flex:1;text-align:center;padding:10px;border-radius:8px;border:1px solid var(--line);color:#C4B5FD;text-decoration:none;font-weight:600;font-size:14px}
+  .promise{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .promise li{padding:10px 14px;border:1px solid var(--line);border-left:3px solid #2DD4BF;border-radius:10px;background:var(--card);font-size:15px;color:#CFCBE6}
+  .promise b{color:var(--ink)}
+  .about{margin-top:34px}
+  .about h2{font:700 22px var(--disp);letter-spacing:.03em;margin:0 0 6px}
+  .about-lede{color:var(--muted);margin:0 0 16px;max-width:60ch}
+  .checks{display:grid;gap:12px;margin:0}
+  @media (min-width:780px){.checks{grid-template-columns:1fr 1fr}}
+  .checks div{background:var(--card);border:1px solid var(--line);border-left:3px solid #8B5CF6;border-radius:10px;padding:14px 16px}
+  .checks dt{font-weight:600;margin:0 0 4px}
+  .checks dd{margin:0;color:var(--muted);font-size:14px}
+  footer{max-width:980px;margin:0 auto;padding:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .row .sub{display:block;font-size:11px;color:var(--muted);margin-top:2px;font-family:var(--sans)}
+  .row .sub a{color:#C4B5FD}
+  .keyok{font-size:13px;margin:8px 0 0;color:var(--ok)}
+  .keyok.bad{color:#FBBF24}
+  details.settings summary .saved{color:var(--ok);font-size:12px;margin-left:6px}
+  /* Floating bubble-map button */
+  .fab{position:fixed;right:18px;bottom:18px;z-index:40;width:64px;height:64px;border-radius:50%;border:0;cursor:pointer;padding:0;
+    background:radial-gradient(circle at 32% 28%,#C4B5FD 0,#8B5CF6 38%,#4C1D95 100%);
+    box-shadow:0 0 0 2px rgba(196,181,253,.35),0 10px 28px rgba(76,29,149,.6);display:none;align-items:center;justify-content:center;
+    animation:fabfloat 4s ease-in-out infinite}
+  .fab.on{display:flex}
+  .fab svg{width:34px;height:34px}
+  .fab .cnt{position:absolute;top:-3px;right:-3px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#F87171;color:#fff;font:700 12px/22px var(--sans);text-align:center;box-shadow:0 0 0 2px var(--paper)}
+  @keyframes fabfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+  dialog.bm{width:min(760px,100vw - 16px);max-height:calc(100vh - 16px);margin:auto;padding:0;border:1.5px solid #6D3FD1;border-radius:16px;background:var(--card);color:var(--ink);box-shadow:0 0 50px rgba(139,92,246,.45)}
+  dialog.bm::backdrop{background:rgba(4,3,10,.78)}
+  dialog.bm .bmh{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  dialog.bm .bmh h2{font:600 17px var(--disp);letter-spacing:.03em;margin:0;flex:1}
+  dialog.bm .bmh button{background:transparent;border:1px solid #4B3A86;color:#C4B5FD;border-radius:8px;padding:6px 12px;font:600 14px var(--sans);cursor:pointer}
+  dialog.bm .bmb{padding:12px 14px 16px;overflow:auto;max-height:calc(100vh - 80px)}
+  dialog.bm .bmap{border-radius:10px}
+  .bmopen{display:flex;align-items:center;gap:12px;width:100%;margin:0;padding:12px;background:#0C0B17;border:1px solid var(--line);border-radius:10px;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+  .bmopen:hover{border-color:#6D3FD1}
+  .bmopen span{color:var(--muted);font-size:14px}
+  @media (prefers-reduced-motion: reduce){.fab{animation:none}}
+
+  /* ================= DASHBOARD THEME ================= */
+  :root{--paper:#07041A;--card:rgba(17,11,44,.82);--line:#2A2160;--ink:#EEEAFE;--muted:#A49CC8;--grad:linear-gradient(90deg,#C084FC,#818CF8 45%,#22D3EE)}
+  body{background:radial-gradient(1100px 600px at 70% -200px,rgba(124,58,237,.35),transparent 70%),radial-gradient(800px 500px at 0% 100%,rgba(34,211,238,.10),transparent 70%),var(--paper)}
+  .app{position:relative;z-index:1}
+  .maincol{min-width:0}
+  main{max-width:1240px;padding:18px 18px 40px}
+
+  /* sidebar */
+  .side{position:fixed;inset:0 auto 0 0;width:258px;z-index:30;display:flex;flex-direction:column;gap:14px;padding:18px 14px;
+    background:linear-gradient(180deg,#0E0828,#090520);border-right:1px solid var(--line);transform:translateX(-100%);transition:transform .25s ease;overflow-y:auto}
+  .side.open{transform:none;box-shadow:0 0 60px rgba(0,0,0,.6)}
+  .scrim{position:fixed;inset:0;z-index:25;background:rgba(3,2,10,.6);opacity:0;pointer-events:none;transition:opacity .25s}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .brand,.brand-m{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+  .brand img{width:52px;height:52px;border-radius:50%}
+  .brand .wm b{display:block;font:700 26px/1 var(--disp);letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand .wm small{display:block;font-size:11px;color:var(--muted);letter-spacing:.04em;margin-top:4px}
+  .snav{display:grid;gap:4px;margin-top:8px}
+  .snav a,.snav .soon{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:12px;color:#D9D3F5;text-decoration:none;font-weight:500;font-size:15px;border:1px solid transparent}
+  .snav svg{width:20px;height:20px;flex:none;color:#A78BFA}
+  .snav a:hover{background:rgba(139,92,246,.12)}
+  .snav a.on{background:linear-gradient(90deg,rgba(124,58,237,.55),rgba(79,70,229,.25));border-color:rgba(167,139,250,.55);box-shadow:0 0 22px rgba(124,58,237,.35);color:#fff}
+  .snav a.on svg{color:#fff}
+  .snav .soon{color:#7D75A6;cursor:default}
+  .snav .soon svg{color:#5B5390}
+  .snav .soon em{margin-left:auto;font-style:normal;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:99px;border:1px solid #3B3270;color:#A49CC8}
+  .side-hoot{margin-top:auto;text-align:center;padding:14px 8px 4px}
+  .side-hoot img{width:120px;height:120px;border-radius:50%;filter:drop-shadow(0 0 24px rgba(139,92,246,.55))}
+  .side-hoot p{margin:8px 0 0;font:700 20px/1.15 var(--disp);font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;transform:rotate(-4deg)}
+  .side-x{margin-top:6px}
+  @media (min-width:1100px){
+    .side{transform:none;width:250px}
+    .scrim,.menubtn{display:none}
+    .maincol{margin-left:250px}
+    .brand-m{display:none!important}
+  }
+
+  /* top bar */
+  .top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 18px;background:rgba(8,5,26,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .menubtn{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;border:1px solid var(--line);background:rgba(139,92,246,.1);color:#EDE9FE;cursor:pointer;padding:0}
+  .menubtn svg{width:22px;height:22px}
+  .brand-m img{width:36px;height:36px;border-radius:50%}
+  .brand-m .wm small{display:block;font-size:10px;color:var(--muted);letter-spacing:.16em}
+  .brand-m .wm b{display:block;font:700 16px var(--disp);letter-spacing:.08em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hsearch{order:5;flex:1 1 100%;display:flex;align-items:center;gap:8px;padding:5px 5px 5px 14px;border-radius:14px;border:1px solid #3B2E7E;background:rgba(10,6,30,.9);box-shadow:inset 0 0 0 1px rgba(139,92,246,.08)}
+  .hsearch svg{width:18px;height:18px;color:#A78BFA;flex:none}
+  .hsearch input{flex:1;min-width:0;border:0;background:transparent;padding:9px 0;font-size:14px}
+  .hsearch input:focus{outline:none}
+  .hsearch:focus-within{border-color:#8B5CF6;box-shadow:0 0 0 3px rgba(139,92,246,.2)}
+  .hsearch button{flex:none;border:0;border-radius:10px;padding:9px 16px;font:700 13px var(--disp);letter-spacing:.08em;text-transform:uppercase;color:#fff;cursor:pointer;background:linear-gradient(90deg,#7C3AED,#4F46E5)}
+  .netpill{display:none;align-items:center;gap:10px;padding:7px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(17,11,44,.8);font-size:13px;font-weight:600}
+  .netpill i{width:10px;height:10px;border-radius:50%;background:#34D399;box-shadow:0 0 10px #34D399}
+  .netpill small{display:block;font-size:11px;font-weight:400;color:var(--muted)}
+  .xlink{margin-left:auto}
+  @media (min-width:860px){.hsearch{order:0;flex:1 1 360px;max-width:520px}.netpill{display:flex}.xlink{margin-left:0}}
+
+  /* cards */
+  .card,.panel,#out:not(:empty),.story,.about{position:relative;background:linear-gradient(180deg,rgba(26,16,66,.78),rgba(12,8,34,.88));border:1px solid rgba(139,92,246,.42);border-radius:18px;
+    box-shadow:0 0 0 1px rgba(139,92,246,.08),0 18px 50px rgba(30,10,80,.35),inset 0 1px 0 rgba(255,255,255,.04);padding:20px}
+  .drow{display:grid;gap:18px;margin-bottom:18px;align-items:start}
+  @media (min-width:960px){.r1{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}.r2{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+  .cards{margin-bottom:18px}
+  .ct{display:flex;align-items:center;gap:10px;font:700 16px var(--disp);letter-spacing:.08em;text-transform:uppercase;margin:0 0 14px}
+  .ct svg{width:20px;height:20px;color:#A78BFA}
+  .chead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .chead .ct{margin:0}
+  .live{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+  .live i{width:8px;height:8px;border-radius:50%;background:#34D399;box-shadow:0 0 8px #34D399;animation:livep 1.6s ease-in-out infinite}
+  @keyframes livep{50%{opacity:.35}}
+  .nnote{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
+
+  /* hero */
+  .hero{display:grid;gap:10px;align-items:center;text-align:left;margin:0;overflow:hidden;
+    background:radial-gradient(500px 300px at 85% 40%,rgba(124,58,237,.45),transparent 70%),linear-gradient(180deg,rgba(26,16,66,.85),rgba(12,8,34,.92))}
+  @media (min-width:700px){.hero{grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr)}}
+  .hero .logo{order:-1;width:min(56vw,230px);margin:0 auto;box-shadow:0 0 80px rgba(139,92,246,.55)}
+  @media (min-width:700px){.hero .logo{order:0;width:min(100%,290px)}}
+  .kick{margin:0 0 6px;font:600 12px var(--disp);letter-spacing:.2em;text-transform:uppercase;color:#C4B5FD}
+  .title{margin:0 0 8px;line-height:.9;text-shadow:none}
+  .title span{display:block;font:700 clamp(30px,7vw,46px)/1 var(--disp);letter-spacing:.06em;color:#F5F3FF}
+  .title b{display:inline-block;font:700 clamp(52px,13vw,84px)/.95 var(--disp);letter-spacing:.02em;transform:skewX(-8deg);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(129,140,248,.45))}
+  .tagline{font:600 17px var(--disp);color:#67E8F9;margin:4px 0 10px}
+  .lede{margin:0 0 14px;max-width:52ch;font-size:15px;color:#DDD8F7}
+  .lede-sub{margin:12px 0 0;max-width:none;font-size:12.5px}
+  .chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+  .chips li{display:flex;align-items:center;gap:9px;font-size:12.5px;line-height:1.25;color:#E4DFFB}
+  .chips svg{width:36px;height:36px;padding:8px;border-radius:50%;border:1px solid rgba(167,139,250,.5);background:rgba(124,58,237,.18);color:#C4B5FD;flex:none}
+
+  /* network card */
+  .nrow{display:grid;grid-template-columns:38px 1fr auto;grid-template-rows:auto auto;column-gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+  .nrow:first-of-type{border-top:0}
+  .ni{grid-row:1 / span 2;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(167,139,250,.45);background:rgba(124,58,237,.15)}
+  .ni svg{width:18px;height:18px;color:#C4B5FD}
+  .nrow > span:nth-child(2){font-size:13.5px;color:var(--muted)}
+  .nrow b{font:600 18px var(--mono);text-align:right}
+  .nrow i{grid-column:3;text-align:right;font-style:normal;font-size:12px}
+  .up{color:#34D399}.down{color:#F87171}
+
+  /* token lists */
+  .tlist .loading{color:var(--muted);font-size:14px;margin:6px 0}
+  .trow{display:grid;grid-template-columns:22px minmax(0,1.4fr) minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .trow:first-child{border-top:0}
+  .trow .rk{color:var(--muted);font:13px var(--mono)}
+  .tk2{display:flex;align-items:center;gap:10px;min-width:0}
+  .av{width:34px;height:34px;border-radius:50%;flex:none;object-fit:cover;background:#2B1F66;display:grid;place-items:center;font:700 13px var(--disp);color:#EDE9FE;border:1px solid rgba(167,139,250,.35)}
+  .tk2 b{display:block;font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tk2 small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tnum{text-align:right;font:13px var(--mono);line-height:1.35}
+  .tnum small{display:block;font-size:11.5px}
+  .tbtn{border:1px solid rgba(167,139,250,.6);background:rgba(124,58,237,.22);color:#EDE9FE;border-radius:10px;padding:8px 12px;font:700 12px var(--disp);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+  .tbtn:hover{background:rgba(124,58,237,.45)}
+  .newl .trow{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) auto}
+
+  /* coming next */
+  .soonbox{display:grid;gap:12px;margin-bottom:18px;background:radial-gradient(400px 200px at 100% 0,rgba(34,211,238,.12),transparent 70%),linear-gradient(180deg,rgba(26,16,66,.78),rgba(12,8,34,.88))}
+  @media (min-width:860px){.soonbox{grid-template-columns:1fr auto;align-items:center}}
+  .soonbox p{margin:0;color:var(--muted)}
+  .soonbox .ct{margin-bottom:6px}
+  .soonbox ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+  .soonbox li{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:12px;border:1px dashed #4B3E95;color:#C9C2EC;font-size:13.5px}
+  .soonbox li svg{width:18px;height:18px;color:#A78BFA}
+
+  /* story + about as cards */
+  .story,.about{margin-top:0;margin-bottom:18px;max-width:none}
+  .story p{max-width:72ch}
+  .hoot,.token,.checks div,.promise li{border-radius:14px}
+  .xlink{border-radius:12px}
+  .xcta{border-radius:12px;background:linear-gradient(90deg,rgba(124,58,237,.45),rgba(79,70,229,.3))}
+  button.go{border-radius:12px;background:linear-gradient(90deg,#7C3AED,#4F46E5 60%,#0EA5E9)}
+  #log{list-style:none;margin:8px 0 0;padding:0;font:12px/1.6 var(--mono);color:var(--muted);max-height:9.6em;overflow:hidden}
+  #log li::before{content:"✓ ";color:#34D399}
+  #log:empty{display:none}
+  #status.busy::after{content:"…";animation:livep 1s infinite}
+  footer{max-width:1240px}
+  @media (min-width:1100px){.menubtn{display:none!important}}
+  .r1{align-items:stretch}
+</style>
+</head>
+<body>
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="app">
+<aside class="side" id="side" aria-label="Menu">
+  <a class="brand" href="#top"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlRyYWNlciBvd2wgbG9nbyI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImJnIiBjeD0iNTAlIiBjeT0iMzglIiByPSI2NSUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyQTFBNUUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDcwNjBGIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib2R5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVCM0ZDNCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyQzFENkIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImlyaXMiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVFRUFENCIvPgogICAgICA8c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjMTRCOEE2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBGNzY2RSIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9Imdsb3ciIHg9Ii01MCUiIHk9Ii01MCUiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiPgogICAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0IiByZXN1bHQ9ImIiLz4KICAgICAgPGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEyOCIgZmlsbD0idXJsKCNiZykiLz4KCiAgPCEtLSB0cmFjZSBwYXRoOiB3YWxsZXRzIGxpbmtlZCB0b2dldGhlciwgdGhlIG93bCBwZXJjaGVzIG9uIGl0IC0tPgogIDxnIGZpbHRlcj0idXJsKCNnbG93KSI+CiAgICA8cG9seWxpbmUgcG9pbnRzPSIyMiwyMDAgNzQsMTg2IDEyOCwxOTggMTgyLDE4NCAyMzQsMTk2IiBmaWxsPSJub25lIiBzdHJva2U9IiNBNzhCRkEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjIwMCIgcj0iOCIgZmlsbD0iI0Y4NzE3MSIvPgogICAgPGNpcmNsZSBjeD0iNzQiIGN5PSIxODYiIHI9IjciIGZpbGw9IiNGQjkyM0MiLz4KICAgIDxjaXJjbGUgY3g9IjE4MiIgY3k9IjE4NCIgcj0iNyIgZmlsbD0iI0ZCQkYyNCIvPgogICAgPGNpcmNsZSBjeD0iMjM0IiBjeT0iMTk2IiByPSI4IiBmaWxsPSIjMkRENEJGIi8+CiAgPC9nPgoKICA8IS0tIGVhciB0dWZ0cyAtLT4KICA8cGF0aCBkPSJNNzAgNzAgTDg2IDMwIEwxMDQgNjYgWiIgZmlsbD0iIzNCMkE4QyIvPgogIDxwYXRoIGQ9Ik0xODYgNzAgTDE3MCAzMCBMMTUyIDY2IFoiIGZpbGw9IiMzQjJBOEMiLz4KCiAgPCEtLSBib2R5IC0tPgogIDxwYXRoIGQ9Ik0xMjggNTAgQyAxODIgNTAgMjAwIDkyIDE5OCAxMzIgQyAxOTYgMTcyIDE2OCAxOTYgMTI4IDE5NiBDIDg4IDE5NiA2MCAxNzIgNTggMTMyIEMgNTYgOTIgNzQgNTAgMTI4IDUwIFoiIGZpbGw9InVybCgjYm9keSkiLz4KICA8IS0tIGJlbGx5IGZlYXRoZXJzIC0tPgogIDxwYXRoIGQ9Ik0xMTAgMTY2IGw2IDYgbDYgLTYgTTEzNCAxNjYgbDYgNiBsNiAtNiBNMTIyIDE4MCBsNiA2IGw2IC02IiBmaWxsPSJub25lIiBzdHJva2U9IiM3QzVDRTAiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CgogIDwhLS0gZXllczogc2Nhbm5lciBsZW5zZXMgLS0+CiAgPGcgZmlsdGVyPSJ1cmwoI2dsb3cpIj4KICAgIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIzMCIgZmlsbD0iIzBCMEExNiIgc3Ryb2tlPSIjQTc4QkZBIiBzdHJva2Utd2lkdGg9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMzAiIGZpbGw9IiMwQjBBMTYiIHN0cm9rZT0iI0E3OEJGQSIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPC9nPgogIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIxOCIgZmlsbD0idXJsKCNpcmlzKSIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMTgiIGZpbGw9InVybCgjaXJpcykiLz4KICA8Y2lyY2xlIGN4PSI5OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjkyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPGNpcmNsZSBjeD0iMTUyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPCEtLSBsZW5zIHRpY2sgbWFya3MgLS0+CiAgPHBhdGggZD0iTTk4IDc0IHY2IE05OCAxMzYgdjYgTTY0IDEwOCBoNiBNMTI2IDEwOCBoNiIgc3Ryb2tlPSIjQzRCNUZEIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gYmVhayAtLT4KICA8cGF0aCBkPSJNMTI4IDEyOCBMMTM4IDE0MCBMMTI4IDE1NCBMMTE4IDE0MCBaIiBmaWxsPSIjRkJCRjI0Ii8+CgogIDwhLS0gZmVldCBvbiB0aGUgdHJhY2UgbGluZSAtLT4KICA8cGF0aCBkPSJNMTEyIDE5NCB2OCBNMTIwIDE5NSB2OCBNMTM2IDE5NSB2OCBNMTQ0IDE5NCB2OCIgc3Ryb2tlPSIjRkJCRjI0IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt=""><span class="wm"><b>TRACER</b><small>Every wallet leaves a trace</small></span></a>
+  <nav class="snav">
+    <a href="#top" class="on"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Home</a>
+    <a href="#scan"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Trace a token</a>
+    <a href="#trending"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-6 2 1 3 3 3 3s1-3 0-7z"/></svg>Trending</a>
+    <a href="#launches"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4c4 0 6 2 6 6l-7 7-6-6 7-7z"/><path d="M7 11l-3 1-1 4 4-1M13 17l-1 3-4 1 1-4"/><circle cx="15" cy="9" r="1.5"/></svg>New launches</a>
+    <a href="#tokensec"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9 9h4.5a1.5 1.5 0 0 1 0 3H10.5a1.5 1.5 0 0 0 0 3H15M12 7v2M12 15v2"/></svg>The token</a>
+    <a href="#storytitle"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/></svg>Why Tracer</a>
+    <a href="#abouttitle"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>What we check</a>
+    <span class="soon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13c0 4 4 6 9 6 6 0 9-4 9-8 0-1-1-2-2-1l-2 2c-1-3-4-4-7-4-4 0-7 2-7 5z"/><path d="M19 8c0-2 1-3 2-3M19 8c0-2-1-3-2-3"/></svg>Whale tracker<em>soon</em></span>
+    <span class="soon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 9h18M16 14h2"/></svg>Wallet tracking<em>soon</em></span>
+    <span class="soon"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts<em>soon</em></span>
+  </nav>
+  <div class="side-hoot"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlRyYWNlciBvd2wgbG9nbyI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImJnIiBjeD0iNTAlIiBjeT0iMzglIiByPSI2NSUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyQTFBNUUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDcwNjBGIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib2R5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVCM0ZDNCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyQzFENkIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImlyaXMiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVFRUFENCIvPgogICAgICA8c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjMTRCOEE2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBGNzY2RSIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9Imdsb3ciIHg9Ii01MCUiIHk9Ii01MCUiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiPgogICAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0IiByZXN1bHQ9ImIiLz4KICAgICAgPGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEyOCIgZmlsbD0idXJsKCNiZykiLz4KCiAgPCEtLSB0cmFjZSBwYXRoOiB3YWxsZXRzIGxpbmtlZCB0b2dldGhlciwgdGhlIG93bCBwZXJjaGVzIG9uIGl0IC0tPgogIDxnIGZpbHRlcj0idXJsKCNnbG93KSI+CiAgICA8cG9seWxpbmUgcG9pbnRzPSIyMiwyMDAgNzQsMTg2IDEyOCwxOTggMTgyLDE4NCAyMzQsMTk2IiBmaWxsPSJub25lIiBzdHJva2U9IiNBNzhCRkEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjIwMCIgcj0iOCIgZmlsbD0iI0Y4NzE3MSIvPgogICAgPGNpcmNsZSBjeD0iNzQiIGN5PSIxODYiIHI9IjciIGZpbGw9IiNGQjkyM0MiLz4KICAgIDxjaXJjbGUgY3g9IjE4MiIgY3k9IjE4NCIgcj0iNyIgZmlsbD0iI0ZCQkYyNCIvPgogICAgPGNpcmNsZSBjeD0iMjM0IiBjeT0iMTk2IiByPSI4IiBmaWxsPSIjMkRENEJGIi8+CiAgPC9nPgoKICA8IS0tIGVhciB0dWZ0cyAtLT4KICA8cGF0aCBkPSJNNzAgNzAgTDg2IDMwIEwxMDQgNjYgWiIgZmlsbD0iIzNCMkE4QyIvPgogIDxwYXRoIGQ9Ik0xODYgNzAgTDE3MCAzMCBMMTUyIDY2IFoiIGZpbGw9IiMzQjJBOEMiLz4KCiAgPCEtLSBib2R5IC0tPgogIDxwYXRoIGQ9Ik0xMjggNTAgQyAxODIgNTAgMjAwIDkyIDE5OCAxMzIgQyAxOTYgMTcyIDE2OCAxOTYgMTI4IDE5NiBDIDg4IDE5NiA2MCAxNzIgNTggMTMyIEMgNTYgOTIgNzQgNTAgMTI4IDUwIFoiIGZpbGw9InVybCgjYm9keSkiLz4KICA8IS0tIGJlbGx5IGZlYXRoZXJzIC0tPgogIDxwYXRoIGQ9Ik0xMTAgMTY2IGw2IDYgbDYgLTYgTTEzNCAxNjYgbDYgNiBsNiAtNiBNMTIyIDE4MCBsNiA2IGw2IC02IiBmaWxsPSJub25lIiBzdHJva2U9IiM3QzVDRTAiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CgogIDwhLS0gZXllczogc2Nhbm5lciBsZW5zZXMgLS0+CiAgPGcgZmlsdGVyPSJ1cmwoI2dsb3cpIj4KICAgIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIzMCIgZmlsbD0iIzBCMEExNiIgc3Ryb2tlPSIjQTc4QkZBIiBzdHJva2Utd2lkdGg9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMzAiIGZpbGw9IiMwQjBBMTYiIHN0cm9rZT0iI0E3OEJGQSIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPC9nPgogIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIxOCIgZmlsbD0idXJsKCNpcmlzKSIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMTgiIGZpbGw9InVybCgjaXJpcykiLz4KICA8Y2lyY2xlIGN4PSI5OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjkyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPGNpcmNsZSBjeD0iMTUyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPCEtLSBsZW5zIHRpY2sgbWFya3MgLS0+CiAgPHBhdGggZD0iTTk4IDc0IHY2IE05OCAxMzYgdjYgTTY0IDEwOCBoNiBNMTI2IDEwOCBoNiIgc3Ryb2tlPSIjQzRCNUZEIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gYmVhayAtLT4KICA8cGF0aCBkPSJNMTI4IDEyOCBMMTM4IDE0MCBMMTI4IDE1NCBMMTE4IDE0MCBaIiBmaWxsPSIjRkJCRjI0Ii8+CgogIDwhLS0gZmVldCBvbiB0aGUgdHJhY2UgbGluZSAtLT4KICA8cGF0aCBkPSJNMTEyIDE5NCB2OCBNMTIwIDE5NSB2OCBNMTM2IDE5NSB2OCBNMTQ0IDE5NCB2OCIgc3Ryb2tlPSIjRkJCRjI0IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt=""><p>Look before<br>you ape.</p></div>
+  <a class="xcta side-x" href="https://x.com/tracersolana" target="_blank" rel="noopener">Follow @tracersolana</a>
+</aside>
+<div class="scrim" id="scrim"></div>
+<div class="maincol">
+<header class="top" id="top">
+  <button class="menubtn" id="menubtn" type="button" aria-label="Open menu" aria-controls="side"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <a class="brand-m" href="#top"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2IiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlRyYWNlciBvd2wgbG9nbyI+CiAgPGRlZnM+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImJnIiBjeD0iNTAlIiBjeT0iMzglIiByPSI2NSUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMyQTFBNUUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDcwNjBGIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib2R5IiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVCM0ZDNCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyQzFENkIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImlyaXMiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzVFRUFENCIvPgogICAgICA8c3RvcCBvZmZzZXQ9Ii43IiBzdG9wLWNvbG9yPSIjMTRCOEE2Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBGNzY2RSIvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9Imdsb3ciIHg9Ii01MCUiIHk9Ii01MCUiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiPgogICAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0IiByZXN1bHQ9ImIiLz4KICAgICAgPGZlTWVyZ2U+PGZlTWVyZ2VOb2RlIGluPSJiIi8+PGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+PC9mZU1lcmdlPgogICAgPC9maWx0ZXI+CiAgPC9kZWZzPgoKICA8Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEyOCIgZmlsbD0idXJsKCNiZykiLz4KCiAgPCEtLSB0cmFjZSBwYXRoOiB3YWxsZXRzIGxpbmtlZCB0b2dldGhlciwgdGhlIG93bCBwZXJjaGVzIG9uIGl0IC0tPgogIDxnIGZpbHRlcj0idXJsKCNnbG93KSI+CiAgICA8cG9seWxpbmUgcG9pbnRzPSIyMiwyMDAgNzQsMTg2IDEyOCwxOTggMTgyLDE4NCAyMzQsMTk2IiBmaWxsPSJub25lIiBzdHJva2U9IiNBNzhCRkEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjIwMCIgcj0iOCIgZmlsbD0iI0Y4NzE3MSIvPgogICAgPGNpcmNsZSBjeD0iNzQiIGN5PSIxODYiIHI9IjciIGZpbGw9IiNGQjkyM0MiLz4KICAgIDxjaXJjbGUgY3g9IjE4MiIgY3k9IjE4NCIgcj0iNyIgZmlsbD0iI0ZCQkYyNCIvPgogICAgPGNpcmNsZSBjeD0iMjM0IiBjeT0iMTk2IiByPSI4IiBmaWxsPSIjMkRENEJGIi8+CiAgPC9nPgoKICA8IS0tIGVhciB0dWZ0cyAtLT4KICA8cGF0aCBkPSJNNzAgNzAgTDg2IDMwIEwxMDQgNjYgWiIgZmlsbD0iIzNCMkE4QyIvPgogIDxwYXRoIGQ9Ik0xODYgNzAgTDE3MCAzMCBMMTUyIDY2IFoiIGZpbGw9IiMzQjJBOEMiLz4KCiAgPCEtLSBib2R5IC0tPgogIDxwYXRoIGQ9Ik0xMjggNTAgQyAxODIgNTAgMjAwIDkyIDE5OCAxMzIgQyAxOTYgMTcyIDE2OCAxOTYgMTI4IDE5NiBDIDg4IDE5NiA2MCAxNzIgNTggMTMyIEMgNTYgOTIgNzQgNTAgMTI4IDUwIFoiIGZpbGw9InVybCgjYm9keSkiLz4KICA8IS0tIGJlbGx5IGZlYXRoZXJzIC0tPgogIDxwYXRoIGQ9Ik0xMTAgMTY2IGw2IDYgbDYgLTYgTTEzNCAxNjYgbDYgNiBsNiAtNiBNMTIyIDE4MCBsNiA2IGw2IC02IiBmaWxsPSJub25lIiBzdHJva2U9IiM3QzVDRTAiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CgogIDwhLS0gZXllczogc2Nhbm5lciBsZW5zZXMgLS0+CiAgPGcgZmlsdGVyPSJ1cmwoI2dsb3cpIj4KICAgIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIzMCIgZmlsbD0iIzBCMEExNiIgc3Ryb2tlPSIjQTc4QkZBIiBzdHJva2Utd2lkdGg9IjUiLz4KICAgIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMzAiIGZpbGw9IiMwQjBBMTYiIHN0cm9rZT0iI0E3OEJGQSIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPC9nPgogIDxjaXJjbGUgY3g9Ijk4IiBjeT0iMTA4IiByPSIxOCIgZmlsbD0idXJsKCNpcmlzKSIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iMTgiIGZpbGw9InVybCgjaXJpcykiLz4KICA8Y2lyY2xlIGN4PSI5OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjE1OCIgY3k9IjEwOCIgcj0iOCIgZmlsbD0iIzA2MDUwRCIvPgogIDxjaXJjbGUgY3g9IjkyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPGNpcmNsZSBjeD0iMTUyIiBjeT0iMTAxIiByPSI0IiBmaWxsPSIjZmZmIi8+CiAgPCEtLSBsZW5zIHRpY2sgbWFya3MgLS0+CiAgPHBhdGggZD0iTTk4IDc0IHY2IE05OCAxMzYgdjYgTTY0IDEwOCBoNiBNMTI2IDEwOCBoNiIgc3Ryb2tlPSIjQzRCNUZEIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gYmVhayAtLT4KICA8cGF0aCBkPSJNMTI4IDEyOCBMMTM4IDE0MCBMMTI4IDE1NCBMMTE4IDE0MCBaIiBmaWxsPSIjRkJCRjI0Ii8+CgogIDwhLS0gZmVldCBvbiB0aGUgdHJhY2UgbGluZSAtLT4KICA8cGF0aCBkPSJNMTEyIDE5NCB2OCBNMTIwIDE5NSB2OCBNMTM2IDE5NSB2OCBNMTQ0IDE5NCB2OCIgc3Ryb2tlPSIjRkJCRjI0IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K" alt=""><span class="wm"><small>SOLANA</small><b>TRACER</b></span></a>
+  <form class="hsearch" id="hform" role="search"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="hq" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste a token address to trace" aria-label="Token address"><button type="submit">Trace</button></form>
+  <div class="netpill"><i></i><span>Solana<small>Mainnet</small></span></div>
+  <a class="xlink" href="https://x.com/tracersolana" target="_blank" rel="noopener">Follow on X</a>
+</header>
+
+<main>
+  <section class="drow r1">
+    <div class="hero card">
+      <div class="hero-txt">
+        <p class="kick">Real-time on-chain insights for Solana</p>
+        <h1 class="title"><span>SOLANA</span><b>TRACER</b></h1>
+        <p class="tagline">Every wallet leaves a trace.</p>
+        <p class="lede">Paste a Solana token address and Tracer shows you how it really launched: who bought in the launch block, what the dev did, and where the tokens went after.</p>
+        <ul class="chips">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>See the<br>launch block</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h6a3 3 0 0 0 0-6h-2a3 3 0 0 1 0-6h6"/></svg><span>Follow hidden<br>wallets</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Rug verdict in<br>plain words</span></li>
+        </ul>
+        <p class="lede-sub">Free to use. Scores come from on-chain data and are estimates, not guarantees.</p>
+      </div>
+      <div class="logo hero-owl"><svg class="owl-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Hoot, the Tracer owl">
+  <defs>
+    <radialGradient id="h-bg" cx="50%" cy="38%" r="65%"><stop offset="0" stop-color="#2A1A5E"/><stop offset="1" stop-color="#07060F"/></radialGradient>
+    <linearGradient id="h-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5B3FC4"/><stop offset="1" stop-color="#2C1D6B"/></linearGradient>
+    <radialGradient id="h-iris" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#5EEAD4"/><stop offset=".7" stop-color="#14B8A6"/><stop offset="1" stop-color="#0F766E"/></radialGradient>
+    <filter id="h-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <clipPath id="h-lens"><circle cx="98" cy="108" r="27"/><circle cx="158" cy="108" r="27"/></clipPath>
+  </defs>
+  <circle cx="128" cy="128" r="128" fill="url(#h-bg)"/>
+
+  <!-- trace path with a pulse running along it -->
+  <g filter="url(#h-glow)">
+    <polyline points="22,200 74,186 128,198 182,184 234,196" fill="none" stroke="#A78BFA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="node n1" cx="22" cy="200" r="8" fill="#F87171"/>
+    <circle class="node n2" cx="74" cy="186" r="7" fill="#FB923C"/>
+    <circle class="node n3" cx="182" cy="184" r="7" fill="#FBBF24"/>
+    <circle class="node n4" cx="234" cy="196" r="8" fill="#2DD4BF"/>
+    <circle r="4.5" fill="#E0FFFA">
+      <animateMotion dur="3.2s" repeatCount="indefinite" path="M22 200 L74 186 L128 198 L182 184 L234 196" keyPoints="0;1" keyTimes="0;1" calcMode="linear"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="3.2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <g class="owl-bob">
+    <path d="M70 70 L86 30 L104 66 Z" fill="#3B2A8C"/>
+    <path d="M186 70 L170 30 L152 66 Z" fill="#3B2A8C"/>
+    <path d="M128 50 C 182 50 200 92 198 132 C 196 172 168 196 128 196 C 88 196 60 172 58 132 C 56 92 74 50 128 50 Z" fill="url(#h-body)"/>
+    <path d="M110 166 l6 6 l6 -6 M134 166 l6 6 l6 -6 M122 180 l6 6 l6 -6" fill="none" stroke="#7C5CE0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <g class="lenses" filter="url(#h-glow)">
+      <circle cx="98" cy="108" r="30" fill="#0B0A16" stroke="#A78BFA" stroke-width="5"/>
+      <circle cx="158" cy="108" r="30" fill="#0B0A16" stroke="#A78BFA" stroke-width="5"/>
+    </g>
+    <g class="blink">
+      <g class="look">
+        <circle cx="98" cy="108" r="18" fill="url(#h-iris)"/><circle cx="158" cy="108" r="18" fill="url(#h-iris)"/>
+        <circle cx="98" cy="108" r="8" fill="#06050D"/><circle cx="158" cy="108" r="8" fill="#06050D"/>
+        <circle cx="92" cy="101" r="4" fill="#fff"/><circle cx="152" cy="101" r="4" fill="#fff"/>
+      </g>
+    </g>
+    <!-- scan beam sweeping across the lenses -->
+    <g clip-path="url(#h-lens)">
+      <rect x="60" y="78" width="140" height="3" fill="#5EEAD4" opacity=".75">
+        <animate attributeName="y" values="80;136;80" dur="2.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;.8;0" dur="2.6s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    <path d="M98 74 v6 M98 136 v6 M64 108 h6 M126 108 h6" stroke="#C4B5FD" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M128 128 L138 140 L128 154 L118 140 Z" fill="#FBBF24"/>
+  </g>
+  <path d="M112 194 v8 M120 195 v8 M136 195 v8 M144 194 v8" stroke="#FBBF24" stroke-width="4" stroke-linecap="round"/>
+</svg></div>
+    </div>
+    <div class="card netcard" id="netcard">
+      <h2 class="ct">Solana network</h2>
+      <div class="nrow"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M9 9h4.5a1.5 1.5 0 0 1 0 3H10.5a1.5 1.5 0 0 0 0 3H15M12 7v2M12 15v2"/></svg></span><span>SOL price</span><b id="n-price">…</b><i id="n-chg"></i></div>
+      <div class="nrow"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span><span>SOL 24h volume</span><b id="n-vol">…</b><i></i></div>
+      <div class="nrow"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-6 2 1 3 3 3 3s1-3 0-7z"/></svg></span><span>Transactions / sec</span><b id="n-tps">…</b><i></i></div>
+      <div class="nrow"><span class="ni"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><span>Current slot</span><b id="n-slot">…</b><i></i></div>
+      <p class="nnote">Live from the Solana network and GeckoTerminal.</p>
+    </div>
+  </section>
+
+  <section class="cards" id="scan">
+    <div class="panel">
+      <h2 class="ct">Start a scan</h2>
+      <label for="mint">Solana mint address</label>
+      <input id="mint" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste a Solana token address">
+      <button class="go" id="go">Trace token</button>
+      <button class="alt" id="demo" type="button">See a sample result</button>
+      <p id="status" role="status" aria-live="polite"></p>
+      <ul id="log" aria-hidden="true"></ul>
+      <details class="settings" hidden>
+        <summary>Helius API key<span class="saved" id="keybadge"></span></summary>
+        <input id="key" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your key or RPC URL">
+        <p class="keyok" id="keyok" role="status"></p>
+        <p class="hint">Saved only in this browser on this device. It is never sent anywhere except Helius.</p>
+        <button class="alt" id="forget" type="button">Forget saved key</button>
+        <button class="alt" id="test" type="button">Test connection</button>
+        <p class="hint" id="testout" role="status"></p>
+      </details>
+    </div>
+
+    <div class="panel">
+      <h2 class="ct">Recent scans</h2>
+      <div id="recent"></div>
+    </div>
+  </section>
+
+  <div id="out"></div>
+
+  <section class="drow r2">
+    <div class="card" id="trending">
+      <div class="chead"><h2 class="ct"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-6 2 1 3 3 3 3s1-3 0-7z"/></svg>Trending tokens</h2><span class="live"><i></i>live</span></div>
+      <div class="tlist" id="trendlist"><p class="loading">Loading trending tokens…</p></div>
+    </div>
+    <div class="card" id="launches">
+      <div class="chead"><h2 class="ct"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4c4 0 6 2 6 6l-7 7-6-6 7-7z"/><path d="M7 11l-3 1-1 4 4-1M13 17l-1 3-4 1 1-4"/><circle cx="15" cy="9" r="1.5"/></svg>Latest launches</h2><span class="live"><i></i>live</span></div>
+      <div class="tlist" id="newlist"><p class="loading">Loading new launches…</p></div>
+      <p class="nnote">Tap Trace to check any new launch for bundles before you buy.</p>
+    </div>
+  </section>
+
+  <section class="card soonbox">
+    <div><h2 class="ct">Coming next</h2><p>Whale tracker, wallet tracking and alerts are on the way. Follow us on X to get them first.</p></div>
+    <ul><li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13c0 4 4 6 9 6 6 0 9-4 9-8 0-1-1-2-2-1l-2 2c-1-3-4-4-7-4-4 0-7 2-7 5z"/><path d="M19 8c0-2 1-3 2-3M19 8c0-2-1-3-2-3"/></svg>Whale tracker</li><li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 9h18M16 14h2"/></svg>Wallet tracking</li><li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>Alerts</li></ul>
+  </section>
+
+  <section class="story" aria-labelledby="storytitle">
+    <h2 id="storytitle">Why Tracer exists</h2>
+    <p>Thousands of tokens launch on pump.fun every day. On the chart, many look organic. The first block tells a different story: a few wallets, often funded from the same source, buy half the supply before anyone else can click. They wait for real buyers, then dump. When people start checking, they move tokens to fresh wallets so the holder list looks clean.</p>
+    <p>We built Tracer because we were tired of finding out too late. Most scanners hand you raw numbers. Tracer reads the launch block, follows the dev, follows bundle wallets even when they hide their tokens, and tells you what it means in plain words. It stays free, because everyone deserves to see the trap before they step in.</p>
+
+    <div class="hoot">
+      <img src="" alt="" class="hoot-img" id="hootimg">
+      <div>
+        <h3>Meet Hoot</h3>
+        <p>Owls see in the dark. Most of the market only sees the chart. Hoot sees the wallets behind it. The Tracer community is made of traders who would rather look before they ape.</p>
+      </div>
+    </div>
+
+    <div class="token" id="tokensec" aria-live="polite"></div>
+
+    <h3>Our promise</h3>
+    <ul class="promise">
+      <li><b>Clean launch.</b> No bundle and a small dev buy. Scan us with Tracer yourself.</li>
+      <li><b>No team snipers.</b> The team does not bundle or snipe our own launch.</li>
+      <li><b>Free forever.</b> The scanner stays free for everyone.</li>
+      <li><b>Same rules for every token,</b> including ours.</li>
+    </ul>
+    <a class="xcta" href="https://x.com/tracersolana" target="_blank" rel="noopener">Follow @tracersolana on X for daily traces</a>
+  </section>
+
+  <section class="about" aria-labelledby="abouttitle">
+    <h2 id="abouttitle">What Tracer checks</h2>
+    <p class="about-lede">Every scan follows the token from its first block to today.</p>
+    <dl class="checks">
+      <div><dt>Bundled launch buys</dt><dd>Wallets that bought in the exact launch block, how much they took and how much they still hold.</dd></div>
+      <div><dt>Snipers</dt><dd>Fast buyers in the first few blocks after launch, often bots or insiders.</dd></div>
+      <div><dt>Dev activity</dt><dd>What the dev bought, sold or sent away, how fast they sold and how many other tokens they launched.</dd></div>
+      <div><dt>Hidden transfers</dt><dd>When bundle wallets move tokens to fresh wallets instead of selling, Tracer follows them and still counts that supply as held.</dd></div>
+      <div><dt>Funding links</dt><dd>Wallets that got their first SOL from the same source, a common sign of one person running many wallets.</dd></div>
+      <div><dt>Liquidity and price</dt><dd>What is left in the pool and how far the price is from its all-time high.</dd></div>
+      <div><dt>Rug verdict</dt><dd>A small dev sell is normal. "Likely rugged" needs a big insider dump of 20% or more and a price crash of 70% or more, or an emptied pool.</dd></div>
+      <div><dt>Bubble map</dt><dd>A visual map of holders, bundles and the funding links between them.</dd></div>
+    </dl>
+  </section>
+</main>
+
+<button class="fab" id="fab" type="button" aria-label="Open bubble map">
+  <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="15" cy="22" r="9" fill="#F87171"/><circle cx="27" cy="14" r="6" fill="#FB923C"/><circle cx="28" cy="28" r="5" fill="#2DD4BF"/><circle cx="12" cy="19" r="2.4" fill="#fff" opacity=".55"/></svg>
+  <span class="cnt" id="fabcnt" hidden></span>
+</button>
+<dialog class="bm" id="bmdlg" aria-labelledby="bmtitle">
+  <div class="bmh"><h2 id="bmtitle">Bubble map</h2><button type="button" id="bmclose">Close</button></div>
+  <div class="bmb">
+    <div class="bmap"><svg id="bmsvg" viewBox="0 0 640 460" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bubble map of holders and funding links"></svg>
+      <div class="bmap-info" id="bminfo">Tap a bubble to see the wallet. Purple lines: same first funder. Orange dashed lines: the dev sent tokens or SOL.</div></div>
+    <ul class="bmap-key">
+      <li><i style="background:var(--dev)"></i>Dev</li><li><i style="background:var(--bundle)"></i>Bundle</li>
+      <li><i style="background:var(--sniper)"></i>Sniper</li><li><i style="background:var(--whale)"></i>Big buy</li>
+      <li><i style="background:var(--other)"></i>Holder</li>
+      <li><i style="background:var(--pool)"></i>Pool</li><li><i style="background:var(--violet)"></i>Funder</li>
+      <li><i class="ring"></i>Sold everything</li>
+      <li><i style="background:transparent;border:2px dashed var(--dev);border-radius:0;height:0;width:16px;vertical-align:3px"></i>Dev sent to</li>
+    </ul>
+  </div>
+</dialog>
+
+<footer>
+  <span>Not financial advice. Do your own research.</span>
+  <span>Tracer · <a href="https://x.com/tracersolana" target="_blank" rel="noopener">@tracersolana on X</a> · On-chain data from Solana · Prices from GeckoTerminal</span>
+</footer>
+</div>
+</div>
+
+<script>
+// ===== Project token. Fill these in on launch day and the token card goes live. =====
+const TOKEN = {
+  ticker: '',   // e.g. 'TRACE' (without the $)
+  ca: ''        // the token's contract address (mint)
+};
+(() => {
+  const el = document.getElementById('tokensec');
+  if (!el) return;
+  const okCa = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(TOKEN.ca);
+  const tick = TOKEN.ticker ? '$' + TOKEN.ticker.replace(/^\$/, '').toUpperCase() : 'The Tracer token';
+  if (!okCa){
+    el.innerHTML = `
+      <h3>${tick}</h3>
+      <p>The community token behind Tracer is coming soon. The scanner stays free for everyone. The token is for traders who want a tool like this to exist.</p>
+      <p class="soon">When it launches, the contract address will be right here, and the first token we trace will be our own.</p>
+      <a class="xcta" href="https://x.com/tracersolana" target="_blank" rel="noopener">Get the launch news on X</a>`;
+    return;
+  }
+  el.innerHTML = `
+    <h3>${tick}</h3>
+    <p>The community token behind Tracer. The scanner stays free for everyone. The token is for traders who want a tool like this to exist.</p>
+    <div class="ca"><code id="tokca">${TOKEN.ca}</code><button type="button" class="alt" id="copyca">Copy</button></div>
+    <button type="button" class="go" id="traceus">Don't trust us. Trace us.</button>
+    <div class="tlinks">
+      <a href="https://pump.fun/coin/${TOKEN.ca}" target="_blank" rel="noopener">pump.fun</a>
+      <a href="https://dexscreener.com/solana/${TOKEN.ca}" target="_blank" rel="noopener">Chart</a>
+      <a href="https://x.com/tracersolana" target="_blank" rel="noopener">X</a>
+    </div>`;
+  document.getElementById('copyca').addEventListener('click', async e => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(TOKEN.ca); }
+    catch(_){ const r = document.createRange(); r.selectNodeContents(document.getElementById('tokca')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand('copy'); }
+    b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 1500);
+  });
+  document.getElementById('traceus').addEventListener('click', () => {
+    traceMint(TOKEN.ca);
+  });
+})();
+
+// ================= DASHBOARD =================
+// Run a trace from anywhere on the page (header search, Trending, Latest launches, the token card)
+function traceMint(m){
+  const mint = document.getElementById('mint'), go = document.getElementById('go');
+  mint.value = m;
+  document.getElementById('scan').scrollIntoView({behavior:'smooth', block:'start'});
+  if (!go.disabled) setTimeout(() => go.click(), 450);
+}
+(() => {
+  const $id = id => document.getElementById(id);
+  const side = $id('side'), scrim = $id('scrim');
+  const setMenu = on => { side.classList.toggle('open', on); scrim.classList.toggle('on', on); $id('menubtn').setAttribute('aria-expanded', on); };
+  $id('menubtn').addEventListener('click', () => setMenu(!side.classList.contains('open')));
+  scrim.addEventListener('click', () => setMenu(false));
+  side.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    if (a.closest('.snav')){ side.querySelectorAll('.snav a').forEach(x => x.classList.toggle('on', x === a)); }
+    if (innerWidth < 1100) setMenu(false);
+  }));
+  $id('hform').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = $id('hq').value.trim();
+    if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(v)){ $id('hq').focus(); $id('hq').select(); return; }
+    traceMint(v); $id('hq').value = '';
+  });
+
+  // ---- live data
+  const GTB = 'https://api.geckoterminal.com/api/v2';
+  const SOL = 'So11111111111111111111111111111111111111112';
+  const SKIP = new Set([SOL, 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v', 'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB']);
+  const h = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const gj = async p => { const r = await fetch(GTB + p, {headers:{accept:'application/json'}}); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); };
+  const n = v => (v === null || v === undefined || v === '' || isNaN(+v)) ? null : +v;
+  const pct = v => v === null ? '' : `<small class="${v >= 0 ? 'up' : 'down'}">${v >= 0 ? '▲' : '▼'} ${Math.abs(v).toFixed(1)}%</small>`;
+  const ago = iso => { const s = (Date.now() - Date.parse(iso)) / 1000; if (!isFinite(s)) return ''; return s < 60 ? 'just now' : s < 3600 ? Math.round(s / 60) + 'm ago' : s < 86400 ? Math.round(s / 3600) + 'h ago' : Math.round(s / 86400) + 'd ago'; };
+  const av = t => {
+    const letter = h((t.sym || '?').replace(/^\$/, '').slice(0, 1).toUpperCase());
+    return t.img ? `<img class="av" src="${h(t.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=&quot;av&quot;>${letter}</span>'">` : `<span class="av">${letter}</span>`;
+  };
+  function rows(j){
+    const inc = {}; (j.included || []).forEach(t => inc[t.id] = t.attributes || {});
+    const seen = new Set(), out = [];
+    (j.data || []).forEach(p => {
+      const a = p.attributes || {}, bid = p.relationships && p.relationships.base_token && p.relationships.base_token.data && p.relationships.base_token.data.id;
+      const mint = bid ? bid.replace(/^solana_/, '') : '';
+      if (!mint || SKIP.has(mint) || seen.has(mint)) return;
+      seen.add(mint);
+      const t = inc[bid] || {};
+      out.push({mint, sym:t.symbol || String(a.name || '').split(' / ')[0], name:t.name || '',
+        img:t.image_url && !/missing/.test(t.image_url) ? t.image_url : '',
+        price:n(a.base_token_price_usd), chg:n(a.price_change_percentage && a.price_change_percentage.h24),
+        vol:n(a.volume_usd && a.volume_usd.h24), mcap:n(a.market_cap_usd) ?? n(a.fdv_usd), created:a.pool_created_at});
+    });
+    return out;
+  }
+  const traceBtn = m => `<button type="button" class="tbtn" data-trace="${h(m)}">Trace</button>`;
+  document.addEventListener('click', e => { const b = e.target.closest('[data-trace]'); if (b) traceMint(b.dataset.trace); });
+
+  async function loadTrending(){
+    const el = $id('trendlist');
+    try {
+      const list = rows(await gj('/networks/solana/trending_pools?page=1&include=base_token')).slice(0, 8);
+      if (!list.length){ el.innerHTML = '<p class="loading">No trending tokens right now.</p>'; return; }
+      el.innerHTML = list.map((t, i) => `<div class="trow">
+        <span class="rk">${i + 1}</span>
+        <span class="tk2">${av(t)}<span><b>${h(t.sym)}</b><small>${h(t.name)}</small></span></span>
+        <span class="tnum">${usdPrice(t.price)}${pct(t.chg)}<small style="color:var(--muted)">vol ${usd(t.vol)}</small></span>
+        ${traceBtn(t.mint)}</div>`).join('');
+    } catch(e){ el.innerHTML = '<p class="loading">Trending tokens could not load. Retrying soon.</p>'; }
+  }
+  async function loadLaunches(){
+    const el = $id('newlist');
+    try {
+      const list = rows(await gj('/networks/solana/new_pools?page=1&include=base_token')).slice(0, 7);
+      if (!list.length){ el.innerHTML = '<p class="loading">No new launches found.</p>'; return; }
+      el.classList.add('newl');
+      el.innerHTML = list.map(t => `<div class="trow">
+        <span class="tk2">${av(t)}<span><b>$${h(String(t.sym).replace(/^\$/, ''))}</b><small>${ago(t.created)}</small></span></span>
+        <span class="tnum">${t.mcap !== null ? 'mc ' + usd(t.mcap) : usdPrice(t.price)}${pct(t.chg)}</span>
+        ${traceBtn(t.mint)}</div>`).join('');
+    } catch(e){ el.innerHTML = '<p class="loading">New launches could not load. Retrying soon.</p>'; }
+  }
+  async function loadNetwork(){
+    try {
+      const a = ((await gj(`/simple/networks/solana/token_price/${SOL}?include_24hr_vol=true&include_24hr_price_change=true`)).data || {}).attributes || {};
+      const p = n(a.token_prices && a.token_prices[SOL]);
+      const v = n(a.h24_volume_usd && a.h24_volume_usd[SOL]);
+      const c = n(a.h24_price_change_percentage && a.h24_price_change_percentage[SOL]);
+      $id('n-price').textContent = p === null ? '—' : '$' + p.toFixed(2);
+      $id('n-vol').textContent = usd(v);
+      const ci = $id('n-chg'); ci.className = c === null ? '' : (c >= 0 ? 'up' : 'down');
+      ci.textContent = c === null ? '' : `${c >= 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}% 24h`;
+    } catch(e){ $id('n-price').textContent = '—'; $id('n-vol').textContent = '—'; }
+    try {
+      if (!BUILT_IN_KEY || BUILT_IN_KEY === 'PASTE_YOUR_HELIUS_KEY_HERE') throw new Error('no key');
+      const r = await fetch('https://mainnet.helius-rpc.com/?api-key=' + encodeURIComponent(BUILT_IN_KEY), {method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({jsonrpc:'2.0', id:1, method:'getRecentPerformanceSamples', params:[1]})});
+      const s = ((await r.json()).result || [])[0];
+      if (!s) throw new Error('no sample');
+      $id('n-tps').textContent = Math.round(s.numTransactions / s.samplePeriodSecs).toLocaleString('en-US');
+      $id('n-slot').textContent = Number(s.slot).toLocaleString('en-US');
+    } catch(e){ $id('n-tps').textContent = '—'; $id('n-slot').textContent = '—'; }
+  }
+  const every = (fn, ms) => { fn(); setInterval(() => { if (!document.hidden) fn(); }, ms); };
+  every(loadNetwork, 120000);
+  every(loadLaunches, 60000);
+  every(loadTrending, 300000);
+})();
+
+// ---- Background: a slow wallet network. Now and then a pulse runs along a link, like a transfer being traced.
+(() => {
+  const cv = document.getElementById('net');
+  if (!cv || !cv.getContext) return;
+  const ctx = cv.getContext('2d');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  const COLORS = ['#8B5CF6', '#8B5CF6', '#8B5CF6', '#A78BFA', '#2DD4BF', '#F87171', '#FB923C', '#FBBF24'];
+  let W = 0, H = 0, LINK = 150, nodes = [], pulses = [], raf = 0, last = 0;
+
+  function size(){
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = innerWidth; H = innerHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(Math.min(70, Math.max(32, W * H / 17000)));
+    LINK = W < 600 ? 115 : 155;
+    nodes = Array.from({length:n}, () => ({
+      x:Math.random() * W, y:Math.random() * H,
+      vx:(Math.random() - .5) * .012, vy:(Math.random() - .5) * .012,
+      r:1.3 + Math.random() * 2.2, c:COLORS[Math.random() * COLORS.length | 0], flash:0
+    }));
+    pulses = [];
+  }
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  function spawn(){
+    const a = nodes[Math.random() * nodes.length | 0];
+    const near = nodes.filter(b => b !== a && dist(a, b) < LINK * .9);
+    if (near.length) pulses.push({a, b:near[Math.random() * near.length | 0], t:0});
+  }
+  function draw(dt){
+    ctx.clearRect(0, 0, W, H);
+    for (const p of nodes){
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      if (p.x < -20) p.x = W + 20; else if (p.x > W + 20) p.x = -20;
+      if (p.y < -20) p.y = H + 20; else if (p.y > H + 20) p.y = -20;
+    }
+    ctx.lineWidth = 1;
+    for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++){
+      const d = dist(nodes[i], nodes[j]);
+      if (d >= LINK) continue;
+      ctx.strokeStyle = `rgba(139,92,246,${(1 - d / LINK) * .22})`;
+      ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke();
+    }
+    for (const p of nodes){
+      ctx.globalAlpha = .5; ctx.fillStyle = p.c;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      if (p.flash > 0){
+        ctx.globalAlpha = p.flash * .7; ctx.strokeStyle = '#5EEAD4'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r + 4 + (1 - p.flash) * 8, 0, 6.283); ctx.stroke();
+        p.flash = Math.max(0, p.flash - dt / 900);
+      }
+    }
+    ctx.globalAlpha = 1;
+    pulses = pulses.filter(q => {
+      q.t += dt / 1500;
+      if (q.t >= 1){ q.b.flash = 1; return false; }
+      if (dist(q.a, q.b) > LINK * 1.15) return false;
+      const x = q.a.x + (q.b.x - q.a.x) * q.t, y = q.a.y + (q.b.y - q.a.y) * q.t;
+      ctx.shadowColor = '#5EEAD4'; ctx.shadowBlur = 12; ctx.fillStyle = '#99F6E4';
+      ctx.beginPath(); ctx.arc(x, y, 2.4, 0, 6.283); ctx.fill();
+      ctx.shadowBlur = 0;
+      return true;
+    });
+  }
+  function loop(ts){
+    raf = requestAnimationFrame(loop);
+    const dt = Math.min(60, ts - last);
+    if (dt < 30) return;                      // ~30 fps is plenty and easier on phone batteries
+    last = ts;
+    if (pulses.length < 3 && Math.random() < dt / 1100) spawn();
+    draw(dt);
+  }
+  function start(){ stop(); if (still.matches) { draw(0); return; } last = performance.now(); raf = requestAnimationFrame(loop); }
+  function stop(){ if (raf) cancelAnimationFrame(raf); raf = 0; }
+  let rt;
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); start(); }, 200); });
+  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+  if (still.addEventListener) still.addEventListener('change', start);
+  size(); start();
+})();
+document.getElementById('hootimg').src = document.querySelector('link[rel="icon"]').href;
+// Hoot's SMIL animations (scan beam, trace pulse) pause when the visitor prefers less motion
+(() => {
+  const s = document.querySelector('.owl-svg'), mq = matchMedia('(prefers-reduced-motion: reduce)');
+  const set = () => { if (s && s.pauseAnimations) mq.matches ? s.pauseAnimations() : s.unpauseAnimations(); };
+  set(); if (mq.addEventListener) mq.addEventListener('change', set);
+})();
+const SYS = '11111111111111111111111111111111';
+const MAX_SIG_PAGES = 60;     // 1000 signatures per page -> pages back through up to 60,000 transactions
+const MAX_EARLY_TX = 100;     // launch-window transactions to analyze
+const DEV_SIG_PAGES = 4;      // 1000 signatures per page -> pages back through up to 4,000 dev wallet transactions to reach the launch
+const MAX_DEV_TX = 300;       // dev transactions since launch to analyze (for sells)
+const MPL = 'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s';
+const MAX_HOLDER_PAGES = 5;   // 1000 accounts per page -> up to 5,000 holders
+const BIGBUY_PCT = 2;         // a current holder (not dev/bundle/sniper/pool) owning at least this % of supply is flagged as a "big buy"
+// Known Raydium authority accounts (pool vaults). Heuristic only.
+const KNOWN_POOL_OWNERS = new Set([
+  '5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1',
+  'GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL'
+]);
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const short = a => a.slice(0,4) + '…' + a.slice(-4);
+let DEMO = false;
+let LAST = '';
+const addrLink = a => DEMO ? `<span class="addr">${esc(short(a))}</span>` : `<a class="addr" href="https://solscan.io/account/${esc(a)}" target="_blank" rel="noopener">${esc(short(a))}</a>`;
+const fmt = n => (Math.round(n*100)/100).toFixed(2) + '%';
+
+let RPC = '';
+// ===== Tracer's own Helius key. Paste yours between the quotes. =====
+// In the Helius dashboard, lock this key to your domain (Allowed domains) so other sites cannot use it.
+const BUILT_IN_KEY = '5d9c8bfb-8f6a-4b8f-8f52-16735ec408f6';
+const KEY_STORE = 'cc_helius_key';
+// Key storage: localStorage first, then a cookie (some in-app browsers and file:// pages block localStorage).
+function storeSet(k){
+  let ok = false;
+  try { if (k) localStorage.setItem(KEY_STORE, k); else localStorage.removeItem(KEY_STORE); ok = localStorage.getItem(KEY_STORE) === (k || null); } catch(e){}
+  try { document.cookie = KEY_STORE + '=' + (k ? encodeURIComponent(k) : '') + ';path=/;SameSite=Lax;max-age=' + (k ? 31536000 : 0); if (!ok && k) ok = storeGet(true) === k; } catch(e){}
+  return ok;
+}
+function storeGet(cookieOnly){
+  if (!cookieOnly){ try { const v = localStorage.getItem(KEY_STORE); if (v) return v; } catch(e){} }
+  try { const m = document.cookie.match(new RegExp('(?:^|; )' + KEY_STORE + '=([^;]*)')); if (m && m[1]) return decodeURIComponent(m[1]); } catch(e){}
+  return '';
+}
+function keyStatus(msg, bad){
+  const p = document.getElementById('keyok'), b = document.getElementById('keybadge');
+  if (p){ p.textContent = msg || ''; p.className = 'keyok' + (bad ? ' bad' : ''); }
+  if (b) b.textContent = storeGet() ? '· saved' : '';
+}
+const saveKey = k => {
+  k = (k || '').trim();
+  if (!k){ storeSet(''); keyStatus(''); return; }
+  if (storeSet(k)) keyStatus('Key saved in this browser.');
+  else keyStatus('This browser is blocking storage (private mode or in-app browser), so the key cannot be saved. Open the page in Chrome or Safari normally.', true);
+};
+{ const k = storeGet(); if (k){ document.getElementById('key').value = k; keyStatus(''); } else document.querySelector('details.settings').open = true; }
+// Some browsers/hosts fail the CORS preflight for application/json. Retry as a "simple" request.
+async function post(body){
+  try {
+    return await fetch(RPC, {method:'POST', headers:{'Content-Type':'application/json'}, body});
+  } catch(e){
+    return await fetch(RPC, {method:'POST', headers:{'Content-Type':'text/plain'}, body});
+  }
+}
+// Shared pacing queue: every request waits its turn so parallel workers never burst past the RPC rate limit.
+// The gap widens automatically after a 429 and shrinks again when calls succeed.
+let GAP = 100, nextAt = 0, lastBad = 0;
+async function gate(){
+  const now = Date.now(), at = Math.max(now, nextAt);
+  nextAt = at + GAP;
+  if (at > now) await sleep(at - now);
+}
+function slower(){ GAP = Math.min(600, Math.round(GAP * 1.6)); lastBad = Date.now(); }
+function faster(){ if (GAP > 100 && Date.now() - lastBad > 8000) GAP = Math.max(100, Math.round(GAP * 0.9)); }
+
+async function rpc(method, params, tries = 7){
+  let netErr = null;
+  for (let i = 0; i < tries; i++){
+    await gate();
+    let r;
+    try { r = await post(JSON.stringify({jsonrpc:'2.0', id:1, method, params})); }
+    catch(e){ netErr = e; if (i >= 2) throw e; slower(); await sleep(500 * (i + 1)); continue; }   // network blip
+    netErr = null;
+    if (r.status === 429){
+      slower();
+      const ra = parseFloat(r.headers.get('retry-after'));
+      await sleep(Math.min(8000, ra > 0 ? ra * 1000 : 600 * 2 ** i));
+      continue;
+    }
+    if (r.status === 401 || r.status === 403) throw new Error('Invalid or non-working API key.');
+    if (r.status >= 500){ await sleep(500 * (i + 1)); continue; }
+    if (!r.ok) throw new Error('RPC error ' + r.status);
+    let j;
+    try { j = await r.json(); } catch(e){ await sleep(400 * (i + 1)); continue; }
+    if (j.error){
+      if (j.error.code === -32429 || /rate limit|too many requests/i.test(j.error.message || '')){ slower(); await sleep(600 * 2 ** Math.min(i, 4)); continue; }
+      throw new Error(j.error.message);
+    }
+    faster();
+    return j.result;
+  }
+  throw new Error('Rate limited by the RPC. Try again in a few seconds.');
+}
+
+// Runs fn over arr with limited parallelism. A failed item is retried before it is given up on (null).
+async function mapLimit(arr, limit, fn, retries = 2){
+  const out = new Array(arr.length);
+  let i = 0;
+  await Promise.all(Array.from({length: limit}, async () => {
+    while (i < arr.length){
+      const k = i++;
+      for (let a = 0; a <= retries; a++){
+        try { out[k] = await fn(arr[k], k); break; }
+        catch(e){ out[k] = null; if (a < retries) await sleep(700 * (a + 1)); }
+      }
+    }
+  }));
+  return out;
+}
+
+async function multi(addrs){
+  const out = [];
+  for (let i = 0; i < addrs.length; i += 100){
+    const res = await rpc('getMultipleAccounts', [addrs.slice(i, i + 100), {encoding:'jsonParsed'}]);
+    out.push(...res.value);
+  }
+  return out;
+}
+
+// ---- PDA detection: program-derived addresses are OFF the ed25519 curve.
+// Bonding curves, pool vault authorities, etc. are PDAs, never real wallets.
+const B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+function b58decode(str){
+  let n = 0n;
+  for (const c of str){ const i = B58.indexOf(c); if (i < 0) return null; n = n * 58n + BigInt(i); }
+  const out = [];
+  while (n > 0n){ out.unshift(Number(n & 255n)); n >>= 8n; }
+  for (const c of str){ if (c === '1') out.unshift(0); else break; }
+  return out;
+}
+const FP = (1n << 255n) - 19n;
+const modp = a => ((a % FP) + FP) % FP;
+function powmod(b, e){ let r = 1n; b = modp(b); while (e > 0n){ if (e & 1n) r = r * b % FP; b = b * b % FP; e >>= 1n; } return r; }
+const ED_D = modp(-121665n * powmod(121666n, FP - 2n));
+const curveCache = new Map();
+function onCurveBytes(bytes){
+  if (!bytes || bytes.length !== 32) return true;
+  let y = 0n;
+  for (let i = 31; i >= 0; i--) y = (y << 8n) | BigInt(i === 31 ? bytes[i] & 0x7f : bytes[i]);
+  if (y >= FP) return false;
+  const y2 = y * y % FP;
+  const x2 = modp(y2 - 1n) * powmod(modp(ED_D * y2 + 1n), FP - 2n) % FP;
+  if (x2 === 0n) return (bytes[31] & 0x80) === 0;
+  return powmod(x2, (FP - 1n) / 2n) === 1n;
+}
+function isOnCurve(addr){
+  if (curveCache.has(addr)) return curveCache.get(addr);
+  const ok = onCurveBytes(b58decode(addr));
+  curveCache.set(addr, ok);
+  return ok;
+}
+function b58encode(bytes){
+  let n = 0n;
+  for (const b of bytes) n = n * 256n + BigInt(b);
+  let s = '';
+  while (n > 0n){ s = B58[Number(n % 58n)] + s; n /= 58n; }
+  for (const b of bytes){ if (b === 0) s = '1' + s; else break; }
+  return s;
+}
+// Same as Solana's findProgramAddress.
+async function findPda(seeds, programId){
+  const pid = Uint8Array.from(b58decode(programId)), tag = new TextEncoder().encode('ProgramDerivedAddress');
+  for (let bump = 255; bump >= 0; bump--){
+    const parts = [...seeds.map(x => Uint8Array.from(x)), Uint8Array.of(bump), pid, tag];
+    const buf = new Uint8Array(parts.reduce((x, p) => x + p.length, 0));
+    let o = 0; parts.forEach(p => { buf.set(p, o); o += p.length; });
+    const h = new Uint8Array(await crypto.subtle.digest('SHA-256', buf));
+    if (!onCurveBytes(h)) return b58encode(h);
+  }
+  return null;
+}
+
+const pct = (bn, sup) => sup === 0n ? 0 : Number(bn * 100000n / sup) / 1000;
+
+let SCANNING = false;
+function setStatus(t, err){
+  const s = $('status'), log = $('log');
+  // the previous step moves into the log as "done"
+  if (log && s.textContent && !s.classList.contains('err') && t && t !== s.textContent && SCANNING){
+    const li = document.createElement('li'); li.textContent = s.textContent; log.appendChild(li);
+    while (log.children.length > 6) log.removeChild(log.firstChild);
+  }
+  s.textContent = t;
+  s.className = err ? 'err' : (t && SCANNING ? 'busy' : '');
+}
+
+// ---- Dev history + funding links
+const TX_OPTS = {encoding:'jsonParsed', maxSupportedTransactionVersion:0, commitment:'confirmed'};
+const allIx = t => [
+  ...t.transaction.message.instructions,
+  ...((t.meta && t.meta.innerInstructions) || []).flatMap(x => x.instructions)
+];
+
+// Programs allowed in a "plain transfer" transaction (no swap / no DEX), so pool trades are not counted.
+const PLAIN_PROGRAMS = new Set(['system', 'spl-token', 'spl-token-2022', 'spl-associated-token-account', 'spl-memo']);
+const PLAIN_IDS = new Set(['ComputeBudget111111111111111111111111111111', 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr', 'Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo']);
+const isPlainTx = t => t.transaction.message.instructions.every(ix => PLAIN_PROGRAMS.has(ix.program) || PLAIN_IDS.has(ix.programId));
+
+async function devHistory(dev, mint, launchSlot){
+  const SIGP = 1000;
+  let sigs = await rpc('getSignaturesForAddress', [dev, {limit:SIGP, commitment:'confirmed'}]);
+  let reachedStart = sigs.length < SIGP;
+  for (let p = 1; !reachedStart && p < DEV_SIG_PAGES; p++){
+    if (!launchSlot || sigs[sigs.length - 1].slot < launchSlot){ reachedStart = true; break; }
+    setStatus(`Reading the dev wallet history… (${sigs.length.toLocaleString()} transactions)`);
+    const more = await rpc('getSignaturesForAddress', [dev, {limit:SIGP, before:sigs[sigs.length - 1].signature, commitment:'confirmed'}]);
+    sigs = sigs.concat(more);
+    if (more.length < SIGP) reachedStart = true;
+  }
+  if (!reachedStart && sigs.length && launchSlot && sigs[sigs.length - 1].slot < launchSlot) reachedStart = true;
+  const ok = sigs.filter(x => !x.err);
+  const sinceLaunch = launchSlot ? ok.filter(x => x.slot >= launchSlot) : [];
+  // latest 100 + up to MAX_DEV_TX of the oldest since launch (sells and transfers usually happen early)
+  const pick = new Map(ok.slice(0, 100).map(x => [x.signature, x]));
+  sinceLaunch.slice(-MAX_DEV_TX).forEach(x => pick.set(x.signature, x));
+  const sample = [...pick.values()];
+  const reachesLaunch = !launchSlot || reachedStart;
+  const missed = sinceLaunch.filter(x => !pick.has(x.signature)).length;
+  setStatus(`Checking ${sample.length} dev wallet transactions…`);
+  const txs = await mapLimit(sample, 5, x => rpc('getTransaction', [x.signature, TX_OPTS]));
+  const failed = txs.filter(t => !t).length;
+  const created = new Map(), tokOut = new Map(), solOut = new Map();
+  let sold = 0n, boughtLater = 0n, received = 0n, burned = 0n, firstSell = 0, lastSell = 0;
+  const sumOwner = arr => arr.filter(b => b.owner === dev).reduce((x, b) => x + BigInt(b.uiTokenAmount.amount), 0n);
+  txs.forEach((t, i) => {
+    if (!t || !t.meta) return;
+    const keys = t.transaction.message.accountKeys.map(k => k.pubkey || k);
+    const time = sample[i].blockTime, sig = sample[i].signature, slot = sample[i].slot;
+    const pre = (t.meta.preTokenBalances || []).filter(b => b.mint === mint);
+    const post = (t.meta.postTokenBalances || []).filter(b => b.mint === mint);
+    const plain = isPlainTx(t);
+    const dd = (pre.length || post.length) ? sumOwner(post) - sumOwner(pre) : 0n;   // net change of the dev's balance in this tx
+
+    // Tokens the dev sent to other wallets. Works for plain transfers and for transfers bundled with other
+    // instructions (multi-send, tips, etc.). A swap/sell pays a pool vault (a PDA), so only real wallets count there.
+    let sentNow = 0n;
+    if (dd < 0n){
+      const rec = []; let recSum = 0n;
+      post.forEach(pb => {
+        if (!pb.owner || pb.owner === dev || KNOWN_POOL_OWNERS.has(pb.owner)) return;
+        const pr = pre.find(x => x.accountIndex === pb.accountIndex);
+        const dl = BigInt(pb.uiTokenAmount.amount) - BigInt(pr ? pr.uiTokenAmount.amount : '0');
+        if (dl <= 0n) return;
+        if (!plain && !isOnCurve(pb.owner)) return;
+        rec.push([pb.owner, dl]); recSum += dl;
+      });
+      if (rec.length && recSum * 10n >= -dd * 9n){        // nearly everything the dev lost went to wallets: a transfer, not a sell
+        rec.forEach(([w, amt]) => {
+          const o = tokOut.get(w) || {to:w, amount:0n, count:0, time, sig};
+          o.amount += amt; o.count++;
+          if (time && (!o.time || time < o.time)){ o.time = time; o.sig = sig; }
+          tokOut.set(w, o);
+        });
+        sentNow = recSum > -dd ? -dd : recSum;
+      }
+    }
+
+    // How the dev's own balance of this token changed in this transaction
+    if (launchSlot && slot >= launchSlot && (pre.length || post.length)){
+      const d = dd;
+      const inWindow = slot <= launchSlot + 3;            // launch buys are already in "Dev bought at launch"
+      if (d < 0n && !plain){
+        const sd = -d - sentNow; sold += sd;
+        if (sd > 0n && time){ firstSell = firstSell ? Math.min(firstSell, time) : time; lastSell = Math.max(lastSell, time); }
+      }
+      else if (d > 0n && !plain && !inWindow) boughtLater += d;
+      else if (d > 0n && plain && !inWindow) received += d;
+      if (d < 0n && plain){
+        allIx(t).forEach(ix => {
+          const p = ix.parsed;
+          if (!p || !p.info || (p.type !== 'burn' && p.type !== 'burnChecked') || p.info.mint !== mint) return;
+          burned += BigInt(p.info.amount || (p.info.tokenAmount && p.info.tokenAmount.amount) || 0);
+        });
+      }
+    }
+
+    if (keys[0] !== dev) return;                       // the rest: only txs the dev paid for
+    allIx(t).forEach(ix => {
+      const p = ix.parsed;
+      if (p && (p.type === 'initializeMint' || p.type === 'initializeMint2') && p.info && p.info.mint){
+        if (!created.has(p.info.mint)) created.set(p.info.mint, {mint:p.info.mint, time});
+      }
+    });
+    if (!plain) return;
+    // SOL sent from dev to other wallets (skip rent to token accounts / PDAs and dust)
+    allIx(t).forEach(ix => {
+      const p = ix.parsed;
+      if (ix.program !== 'system' || !p || p.type !== 'transfer' || !p.info) return;
+      const to = p.info.destination;
+      if (p.info.source !== dev || to === dev || !isOnCurve(to) || p.info.lamports < 1e7) return;
+      const o = solOut.get(to) || {to, lamports:0, count:0, time, sig};
+      o.lamports += p.info.lamports; o.count++;
+      if (time && (!o.time || time < o.time)){ o.time = time; o.sig = sig; }
+      solOut.set(to, o);
+    });
+  });
+  const byAmt = (a, b) => (b.amount > a.amount ? 1 : b.amount < a.amount ? -1 : 0);
+  return {
+    list:[...created.values()], checked:sample.length, more: ok.length > sample.length,
+    sold, boughtLater, received, burned, firstSell, lastSell,
+    sinceLaunch: sinceLaunch.length, complete: reachesLaunch && missed === 0 && failed === 0,
+    tokenOut:[...tokOut.values()].sort(byAmt),
+    solOut:[...solOut.values()].sort((a, b) => b.lamports - a.lamports)
+  };
+}
+
+// Current balance of a wallet across all its token accounts for this mint.
+async function walletBalance(owner, mint){
+  const r = await rpc('getTokenAccountsByOwner', [owner, {mint}, {encoding:'jsonParsed', commitment:'confirmed'}]);
+  return ((r && r.value) || []).reduce((x, a) => x + BigInt(a.account.data.parsed.info.tokenAmount.amount), 0n);
+}
+
+// A launch buyer that "sold" may only have moved its tokens to fresh wallets. Follow those transfers one step
+// and count what the receiving wallets still hold as held by the bundle, not sold.
+const MAX_LB_TRACE = 12, MAX_LB_TX = 15, MAX_LB_RCV = 20;
+const lbHeld = h => h.now + (h.movedNow || 0n);
+async function traceLaunchTransfers(buyers, mint){
+  const byBig = (a, b) => (b > a ? 1 : b < a ? -1 : 0);
+  const known = new Set(buyers.map(h => h.owner));
+  const targets = buyers.filter(h => h.bought > 0n && h.now * 2n < h.bought && h.accounts && h.accounts.size)
+    .sort((a, b) => byBig(a.bought, b.bought)).slice(0, MAX_LB_TRACE);
+  if (!targets.length) return {targets:0, checked:0, recipients:0, unchecked:0};
+  setStatus(`Checking if ${targets.length} launch buyer${targets.length > 1 ? 's' : ''} moved tokens to other wallets…`);
+  let checked = 0;
+  await mapLimit(targets, 3, async h => {
+    const lists = await Promise.all([...h.accounts].slice(0, 2).map(a => rpc('getSignaturesForAddress', [a, {limit:MAX_LB_TX, commitment:'confirmed'}])));
+    const sigs = [...new Map(lists.flat().filter(x => !x.err).map(x => [x.signature, x])).values()].slice(0, MAX_LB_TX);
+    const txs = await mapLimit(sigs, 3, x => rpc('getTransaction', [x.signature, TX_OPTS]));
+    const movedTo = new Map(); let movedOut = 0n;
+    const mine = arr => arr.filter(b => b.owner === h.owner).reduce((x, b) => x + BigInt(b.uiTokenAmount.amount), 0n);
+    txs.forEach(t => {
+      if (!t || !t.meta) return;
+      const pre = (t.meta.preTokenBalances || []).filter(b => b.mint === mint);
+      const post = (t.meta.postTokenBalances || []).filter(b => b.mint === mint);
+      const dd = mine(post) - mine(pre);
+      if (dd >= 0n) return;
+      const plain = isPlainTx(t);
+      const rec = []; let recSum = 0n;
+      post.forEach(pb => {
+        if (!pb.owner || pb.owner === h.owner || KNOWN_POOL_OWNERS.has(pb.owner)) return;
+        const pr = pre.find(x => x.accountIndex === pb.accountIndex);
+        const dl = BigInt(pb.uiTokenAmount.amount) - BigInt(pr ? pr.uiTokenAmount.amount : '0');
+        if (dl <= 0n || (!plain && !isOnCurve(pb.owner))) return;
+        rec.push([pb.owner, dl]); recSum += dl;
+      });
+      if (!rec.length || recSum * 10n < -dd * 9n) return;   // most of it went into a pool: that is a sell
+      rec.forEach(([w, amt]) => movedTo.set(w, (movedTo.get(w) || 0n) + amt));
+      movedOut += recSum > -dd ? -dd : recSum;
+    });
+    h.movedTo = movedTo; h.movedOut = movedOut; checked++;
+  });
+  // Total each outside wallet received (transfers to other launch buyers are already in their own balance)
+  const tot = new Map();
+  targets.forEach(h => (h.movedTo || new Map()).forEach((a, w) => { if (!known.has(w)) tot.set(w, (tot.get(w) || 0n) + a); }));
+  const rcv = [...tot.entries()].sort((a, b) => byBig(a[1], b[1])).slice(0, MAX_LB_RCV);
+  if (rcv.length) setStatus(`Checking what the ${rcv.length} wallet${rcv.length > 1 ? 's' : ''} that got tokens from launch buyers hold now…`);
+  const bals = await mapLimit(rcv, 3, ([w]) => walletBalance(w, mint));
+  const balOf = new Map();
+  rcv.forEach(([w], i) => { if (typeof bals[i] === 'bigint') balOf.set(w, bals[i]); });
+  targets.forEach(h => {
+    h.movedNow = 0n;
+    (h.movedTo || new Map()).forEach((a, w) => {
+      if (known.has(w) || !balOf.has(w)) return;
+      const share = balOf.get(w) * a / tot.get(w);     // a wallet fed by several buyers is split between them
+      h.movedNow += share > a ? a : share;
+    });
+  });
+  return {targets:targets.length, checked, recipients:rcv.length, unchecked:Math.max(0, tot.size - rcv.length)};
+}
+
+// For tokens with too many transactions to page back: the Metaplex metadata account is only
+// touched at creation (and rare updates), so its oldest signature is the launch. Then read the
+// launch blocks directly instead of paging through the whole token history.
+async function launchViaMetadata(mint){
+  const mb = b58decode(mint);
+  if (!mb || mb.length !== 32) return null;
+  const meta = await findPda([new TextEncoder().encode('metadata'), b58decode(MPL), mb], MPL);
+  if (!meta) return null;
+  let sigs = [], mBefore, atStart = false;
+  for (let p = 0; p < 5; p++){
+    const o = {limit:1000, commitment:'confirmed'};
+    if (mBefore) o.before = mBefore;
+    const page = await rpc('getSignaturesForAddress', [meta, o]);
+    sigs = sigs.concat(page);
+    if (page.length < 1000){ atStart = true; break; }
+    mBefore = page[page.length - 1].signature;
+  }
+  const ok = sigs.filter(s => !s.err);
+  if (!atStart || !ok.length) return null;
+  const first = ok[ok.length - 1];
+  const txs = [];
+  let dev = null;
+  for (let slot = first.slot; slot <= first.slot + 3; slot++){
+    setStatus(`Reading launch block ${slot - first.slot + 1} of 4…`);
+    let b = null;
+    try {
+      b = await rpc('getBlock', [slot, {encoding:'jsonParsed', transactionDetails:'accounts', maxSupportedTransactionVersion:0, rewards:false, commitment:'confirmed'}], 3);
+    } catch(e){ continue; }                           // skipped slot
+    if (!b || !b.transactions) continue;
+    b.transactions.forEach(t => {
+      if (!t.meta || t.meta.err) return;
+      if (!(t.meta.postTokenBalances || []).some(x => x.mint === mint)) return;
+      const tx = t.transaction || {};
+      const keys = (tx.accountKeys || (tx.message && tx.message.accountKeys) || []).map(k => k.pubkey || k);
+      const item = {slot, keys, meta:t.meta};
+      if (tx.signatures && tx.signatures.includes(first.signature)){ dev = keys[0]; txs.unshift(item); }
+      else txs.push(item);
+    });
+  }
+  if (!txs.length) return null;
+  txs.sort((a, b) => a.slot - b.slot);                 // stable: the create tx stays first in its slot
+  return {slot:first.slot, blockTime:first.blockTime, txs, dev};
+}
+
+// Read name/symbol straight from the Metaplex metadata account (fallback when DAS has nothing).
+async function metaplexName(mint){
+  const mb = b58decode(mint);
+  if (!mb || mb.length !== 32) return null;
+  const meta = await findPda([new TextEncoder().encode('metadata'), b58decode(MPL), mb], MPL);
+  if (!meta) return null;
+  const r = await rpc('getAccountInfo', [meta, {encoding:'base64'}]);
+  if (!r || !r.value || !Array.isArray(r.value.data)) return null;
+  const b = Uint8Array.from(atob(r.value.data[0]), c => c.charCodeAt(0));
+  const str = o => { const n = b[o] | b[o+1] << 8 | b[o+2] << 16 | b[o+3] << 24; return [new TextDecoder().decode(b.slice(o + 4, o + 4 + n)).replace(/\0/g, '').trim(), o + 4 + n]; };
+  if (b.length < 70) return null;
+  const [name, o2] = str(65); const [symbol] = str(o2);
+  return (name || symbol) ? {name, symbol} : null;
+}
+
+// Helius getTransactionsForAddress can read history oldest-first, so the launch is found in one call
+// even for tokens with millions of transactions. Not every plan has it, so failures just return null.
+async function launchSigsAsc(mint){
+  try {
+    const r = await rpc('getTransactionsForAddress', [mint, {transactionDetails:'signatures', sortOrder:'asc', limit:1000, filters:{status:'succeeded'}}], 2);
+    const list = (r && (r.data || r.result || r)) || [];
+    if (!Array.isArray(list) || !list.length || !list[0].signature) return null;
+    return list.filter(x => !x.err).map(x => ({signature:x.signature, slot:x.slot, blockTime:x.blockTime, err:null}));
+  } catch(e){ return null; }
+}
+
+async function firstFunder(wallet){
+  const page = await rpc('getSignaturesForAddress', [wallet, {limit:1000, commitment:'confirmed'}]);
+  if (page.length >= 1000) return {active:true};       // trader/bot wallet: too active to reach its first tx
+  const ok = page.filter(x => !x.err);
+  if (!ok.length) return {none:true};
+  // Check the 3 oldest transactions for the first incoming SOL (transfer, createAccount, transferWithSeed).
+  for (const sig of ok.slice(-3).reverse()){
+    const t = await rpc('getTransaction', [sig.signature, TX_OPTS]);
+    if (!t) continue;
+    for (const ix of allIx(t)){
+      const p = ix.parsed;
+      if (ix.program !== 'system' || !p || !p.info) continue;
+      if ((p.type === 'transfer' || p.type === 'transferWithSeed') && p.info.destination === wallet && p.info.source !== wallet)
+        return {funder:p.info.source, lamports:p.info.lamports};
+      if ((p.type === 'createAccount' || p.type === 'createAccountWithSeed') && p.info.newAccount === wallet && p.info.source !== wallet)
+        return {funder:p.info.source, lamports:p.info.lamports};
+    }
+  }
+  return {none:true};                                    // checked, but no plain SOL funding found (e.g. funded via a swap or bridge)
+}
+
+async function traceFunding(dev, wallets){
+  const targets = dev ? [dev, ...wallets] : wallets;
+  const results = await mapLimit(targets, 3, w => firstFunder(w));
+  // second pass for any wallet that still failed (usually a rate-limit burst): wait a moment, go slower
+  const redo = targets.map((_, i) => i).filter(i => !results[i]);
+  if (redo.length){
+    setStatus(`Retrying ${redo.length} wallet${redo.length > 1 ? 's' : ''} that could not be checked…`);
+    await sleep(1500);
+    const again = await mapLimit(redo.map(i => targets[i]), 2, w => firstFunder(w), 3);
+    redo.forEach((i, k) => { results[i] = again[k]; });
+  }
+  const map = new Map();
+  targets.forEach((w, i) => {
+    const r = results[i];
+    if (!r || r.active || r.none) return;
+    const arr = map.get(r.funder) || [];
+    arr.push(w);
+    map.set(r.funder, arr);
+  });
+  // A funder with 1000+ transactions is almost always an exchange or hub wallet.
+  // Sharing it is not evidence of a bundle.
+  const cand = [...map.entries()].filter(([f, ws]) => ws.length >= 2 && f !== dev);
+  const hubFlags = await mapLimit(cand, 3, async ([f]) =>
+    (await rpc('getSignaturesForAddress', [f, {limit:1000, commitment:'confirmed'}])).length >= 1000);
+  let hubs = 0;
+  cand.forEach(([f], i) => { if (hubFlags[i]){ map.delete(f); hubs++; } });
+  const clusters = [...map.entries()]
+    .map(([funder, ws]) => ({funder, wallets:ws, includesDev: !!dev && (ws.includes(dev) || funder === dev)}))
+    .filter(c => c.wallets.length >= 2 || (dev && c.funder === dev))
+    .sort((a, b) => b.wallets.length - a.wallets.length);
+  return {clusters, hubs, failed: results.filter(r => !r).length, traced: results.filter(Boolean).length, active: results.filter(r => r && r.active).length, total: targets.length};
+}
+
+async function analyze(mint){
+  const res = {mint, notes:[], flags:[]};
+
+  setStatus('Fetching token details…');
+  const mi = await rpc('getAccountInfo', [mint, {encoding:'jsonParsed'}]);
+  const parsed = mi.value && mi.value.data && mi.value.data.parsed;
+  if (!mi.value) throw new Error('No account found at this address on Solana.');
+  if (!parsed || parsed.type !== 'mint'){
+    if (mi.value.owner === SYS) throw new Error('This is a wallet address, not a token. Paste the token contract address (CA).');
+    throw new Error('This is not a token mint address. Make sure you pasted the token contract address (CA).');
+  }
+  const info = parsed.info;
+  const supply = BigInt(info.supply);
+  res.supply = supply;
+  res.mintAuth = info.mintAuthority;
+  res.freezeAuth = info.freezeAuthority;
+
+  res.name = ''; res.symbol = '';
+  try {
+    const a = await rpc('getAsset', {id: mint}, 3);
+    const md = (a && a.content && a.content.metadata) || {};
+    res.name = (md.name || (a && a.token_info && a.token_info.name) || '').trim();
+    res.symbol = (md.symbol || (a && a.token_info && a.token_info.symbol) || '').trim();
+  } catch(e){}
+  if (!res.name && !res.symbol){                         // Token-2022 tokens keep name/symbol inside the mint
+    const ext = (info.extensions || []).find(x => x.extension === 'tokenMetadata');
+    if (ext && ext.state){ res.name = (ext.state.name || '').trim(); res.symbol = (ext.state.symbol || '').trim(); }
+  }
+  if (!res.name && !res.symbol){
+    try { const m = await metaplexName(mint); if (m){ res.name = m.name; res.symbol = m.symbol; } } catch(e){}
+  }
+  res.program = mi.value.owner;
+
+  // --- Earliest transactions
+  setStatus('Finding the launch transaction…');
+  let before, tail = [], prev = [], sigEnd = false, read = 0, metaL = null, metaTried = false, ascTried = false, ascSigs = null;
+  for (let p = 0; p < MAX_SIG_PAGES; p++){
+    const opts = {limit:1000, commitment:'confirmed'};
+    if (before) opts.before = before;
+    const page = await rpc('getSignaturesForAddress', [mint, opts]);
+    read += page.length;
+    if (p === 0){ const nw = page.find(x => !x.err && x.blockTime); if (nw) res.lastTx = nw.blockTime; }
+    if (page.length){ prev = tail; tail = page; }       // keep only the last 2 pages: the launch is at the end
+    if (page.length < 1000){ sigEnd = true; break; }
+    before = page[page.length - 1].signature;
+    setStatus(`Finding the launch transaction… (${read.toLocaleString()} transactions read)`);
+    if (p === 2 && !ascTried){                          // busy token: try reading history oldest-first in one call
+      ascTried = true;
+      setStatus('Busy token. Reading its history from the start…');
+      ascSigs = await launchSigsAsc(mint);
+      if (ascSigs) break;
+    }
+    if (p === 7 && !metaTried){                         // busy token: the metadata shortcut is far cheaper than paging through everything
+      metaTried = true;
+      setStatus('Busy token. Looking up the launch block directly…');
+      try { metaL = await launchViaMetadata(mint); } catch(e){ metaL = null; }
+      if (metaL) break;
+    }
+  }
+
+  let bundleWallets = [], snipers = [], dev = null, devBought = 0n, launchSlot = null, launchTime = null;
+  let early = [];                                        // [{slot, keys, meta}] for the first 4 slots
+  const holdersOf = new Map(); // owner -> {role, bought, accounts:Set}
+
+  const chrono = ascSigs ? ascSigs : sigEnd ? [...prev, ...tail].filter(s => !s.err).reverse() : [];
+  if (chrono.length){
+    launchSlot = chrono[0].slot; launchTime = chrono[0].blockTime;
+    let first = chrono.filter(s => s.slot <= launchSlot + 3);
+    if (first.length > MAX_EARLY_TX){ first = first.slice(0, MAX_EARLY_TX); res.notes.push(`Too many transactions in the first few slots. Only ${MAX_EARLY_TX} were analyzed.`); }
+    setStatus(`Analyzing the first ${first.length} transactions…`);
+    const txs = await mapLimit(first, 4, s => rpc('getTransaction', [s.signature, TX_OPTS]));
+    txs.forEach((t, i) => { if (t && t.meta) early.push({slot:first[i].slot, keys:t.transaction.message.accountKeys.map(k => k.pubkey || k), meta:t.meta}); });
+    if (early.length && early.length < first.length) res.notes.push(`${first.length - early.length} of the first ${first.length} launch transactions could not be read, so bundle and sniper numbers may be slightly low.`);
+    res.launchVia = ascSigs ? 'history-asc' : 'history';
+  }
+  if (!early.length && !metaL && !ascSigs && !ascTried){   // paging gave up before the asc lookup ran
+    ascSigs = await launchSigsAsc(mint);
+    if (ascSigs && ascSigs.length){
+      launchSlot = ascSigs[0].slot; launchTime = ascSigs[0].blockTime;
+      const first = ascSigs.filter(s => s.slot <= launchSlot + 3).slice(0, MAX_EARLY_TX);
+      const txs = await mapLimit(first, 4, s => rpc('getTransaction', [s.signature, TX_OPTS]));
+      txs.forEach((t, i) => { if (t && t.meta) early.push({slot:first[i].slot, keys:t.transaction.message.accountKeys.map(k => k.pubkey || k), meta:t.meta}); });
+      if (early.length) res.launchVia = 'history-asc';
+    }
+  }
+  if (!early.length){                                   // too many transactions to page back, or the launch transactions could not be read
+    setStatus('Looking up the launch block directly…');
+    try {
+      const L = metaL || (metaTried ? null : await launchViaMetadata(mint));
+      if (L){
+        launchSlot = L.slot; launchTime = L.blockTime; early = L.txs; dev = L.dev;
+        res.launchVia = 'blocks';
+        res.notes.push(`The launch was found through the token's metadata account and read straight from the launch blocks${sigEnd ? '' : ` (this token has more than ${read.toLocaleString()} transactions)`}.`);
+      }
+    } catch(e){ res.notes.push('Direct launch lookup failed: ' + e.message); }
+  }
+  res.reachedEnd = early.length > 0;
+
+  if (res.reachedEnd){
+    res.launchSlot = launchSlot;
+    res.launchTime = launchTime;
+    early.forEach(e => {
+      const keys = e.keys;
+      if (!dev) dev = keys[0];
+      const pre = (e.meta.preTokenBalances || []).filter(b => b.mint === mint);
+      const post = (e.meta.postTokenBalances || []).filter(b => b.mint === mint);
+      post.forEach(pb => {
+        const pr = pre.find(x => x.accountIndex === pb.accountIndex);
+        const delta = BigInt(pb.uiTokenAmount.amount) - BigInt(pr ? pr.uiTokenAmount.amount : '0');
+        if (delta <= 0n || !pb.owner) return;
+        const h = holdersOf.get(pb.owner) || {bought:0n, firstSlot:e.slot, accounts:new Set()};
+        h.bought += delta;
+        h.firstSlot = Math.min(h.firstSlot, e.slot);
+        if (keys[pb.accountIndex]) h.accounts.add(keys[pb.accountIndex]);
+        holdersOf.set(pb.owner, h);
+      });
+    });
+    res.dev = dev;
+    // Remove the bonding curve / pool / any program account. On pump.fun the
+    // bonding curve receives 100% of supply in the launch slot.
+    const ownerList = [...holdersOf.keys()].filter(o => o !== dev);
+    const ownerInfo = ownerList.length ? await multi(ownerList) : [];
+    let removed = 0;
+    ownerList.forEach((o, i) => {
+      const v = ownerInfo[i];
+      if (!isOnCurve(o) || KNOWN_POOL_OWNERS.has(o) || (v && v.owner !== SYS)){ holdersOf.delete(o); removed++; }
+    });
+    if (removed) res.notes.push(`${removed} program account${removed > 1 ? 's' : ''} (bonding curve / pool) excluded from bundle and sniper counts.`);
+    for (const [owner, h] of holdersOf){
+      if (owner === dev){ h.role = 'dev'; devBought = h.bought; }
+      else if (h.firstSlot === launchSlot) h.role = 'bundle';
+      else h.role = 'sniper';
+    }
+
+    // Current balances
+    setStatus('Fetching current wallet balances…');
+    const accs = [...new Set([...holdersOf.values()].flatMap(h => [...h.accounts]))];
+    const vals = accs.length ? await multi(accs) : [];
+    const cur = new Map();
+    accs.forEach((a, i) => {
+      const v = vals[i];
+      const amt = v && v.data && v.data.parsed && v.data.parsed.info.tokenAmount ? BigInt(v.data.parsed.info.tokenAmount.amount) : 0n;
+      cur.set(a, amt);
+    });
+    for (const [owner, h] of holdersOf){
+      h.now = [...h.accounts].reduce((s, a) => s + (cur.get(a) || 0n), 0n);
+      h.owner = owner;
+    }
+    const list = [...holdersOf.values()];
+    const byBought = (a, b) => (b.bought > a.bought ? 1 : b.bought < a.bought ? -1 : 0);
+    bundleWallets = list.filter(h => h.role === 'bundle').sort(byBought);
+    snipers = list.filter(h => h.role === 'sniper').sort(byBought);
+    // Dev's real balance across all its token accounts (not only the launch account)
+    try { res.devNow = await walletBalance(dev, mint); }
+    catch(e){ res.devNow = holdersOf.get(dev) ? holdersOf.get(dev).now : 0n; }
+
+    try {
+      setStatus('Checking the dev wallet history…');
+      res.devHistory = await devHistory(dev, mint, launchSlot);
+      const rcv = res.devHistory.tokenOut.slice(0, 15);
+      if (rcv.length){
+        setStatus(`Checking what the ${rcv.length} wallet${rcv.length > 1 ? 's' : ''} that got tokens from the dev hold now…`);
+        const bals = await mapLimit(rcv, 3, o => walletBalance(o.to, mint));
+        rcv.forEach((o, i) => { if (typeof bals[i] === 'bigint') o.now = bals[i]; });
+      }
+    } catch(e){ res.notes.push('Dev history check failed: ' + e.message); }
+
+    try {
+      res.lbTrace = await traceLaunchTransfers([...bundleWallets, ...snipers], mint);
+      if (res.lbTrace.checked < res.lbTrace.targets) res.notes.push(`Transfers were checked for ${res.lbTrace.checked} of ${res.lbTrace.targets} launch buyers (likely RPC rate limit).`);
+      if (res.lbTrace.unchecked) res.notes.push(`${res.lbTrace.unchecked} more wallets got tokens from launch buyers but were not checked.`);
+    } catch(e){ res.notes.push('Launch buyer transfer check failed: ' + e.message); }
+  } else {
+    res.notes.push('The launch could not be reached (this token has too many transactions for this API key to page back through), so dev, bundle and sniper numbers are unknown, not zero. Funding links were still checked for the top holders. A paid Helius plan can read history oldest-first and fixes this.');
+  }
+  res.bundleWallets = bundleWallets;
+  res.snipers = snipers;
+  res.devBought = devBought;
+
+  // --- Holders
+  // Try the full holder list first (Helius DAS getTokenAccounts), fall back to top 20 accounts.
+  let rows = null;
+  try {
+    rows = [];
+    for (let page = 1; page <= MAX_HOLDER_PAGES; page++){
+      setStatus(`Fetching holders… (${rows.length.toLocaleString()} accounts so far)`);
+      const r = await rpc('getTokenAccounts', {mint, page, limit:1000, options:{showZeroBalance:false}});
+      const list = (r && r.token_accounts) || [];
+      list.forEach(a => rows.push({owner:a.owner, acct:a.address, amount: typeof a.amount === 'string' ? BigInt(a.amount) : BigInt(Math.round(a.amount || 0))}));
+      if (list.length < 1000){ res.holderCountExact = true; break; }
+    }
+    res.holderSource = 'full';
+  } catch(e){
+    rows = null;
+    res.notes.push('Full holder list is not available right now. Only the top 20 accounts were checked.');
+  }
+  if (!rows){
+    setStatus('Analyzing top holders…');
+    const largest = (await rpc('getTokenLargestAccounts', [mint, {commitment:'confirmed'}])).value;
+    const tVals = await multi(largest.map(x => x.address));
+    rows = largest.map((x, i) => ({owner: tVals[i] && tVals[i].data && tVals[i].data.parsed ? tVals[i].data.parsed.info.owner : '—', acct:x.address, amount: BigInt(x.amount)}));
+    res.holderSource = 'top';
+  }
+  // merge accounts with the same owner
+  const merged = new Map(), best = new Map();
+  rows.forEach(h => {
+    if (h.amount <= 0n) return;
+    if (!best.has(h.owner) || h.amount > best.get(h.owner).amt) best.set(h.owner, {amt:h.amount, acct:h.acct});
+    merged.set(h.owner, (merged.get(h.owner) || 0n) + h.amount);
+  });
+  const sorted = [...merged.entries()].map(([owner, amount]) => ({owner, amount, acct:(best.get(owner) || {}).acct})).sort((a,b) => (b.amount > a.amount ? 1 : b.amount < a.amount ? -1 : 0));
+  res.holderCount = sorted.length;
+  if (res.holderSource === 'full' && !res.holderCountExact) res.notes.push(`Holder scan stopped at ${(MAX_HOLDER_PAGES * 1000).toLocaleString()} accounts. The real holder count is higher.`);
+
+  // label the top 100
+  setStatus('Labeling top holders…');
+  const top = sorted.slice(0, 100);
+  const uniq = top.map(h => h.owner).filter(o => o !== '—');
+  const oVals = await multi(uniq);
+  const progOwned = new Map();
+  uniq.forEach((o, i) => progOwned.set(o, !isOnCurve(o) || (oVals[i] && oVals[i].owner !== SYS) || KNOWN_POOL_OWNERS.has(o)));
+  const roleOf = o => {
+    if (progOwned.get(o)) return 'pool';
+    const h = holdersOf.get(o);
+    return h ? h.role : 'wallet';
+  };
+  top.forEach(h => h.role = roleOf(h.owner));
+  // flag big single holders that aren't already dev/bundle/sniper/pool as "big buys"
+  top.forEach(h => { if (h.role === 'wallet' && pct(h.amount, res.supply) >= BIGBUY_PCT) h.role = 'whale'; });
+  res.holders = top;
+
+  // --- Funding links: launch bundle wallets + the biggest current holders.
+  // Catches insider clusters even on older tokens where the launch can't be reached.
+  const traceList = [...new Set([
+    ...bundleWallets.slice(0, 15).map(h => h.owner),
+    ...top.filter(h => h.role !== 'pool' && h.owner !== '—').slice(0, 15).map(h => h.owner)
+  ])].filter(w => w !== dev).slice(0, 25);
+  try {
+    setStatus(`Tracing where ${traceList.length} wallets got their funds…`);
+    res.funding = await traceFunding(dev, traceList);
+    if (res.funding.active) res.notes.push(`${res.funding.active} wallet${res.funding.active > 1 ? 's are' : ' is'} very active (1000+ transactions, likely traders or bots), so the original funder could not be checked.`);
+    if (res.funding.hubs) res.notes.push(`${res.funding.hubs} shared funder${res.funding.hubs > 1 ? 's look' : ' looks'} like an exchange (1000+ transactions) and was ignored.`);
+    // how much of the supply each cluster holds right now
+    const nowOf = new Map(top.map(h => [h.owner, h.amount]));
+    for (const h of holdersOf.values()) if (!nowOf.has(h.owner)) nowOf.set(h.owner, h.now || 0n);
+    res.funding.clusters.forEach(c => { c.held = c.wallets.reduce((x, w) => x + (nowOf.get(w) || 0n), 0n); });
+  } catch(e){ res.notes.push('Funding check failed: ' + e.message); }
+  try { setStatus('Checking pool liquidity…'); res.market = await poolLiquidity(res); }
+  catch(e){ res.market = {ok:false}; res.notes.push('Pool liquidity check failed: ' + e.message); }
+  try { setStatus('Checking price history…'); res.price = await priceHistory(res); }
+  catch(e){ res.price = {ok:false}; res.notes.push('Price history check failed: ' + e.message); }
+  return res;
+}
+
+// ---- Price history (all-time high vs now) from GeckoTerminal's free public API.
+// Only used to tell a real crash after an insider dump apart from a normal dip.
+const GT = 'https://api.geckoterminal.com/api/v2/networks/solana';
+async function gtGet(path){
+  const r = await fetch(GT + path, {headers:{accept:'application/json'}});
+  if (!r.ok) throw new Error('GeckoTerminal returned ' + r.status);
+  return r.json();
+}
+async function priceHistory(res){
+  const out = {ok:false};
+  const allPools = (await gtGet(`/tokens/${res.mint}/pools?page=1`)).data || [];
+  const pools = allPools.slice(0, 2);
+  // Market snapshot: price, market cap, liquidity, 24h volume
+  try {
+    const t = ((await gtGet(`/tokens/${res.mint}`)).data || {}).attributes || {};
+    const top = (allPools[0] && allPools[0].attributes) || {};
+    const num = v => (v === null || v === undefined || v === '' || isNaN(+v)) ? null : +v;
+    const vol = num(t.volume_usd && t.volume_usd.h24) ?? allPools.reduce((x, p) => x + (num(p.attributes && p.attributes.volume_usd && p.attributes.volume_usd.h24) || 0), 0);
+    out.stats = {
+      priceUsd: num(t.price_usd) ?? num(top.base_token_price_usd),
+      mcap: num(t.market_cap_usd) ?? num(t.fdv_usd) ?? num(top.market_cap_usd) ?? num(top.fdv_usd),
+      liqUsd: num(t.total_reserve_in_usd) ?? num(top.reserve_in_usd),
+      vol24: vol,
+      change24: num(top.price_change_percentage && top.price_change_percentage.h24)
+    };
+  } catch(e){ /* the snapshot is optional */ }
+  if (!pools.length) return out;
+  const ageH = res.launchTime ? (Date.now() / 1000 - res.launchTime) / 3600 : Infinity;
+  const tf = ageH <= 80 ? 'minute?aggregate=5' : ageH <= 960 ? 'hour?aggregate=1' : 'day?aggregate=1';
+  let ath = 0, athTime = null, last = null, lastTime = 0;
+  for (const p of pools){
+    const addr = p.attributes && p.attributes.address;
+    if (!addr) continue;
+    const j = await gtGet(`/pools/${addr}/ohlcv/${tf}&limit=1000&currency=usd&token=${res.mint}`);
+    const list = (j.data && j.data.attributes && j.data.attributes.ohlcv_list) || [];
+    for (const c of list){
+      const t = Number(c[0]), hi = Number(c[2]), cl = Number(c[4]);
+      if (hi > ath){ ath = hi; athTime = t; }
+      if (t > lastTime){ lastTime = t; last = cl; }
+    }
+  }
+  if (ath > 0 && last !== null){
+    out.ok = true; out.ath = ath; out.athTime = athTime; out.now = last; out.nowTime = lastTime;
+    out.drop = Math.max(0, (1 - last / ath) * 100);
+  }
+  return out;
+}
+
+// ---- Pool liquidity, read on-chain through Helius (no third-party API).
+const PUMP = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P';
+const QUOTES = {
+  'So11111111111111111111111111111111111111112': {n:'SOL', d:9},
+  'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v': {n:'USDC', d:6},
+  'Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB': {n:'USDT', d:6}
+};
+const u64le = (b, o) => { let v = 0n; for (let i = 7; i >= 0; i--) v = (v << 8n) | BigInt(b[o + i]); return v; };
+
+// Quote-side reserve (SOL/USDC) of an AMM pool. The pool's quote vault shows up in any recent swap that touched the token vault.
+async function vaultQuote(p){
+  const sigs = await rpc('getSignaturesForAddress', [p.acct, {limit:5, commitment:'confirmed'}]);
+  for (const s of sigs.filter(x => !x.err).slice(0, 3)){
+    const t = await rpc('getTransaction', [s.signature, TX_OPTS]);
+    if (!t || !t.meta) continue;
+    const hit = (t.meta.postTokenBalances || []).find(b => b.owner === p.owner && QUOTES[b.mint]);
+    if (hit){ const q = QUOTES[hit.mint]; return {quote:q.n, amount:Number(hit.uiTokenAmount.amount) / 10 ** q.d, asOf:s.blockTime}; }
+  }
+  return null;
+}
+async function poolLiquidity(res){
+  const sup = res.supply;
+  const pools = res.holders.filter(h => h.role === 'pool');
+  const out = {ok:true, pools:[], liquiditySol:0, liquidityUsd:0, poolShare:pct(pools.reduce((x, h) => x + h.amount, 0n), sup)};
+  if (!pools.length){ out.none = true; return out; }
+  const targets = pools.slice(0, 3);
+  const info = await multi(targets.map(p => p.owner));
+  for (let i = 0; i < targets.length; i++){
+    const p = targets[i], v = info[i];
+    try {
+      let rec = null;
+      if (v && v.owner === PUMP){                         // pump.fun bonding curve: real SOL reserves are stored in the account
+        let sol = (v.lamports || 0) / 1e9, done = false;
+        const b64 = Array.isArray(v.data) ? v.data[0] : null;
+        if (b64){
+          const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+          if (bytes.length >= 49){ sol = Number(u64le(bytes, 32)) / 1e9; done = bytes[48] === 1; }
+        }
+        if (done){ out.migrated = true; continue; }       // finished curve: the liquidity moved to a DEX pool
+        rec = {kind:'pump.fun bonding curve', quote:'SOL', amount:sol};
+      } else if (p.acct){
+        const q = await vaultQuote(p);
+        if (q) rec = {kind:'Liquidity pool', ...q};
+      }
+      if (rec){
+        rec.share = pct(p.amount, sup);
+        out.pools.push(rec);
+        if (rec.quote === 'SOL') out.liquiditySol += rec.amount; else out.liquidityUsd += rec.amount;
+      }
+    } catch(e){}
+  }
+  if (!out.pools.length){ if (out.migrated) out.none = true; else out.unknown = true; }
+  return out;
+}
+
+const ago = t => {
+  const s = Math.max(0, Date.now() / 1000 - t);
+  return s < 90 ? 'just now' : s < 5400 ? Math.round(s / 60) + ' min ago' : s < 172800 ? Math.round(s / 3600) + ' h ago' : Math.round(s / 86400) + ' days ago';
+};
+
+// Did this token get rugged? A rug means a BIG insider dump, not just a dev selling a small bag.
+// Small dev sells (1-3%) are normal on pump.fun because of bots, so they are only a minor flag.
+const RUG = {
+  smallSellPct: 5,   // dev + launch buyers sold less than this = normal
+  rugSellPct: 20,    // dev + launch buyers dumped at least this much of supply...
+  rugDropPct: 70     // ...and the price is down at least this much from its high
+};
+function rugCheck(res){
+  const sup = res.supply, dh = res.devHistory, m = res.market, ph = res.price, now = Date.now() / 1000;
+  const r = {level:null, reasons:[], lastExit:null, devSold:0, lbSold:0};
+  r.ageH = res.launchTime ? (now - res.launchTime) / 3600 : null;
+  r.idleMin = res.lastTx ? (now - res.lastTx) / 60 : null;
+
+  if (res.reachedEnd && res.devBought > 0n){
+    r.devGot = pct(res.devBought + (dh ? dh.boughtLater + dh.received : 0n), sup);
+    r.devNow = pct(res.devNow || 0n, sup);
+    r.devOut = dh ? pct(dh.sold + devSent(res), sup) : 0;
+    r.devSold = dh ? Math.min(r.devGot, r.devOut) : Math.max(0, r.devGot - r.devNow);
+    r.devExit = r.devGot >= 0.5 && (r.devNow < 0.01 || r.devOut >= r.devGot * 0.7);
+    if (dh){
+      r.firstSellMin = dh.firstSell && res.launchTime ? (dh.firstSell - res.launchTime) / 60 : null;
+      r.lastExit = Math.max(dh.lastSell || 0, ...(dh.tokenOut || []).map(o => o.time || 0)) || null;
+      r.fastDump = r.firstSellMin !== null && r.firstSellMin <= 60 && r.devSold >= RUG.smallSellPct;
+    }
+  }
+  if (res.reachedEnd){
+    const lb = [...res.bundleWallets, ...res.snipers];
+    r.lbN = lb.length;
+    r.lbBought = pct(lb.reduce((x, h) => x + h.bought, 0n), sup);
+    r.lbNow = pct(lb.reduce((x, h) => x + lbHeld(h), 0n), sup);
+    r.lbMoved = pct(lb.reduce((x, h) => x + (h.movedOut || 0n), 0n), sup);
+    r.lbMovedNow = pct(lb.reduce((x, h) => x + (h.movedNow || 0n), 0n), sup);
+    r.lbSold = Math.max(0, r.lbBought - r.lbNow);
+    r.lbExit = lb.length >= 3 && r.lbBought >= 3 && r.lbNow < r.lbBought * 0.15;
+  }
+  r.insiderSold = r.devSold + r.lbSold;
+  r.drop = ph && ph.ok ? ph.drop : null;
+  if (m && m.ok){
+    if (m.pools && m.pools.length) r.liqDead = m.liquiditySol < 1 && m.liquidityUsd < 150;
+    else if (m.none && !m.migrated) r.noPool = r.ageH !== null && r.ageH < 168;
+  }
+  const pulled = r.liqDead || r.noPool;
+  const bigDump = r.insiderSold >= RUG.rugSellPct;
+  const crashed = r.drop !== null && r.drop >= RUG.rugDropPct;
+
+  if (r.devSold > 0 && r.devSold < RUG.smallSellPct) r.reasons.push(`The dev sold ${fmt(r.devSold)} of supply. Small dev sells like this are common.`);
+  else if (r.devSold >= RUG.smallSellPct) r.reasons.push(`The dev got ${fmt(r.devGot)} of supply and now holds ${fmt(r.devNow)}.`);
+  if (r.fastDump) r.reasons.push(r.firstSellMin < 1 ? 'The dev started selling within a minute of launch.' : `The dev started selling ${Math.round(r.firstSellMin)} min after launch.`);
+  if (r.lbSold >= 1) r.reasons.push(`Bundle and sniper wallets bought ${fmt(r.lbBought)} and now hold only ${fmt(r.lbNow)}.`);
+  if (r.lbMoved >= 0.5) r.reasons.push(`Launch buyers moved ${fmt(r.lbMoved)} of supply to other wallets, which still hold ${fmt(r.lbMovedNow)}. That part counts as still held, not sold.`);
+  if (r.drop !== null && (r.insiderSold >= RUG.smallSellPct || pulled)) r.reasons.push(`The price is down ${Math.round(r.drop)}% from its high.`);
+  if (bigDump && r.drop === null) r.reasons.push('Price history could not be read, so a crash could not be confirmed.');
+  if (r.liqDead) r.reasons.push(`The pool has only ${m.liquiditySol.toFixed(2)} SOL${m.liquidityUsd > 0 ? ' + ' + Math.round(m.liquidityUsd) + ' USD' : ''} left.`);
+  if (r.noPool) r.reasons.push('No pool holds this token anymore. The liquidity may have been removed.');
+
+  if ((pulled && r.insiderSold > 0) || (bigDump && crashed)) r.level = 'rugged';
+  else if (r.insiderSold >= RUG.smallSellPct) r.level = 'exited';
+  else if (pulled) r.level = 'warn';
+  else if (r.insiderSold > 0) r.level = 'devsold';
+  // Only call it "rugged" when the exit is recent. An old token that slowly died is a warning, not a fresh rug.
+  const recent = r.lastExit ? (now - r.lastExit) / 3600 < 72 : (r.ageH === null || r.ageH < 72);
+  if (r.level === 'rugged' && !recent) r.level = 'warn';
+  return r;
+}
+
+// Market snapshot card under the verdict
+const usd = v => {
+  if (v === null || v === undefined) return '—';
+  const a = Math.abs(v);
+  if (a >= 1e9) return '$' + (v / 1e9).toFixed(2) + 'B';
+  if (a >= 1e6) return '$' + (v / 1e6).toFixed(2) + 'M';
+  if (a >= 1e3) return '$' + (v / 1e3).toFixed(1) + 'K';
+  return '$' + v.toFixed(a >= 1 ? 2 : 0);
+};
+const usdPrice = v => {
+  if (v === null || v === undefined) return '—';
+  if (v >= 1) return '$' + v.toLocaleString('en-US', {maximumFractionDigits:4});
+  if (v <= 0) return '$0';
+  const d = Math.min(12, Math.max(2, -Math.floor(Math.log10(v)) + 3));
+  return '$' + v.toFixed(d).replace(/0+$/, '').replace(/\.$/, '');
+};
+function marketCard(res){
+  const st = res.price && res.price.stats, m = res.market;
+  if (!st && !(m && m.ok)) return '';
+  const S = st || {};
+  const chg = S.change24 !== null && S.change24 !== undefined
+    ? `<i class="${S.change24 >= 0 ? 'up' : 'down'}">${S.change24 >= 0 ? '+' : ''}${S.change24.toFixed(1)}% 24h</i>` : '';
+  const sol = m && m.ok && m.liquiditySol > 0 ? `<i>${m.liquiditySol.toFixed(2)} SOL in pool</i>` : '';
+  return `<div class="mkt">
+    <div><span>Market cap</span><b>${usd(S.mcap)}</b></div>
+    <div><span>Price</span><b>${usdPrice(S.priceUsd)}</b>${chg}</div>
+    <div><span>Liquidity</span><b>${usd(S.liqUsd)}</b>${sol}</div>
+    <div><span>Volume 24h</span><b>${usd(S.vol24)}</b></div>
+  </div>`;
+}
+
+function rugSection(res){
+  const r = res.rug || rugCheck(res), dh = res.devHistory, m = res.market;
+  const row = (label, val, cls = '') => `<li><span>${label}</span><span class="v ${cls}">${val}</span></li>`;
+  let rows = '';
+  rows += row('Token launched', res.launchTime ? ago(res.launchTime) : 'unknown');
+  if (res.lastTx) rows += row('Last on-chain activity', ago(res.lastTx), r.idleMin >= 60 && r.ageH !== null && r.ageH < 72 ? 'flag' : '');
+  if (r.devGot !== undefined){
+    rows += row('Dev got / holds now', `${fmt(r.devGot)} → ${fmt(r.devNow)}`, r.devExit ? 'flag' : '');
+    if (dh && dh.firstSell && res.launchTime) rows += row('Dev first sold', r.firstSellMin < 1 ? 'within a minute of launch' : `${Math.round(r.firstSellMin)} min after launch`, r.fastDump ? 'flag' : '');
+    if (r.lastExit) rows += row('Dev last sold or sent tokens', ago(r.lastExit), r.devExit ? 'flag' : '');
+  }
+  if (r.lbN !== undefined) rows += row(`Launch buyers (${r.lbN} wallets) bought → hold now`, `${fmt(r.lbBought)} → ${fmt(r.lbNow)}`, r.lbExit ? 'flag' : '');
+  if (r.lbMoved > 0) rows += row('Launch buyers moved to other wallets → still held there', `${fmt(r.lbMoved)} → ${fmt(r.lbMovedNow)}`, r.lbMovedNow >= 5 ? 'flag' : '');
+  if (r.insiderSold > 0) rows += row('Sold by dev + launch buyers', fmt(r.insiderSold), r.insiderSold >= RUG.rugSellPct ? 'flag' : '');
+  rows += row('Price vs all-time high', r.drop !== null ? `down ${Math.round(r.drop)}%` : 'not available', r.drop !== null && r.drop >= RUG.rugDropPct ? 'flag' : '');
+  if (m && m.ok){
+    if (m.unknown) rows += row('Pool liquidity', 'could not be read');
+    else if (m.pools && m.pools.length){
+      m.pools.forEach(p => { rows += row(esc(p.kind), `${p.amount.toFixed(2)} ${p.quote}`, (p.quote === 'SOL' ? p.amount < 1 : p.amount < 150) ? 'flag' : ''); });
+      rows += row('Supply still in the pool', fmt(m.poolShare));
+    } else rows += row('Pool', m.migrated ? 'bonding curve finished (moved to a DEX)' : 'no pool holds the supply', r.noPool ? 'flag' : '');
+  } else rows += row('Pool liquidity', 'not checked');
+  const head = r.level === 'rugged' ? `<div class="verdict high" style="margin:0 0 12px"><div class="word" style="font-size:22px">Likely rugged${r.lastExit ? ' · dev exit ' + ago(r.lastExit) : ''}</div></div>`
+    : r.level === 'exited' ? `<div class="verdict mid" style="margin:0 0 12px"><div class="word" style="font-size:22px">Bundle exited${r.drop !== null ? ' · price down ' + Math.round(r.drop) + '%' : ''}</div></div>` : '';
+  return `<h2>Rug check</h2>${head}<ul class="facts">${rows}</ul>`;
+}
+
+function isIncomplete(res){
+  return !res.reachedEnd || !res.funding || res.funding.traced < res.funding.total * 0.6;
+}
+function score(res){
+  let s = 0; const flags = [];
+  const sup = res.supply;
+  if (res.mintAuth){ s += 20; flags.push('Mint authority is still active. More tokens can be minted.'); }
+  if (res.freezeAuth){ s += 15; flags.push('Freeze authority is still active. Wallets can be frozen.'); }
+  if (res.reachedEnd){
+    const devPct = pct(res.devNow, sup);
+    if (devPct > 10) { s += 25; flags.push(`The dev still holds ${fmt(devPct)} of supply.`); }
+    else if (devPct > 5) { s += 15; flags.push(`The dev still holds ${fmt(devPct)} of supply.`); }
+    else if (devPct > 2) { s += 8; }
+    const b = res.bundleWallets;
+    const bBought = pct(b.reduce((x, h) => x + h.bought, 0n), sup);
+    const bNowPct = pct(b.reduce((x, h) => x + lbHeld(h), 0n), sup);
+    if (b.length >= 3) s += 5;
+    // Bundle supply still held is a live risk. Supply already sold is history (the rug check judges that).
+    const bHolding = bBought > 0 && bNowPct >= bBought * 0.5;
+    if (b.length >= 1 && bBought > 5){
+      if (!bHolding) s += 8;
+      else if (bBought >= 50) s += 55; else if (bBought > 20) s += 35; else if (bBought > 10) s += 25; else s += 12;
+      flags.push(`${b.length} ${b.length === 1 ? 'wallet' : 'wallets'} bought in the exact launch slot (${fmt(bBought)} of supply).`);
+      if (bBought >= 20 && bNowPct < bBought * 0.1){
+        flags.push(`Bundle wallets already sold almost everything (now hold ${fmt(bNowPct)}). The supply was likely dumped on later buyers.`);
+      }
+      const devB = pct(res.devBought, sup);
+      if (devB + bBought >= 50){ if (bHolding) s += 10; flags.push(`Dev + bundle bought ${fmt(devB + bBought)} of supply at launch.`); }
+    } else if (b.length >= 3){
+      flags.push(`${b.length} wallets bought in the exact launch slot (${fmt(bBought)} of supply).`);
+    }
+    const sn = pct(res.snipers.reduce((x, h) => x + h.bought, 0n), sup);
+    if (sn > 10){ s += 10; flags.push(`Snipers (first 3 slots) bought ${fmt(sn)} of supply.`); }
+  }
+  if (res.devHistory){
+    const others = res.devHistory.list.filter(m => m.mint !== res.mint).length;
+    if (others >= 10) s += 25; else if (others >= 5) s += 20; else if (others >= 2) s += 10;
+    if (others >= 2) flags.push(`The dev wallet created ${others}${res.devHistory.more ? '+' : ''} other tokens.`);
+    const tOut = res.devHistory.tokenOut || [], sOut = res.devHistory.solOut || [];
+    const sentPct = pct(tOut.reduce((x, o) => x + o.amount, 0n), sup);
+    if (tOut.length && sentPct > 1){
+      s += sentPct > 5 ? 20 : 10;
+      flags.push(`The dev sent ${fmt(sentPct)} of supply to ${tOut.length} other wallet${tOut.length > 1 ? 's' : ''} (can hide how much the dev really holds).`);
+    }
+    if (tOut.length && sentPct >= 0.05 && sentPct <= 1) flags.push(`The dev sent ${fmt(sentPct)} of supply to ${tOut.length} other wallet${tOut.length > 1 ? 's' : ''}.`);
+    const emptied = tOut.filter(o => o.now === 0n).length;
+    if (emptied && sentPct > 1){ s += 5; flags.push(`${emptied} of the wallets that got tokens from the dev no longer hold any (sold or moved again).`); }
+    if (sOut.length){
+      const lam = sOut.reduce((x, o) => x + o.lamports, 0);
+      flags.push(`The dev sent ${(lam / 1e9).toFixed(2)} SOL to ${sOut.length} other wallet${sOut.length > 1 ? 's' : ''}.`);
+    }
+    const known = new Set([...(res.bundleWallets || []), ...(res.snipers || [])].map(h => h.owner).concat(res.holders.map(h => h.owner)));
+    const solLinked = sOut.filter(o => known.has(o.to)).length;
+    if (solLinked){ s += 15; flags.push(`The dev sent SOL to ${solLinked} wallet${solLinked > 1 ? 's that bought or hold' : ' that bought or holds'} this token.`); }
+  }
+  if (res.funding){
+    const nonDev = c => c.wallets.filter(w => w !== res.dev).length;
+    const big = res.funding.clusters.filter(c => nonDev(c) >= 3);
+    if (big.length){
+      const heldPct = pct(big[0].held || 0n, res.supply);
+      s += 20; flags.push(`${nonDev(big[0])} wallets share the same funding wallet` + (heldPct > 0 ? ` and hold ${fmt(heldPct)} of supply now.` : '.'));
+      if (heldPct > 10) s += 10;
+    }
+    if (res.funding.clusters.some(c => c.includesDev && nonDev(c) >= 1)){
+      s += 15; flags.push('The dev wallet is linked to bundle wallets through shared funding.');
+    }
+  }
+  // Dev exit
+  const dh = res.devHistory;
+  if (res.reachedEnd && res.devBought > 0n){
+    const gotP = pct(res.devBought + (dh ? dh.boughtLater + dh.received : 0n), sup);
+    const soldP = dh ? pct(dh.sold, sup) : 0;
+    if (pct(res.devNow, sup) < 0.01 && gotP >= 0.5){
+      if (gotP < RUG.smallSellPct) flags.push(`The dev sold their whole bag (${fmt(gotP)} of supply). Small dev sells like this are common.`);
+      else { s += 8; flags.push(`The dev no longer holds any of this token (got ${fmt(gotP)}${soldP ? `, sold ${fmt(soldP)} into the pool` : ''}).`); }
+    } else if (soldP >= RUG.smallSellPct){
+      s += 5; flags.push(`The dev has sold ${fmt(soldP)} of supply into the pool.`);
+    }
+  }
+  // Launch buyers exited
+  if (res.reachedEnd){
+    const lb = [...res.bundleWallets, ...res.snipers];
+    const gone = lb.filter(h => h.bought > 0n && lbHeld(h) === 0n);
+    const lbP = pct(lb.reduce((x, h) => x + h.bought, 0n), sup);
+    if (lb.length >= 3 && gone.length >= Math.ceil(lb.length * 0.6) && lbP >= 3){
+      flags.push(`${gone.length} of ${lb.length} launch buyers (bundle and sniper wallets) no longer hold this token, including wallets they moved it to.`);
+    }
+  }
+  // No demand: nearly all supply still sits in the pool / bonding curve long after launch
+  const poolP = pct(res.holders.filter(h => h.role === 'pool').reduce((x, h) => x + h.amount, 0n), sup);
+  const ageH = res.launchTime ? (Date.now() / 1000 - res.launchTime) / 3600 : null;
+  if (poolP >= 95 && ageH !== null && ageH >= 1){
+    s += 20;
+    const age = ageH >= 48 ? `${Math.round(ageH / 24)} days` : `${Math.round(ageH)} hour${Math.round(ageH) === 1 ? '' : 's'}`;
+    flags.push(`${fmt(poolP)} of supply is still in the pool or bonding curve ${age} after launch. Almost nobody is holding it: likely dead or already dumped.`);
+  }
+
+  const top10 = pct(res.holders.filter(h => h.role !== 'pool').slice(0, 10).reduce((x, h) => x + h.amount, 0n), sup);
+  res.top10 = top10;
+  if (top10 > 50){ s += 20; flags.push(`The top 10 holders (excluding the pool) hold ${fmt(top10)} of supply.`); }
+  else if (top10 > 30){ s += 10; }
+  const rug = rugCheck(res); res.rug = rug;
+  if (rug.level === 'rugged'){
+    s = Math.max(s, 85);
+    flags.unshift('Likely rugged' + (rug.lastExit ? ` (dev exit ${ago(rug.lastExit)})` : '') + '. ' + rug.reasons.join(' '));
+  } else if (rug.level === 'exited'){
+    s += 10;
+    flags.unshift('Bundle exited, not a confirmed rug. ' + rug.reasons.join(' '));
+  } else if (rug.level === 'warn' && rug.reasons.length){
+    s += 10;
+    flags.push('Possible rug signs: ' + rug.reasons.join(' '));
+  }
+  return {s: Math.min(100, s), flags};
+}
+
+const ROLE = {
+  dev:{c:'var(--dev)', t:'dev'},
+  bundle:{c:'var(--bundle)', t:'bundle'},
+  sniper:{c:'var(--sniper)', t:'sniper'},
+  pool:{c:'var(--pool)', t:'pool'},
+  whale:{c:'var(--whale)', t:'big buy'}
+};
+
+function extraSections(res){
+  let out = '';
+  if (res.devHistory){
+    const others = res.devHistory.list.filter(m => m.mint !== res.mint);
+    const n = others.length;
+    out += `<h2>Dev history</h2>
+      <ul class="facts">
+        <li><span>Other tokens created by this wallet</span><span class="v ${n >= 2 ? 'flag' : 'good'}">${n}${res.devHistory.more ? '+' : ''}</span></li>
+        <li><span>Dev transactions checked</span><span class="v">${res.devHistory.checked}${res.devHistory.complete === false ? ' (partial)' : ''}</span></li>
+      </ul>
+      ${n ? `<div class="rows">${others.slice(0, 10).map(m => `<div class="row" style="grid-template-columns:1fr 100px"><span>${addrLink(m.mint)}</span><span class="n">${m.time ? new Date(m.time * 1000).toLocaleDateString() : ''}</span></div>`).join('')}</div>` : ''}`;
+  }
+  if (res.devHistory && (res.devHistory.tokenOut || res.devHistory.solOut)){
+    const dh = res.devHistory;
+    const tOut = dh.tokenOut || [], sOut = dh.solOut || [];
+    const holdNow = new Map(res.holders.map(h => [h.owner, h.amount]));
+    const when = t => t ? new Date(t * 1000).toLocaleDateString() : '';
+    const nowOf = o => o.now !== undefined ? o.now : (holdNow.has(o.to) ? holdNow.get(o.to) : null);
+    const sentTotal = tOut.reduce((x, o) => x + o.amount, 0n);
+    const solTotal = sOut.reduce((x, o) => x + o.lamports, 0);
+    const sub = parts => { const p = parts.filter(Boolean).join(' · '); return p ? `<span class="sub">${p}</span>` : ''; };
+    out += `<h2>Dev transfers</h2>
+      <ul class="facts">
+        <li><span>Wallets that got this token from the dev</span><span class="v ${tOut.length ? 'flag' : 'good'}">${tOut.length}</span></li>
+        ${tOut.length ? `<li><span>Total token sent by the dev</span><span class="v flag">${fmt(pct(sentTotal, res.supply))}</span></li>` : ''}
+        <li><span>Wallets that got SOL from the dev</span><span class="v ${sOut.length ? 'flag' : ''}">${sOut.length}</span></li>
+        ${sOut.length ? `<li><span>Total SOL sent by the dev</span><span class="v flag">${(solTotal / 1e9).toFixed(2)}</span></li>` : ''}
+      </ul>
+      ${tOut.length ? `<div class="rows" style="margin-top:10px">
+        <div class="row head"><span>Got token from dev</span><span class="n">Sent</span><span class="n">Holds now</span></div>
+        ${tOut.slice(0, 15).map(o => { const n = nowOf(o); return `<div class="row"><span>${addrLink(o.to)}${n === 0n ? '<span class="tag" style="background:var(--bundle)">empty</span>' : ''}${sub([when(o.time), o.count > 1 ? o.count + ' transfers' : '', txLink(o.sig)])}</span><span class="n">${fmt(pct(o.amount, res.supply))}</span><span class="n">${n === null ? '—' : fmt(pct(n, res.supply))}</span></div>`; }).join('')}
+      </div>` : ''}
+      ${sOut.length ? `<div class="rows" style="margin-top:10px">
+        <div class="row head"><span>Got SOL from dev</span><span class="n">SOL</span><span class="n">Date</span></div>
+        ${sOut.slice(0, 15).map(o => `<div class="row"><span>${addrLink(o.to)}${sub([txLink(o.sig)])}</span><span class="n">${(o.lamports / 1e9).toFixed(2)}</span><span class="n">${when(o.time)}</span></div>`).join('')}
+      </div>` : ''}
+      ${!tOut.length && !sOut.length || dh.complete === false ? `<div class="notes" style="margin-top:8px"><p>${!tOut.length && !sOut.length ? 'No transfers from the dev wallet were found' : 'There may be more transfers'}${dh.complete === false ? ' (only part of the dev wallet history could be checked).' : '.'}</p></div>` : ''}`;
+  }
+  if (res.funding){
+    const f = res.funding;
+    const nonDev = c => c.wallets.filter(w => w !== res.dev).length;
+    out += `<h2>Funding links</h2>
+      <ul class="facts">
+        <li><span>Wallets traced</span><span class="v">${f.traced} / ${f.total}</span></li>
+        ${f.clusters.length ? f.clusters.map(c => `<li><span>${addrLink(c.funder)} funded ${nonDev(c) || c.wallets.length} wallet${(nonDev(c) || c.wallets.length) > 1 ? 's' : ''}${c.held ? ` holding ${fmt(pct(c.held, res.supply))}` : ''}${c.includesDev ? '<span class="tag" style="background:var(--dev)">dev linked</span>' : ''}</span><span class="v flag">shared</span></li>`).join('') : '<li><span>Shared funding wallets</span><span class="v good">none found</span></li>'}
+      </ul>`;
+  }
+  return out;
+}
+
+const txLink = sig => (!sig || DEMO) ? '' : `<a href="https://solscan.io/tx/${esc(sig)}" target="_blank" rel="noopener">view tx</a>`;
+// Quick summary rows for the Launch list, so dev transfers are visible without scrolling.
+function devTransferRows(res){
+  const dh = res.devHistory;
+  if (!dh) return '';
+  const tOut = dh.tokenOut || [], sOut = dh.solOut || [];
+  const plural = n => n + ' wallet' + (n > 1 ? 's' : '');
+  return `<li><span>Dev sent tokens to other wallets</span><span class="v ${tOut.length ? 'flag' : 'good'}">${tOut.length ? plural(tOut.length) + ' · ' + fmt(pct(devSent(res), res.supply)) : 'none found'}</span></li>
+        <li><span>Dev sent SOL to other wallets</span><span class="v ${sOut.length ? 'flag' : 'good'}">${sOut.length ? plural(sOut.length) + ' · ' + (sOut.reduce((x, o) => x + o.lamports, 0) / 1e9).toFixed(2) + ' SOL' : 'none found'}</span></li>`;
+}
+
+// Where the dev's tokens went: bought - sold - sent - burned should equal what the dev holds now.
+function devSent(res){ return ((res.devHistory && res.devHistory.tokenOut) || []).reduce((x, o) => x + o.amount, 0n); }
+function devFlow(res){
+  const dh = res.devHistory, sup = res.supply;
+  if (!dh || dh.sold === undefined) return '';
+  const row = (label, v, sign, cls = '') => `<li><span>${label}</span><span class="v ${cls}">${sign}${fmt(pct(v, sup))}</span></li>`;
+  const sent = devSent(res);
+  let out = '';
+  if (dh.boughtLater > 0n) out += row('Dev bought later', dh.boughtLater, '+');
+  if (dh.received > 0n) out += row('Dev received from other wallets', dh.received, '+');
+  out += row('Dev sold into the pool', dh.sold, dh.sold > 0n ? '−' : '', dh.sold > 0n ? 'flag' : '');
+  out += row('Dev sent to other wallets', sent, sent > 0n ? '−' : '', sent > 0n ? 'flag' : '');
+  if (dh.burned > 0n) out += row('Dev burned', dh.burned, '−');
+  const should = res.devBought + dh.boughtLater + dh.received - dh.sold - sent - dh.burned;
+  out += `<li><span>Dev should hold now</span><span class="v">${fmt(pct(should < 0n ? 0n : should, sup))}</span></li>`;
+  return out;
+}
+function devGap(res){
+  const dh = res.devHistory, sup = res.supply;
+  if (!dh || dh.sold === undefined) return '';
+  const should = res.devBought + dh.boughtLater + dh.received - dh.sold - devSent(res) - dh.burned;
+  const gap = should - (res.devNow || 0n);
+  const g = pct(gap < 0n ? -gap : gap, sup);
+  if (g < 0.05) return `<li><span>Dev numbers add up</span><span class="v good">yes</span></li>`;
+  const why = dh.complete ? 'moved in a way this scan does not track' : 'not all dev transactions were checked';
+  return `<li><span>Not explained (${why})</span><span class="v flag">${gap > 0n ? '−' : '+'}${fmt(g)}</span></li>`;
+}
+
+function render(res){
+  const {s, flags} = score(res);
+  const sup = res.supply;
+  const inc = isIncomplete(res);
+  LAST = res.mint;
+  const lvl = res.rug && res.rug.level;
+  const cls = s >= 55 ? 'high' : (s >= 25 || inc || lvl === 'exited') ? 'mid' : '';
+  const word = lvl === 'rugged' ? 'Likely rugged' : s >= 55 ? 'High risk' : lvl === 'exited' ? 'Bundle exited' : s >= 25 ? 'Caution' : inc ? 'Incomplete scan' : 'No major red flags';
+  if (inc && s < 55){
+    const why = [];
+    if (!res.reachedEnd) why.push('the launch could not be reached (too many transactions)');
+    if (!res.funding) why.push('the funding check failed');
+    else if (res.funding.traced < res.funding.total * 0.6) why.push(`funding was traced for only ${res.funding.traced} of ${res.funding.total} wallets (likely RPC rate limit, try again in a minute)`);
+    flags.push('Scan is incomplete: ' + why.join('; ') + '. Not the same as safe.');
+  }
+  const nm = (res.name || res.symbol) ? esc(res.name || res.symbol) + (res.name && res.symbol ? ' (' + esc(res.symbol) + ')' : '') + ' · ' : 'No name on-chain · ';
+
+  const sum = (arr, key) => arr.reduce((x, h) => x + h[key], 0n);
+  const devNow = res.reachedEnd ? pct(res.devNow, sup) : null;
+  const bNow = res.reachedEnd ? pct(sum(res.bundleWallets, 'now'), sup) : null;
+  const sNow = res.reachedEnd ? pct(sum(res.snipers, 'now'), sup) : null;
+  const poolPct = pct(res.holders.filter(h => h.role === 'pool').reduce((x, h) => x + h.amount, 0n), sup);
+  const whalePct = pct(res.holders.slice(0, 20).filter(h => h.role === 'whale').reduce((x, h) => x + h.amount, 0n), sup);
+  const otherTop = Math.max(0, pct(res.holders.slice(0, 20).filter(h => h.role === 'wallet').reduce((x, h) => x + h.amount, 0n), sup));
+  const used = (devNow || 0) + (bNow || 0) + (sNow || 0) + poolPct + whalePct + otherTop;
+  const rest = Math.max(0, 100 - used);
+  const seg = [
+    ['Pool / bonding curve', poolPct, 'var(--pool)'],
+    ['Dev', devNow, 'var(--dev)'],
+    ['Bundle wallets', bNow, 'var(--bundle)'],
+    ['Snipers', sNow, 'var(--sniper)'],
+    [`Big buyers (≥${BIGBUY_PCT}% each)`, whalePct, 'var(--whale)'],
+    ['Other top holders', otherTop, 'var(--other)'],
+    ['Remaining holders', rest, 'var(--rest)']
+  ];
+
+  const rowsFor = (arr, role) => arr.slice(0, 15).map(h => `
+    <div class="row"><span>${addrLink(h.owner)}${h.role ? `<span class="tag" style="background:${ROLE[h.role] ? ROLE[h.role].c : 'var(--pool)'}">${ROLE[h.role] ? ROLE[h.role].t : ''}</span>` : ''}</span>
+    <span class="n">${fmt(pct(h.bought, sup))}</span><span class="n">${fmt(pct(h.now, sup))}</span></div>`).join('');
+
+  let bundleSection = '';
+  if (res.reachedEnd){
+    const bB = pct(sum(res.bundleWallets, 'bought'), sup);
+    bundleSection = `
+      <h2>Launch</h2>
+      <ul class="facts">
+        <li><span>Deployer (dev)</span><span class="v">${addrLink(res.dev)}</span></li>
+        <li><span>Dev bought at launch</span><span class="v">${fmt(pct(res.devBought, sup))}</span></li>
+        ${devFlow(res)}
+        <li><span>Dev still holds</span><span class="v ${devNow > 5 ? 'flag' : ''}">${fmt(devNow)}</span></li>
+        ${devGap(res)}
+        ${devTransferRows(res)}
+        <li><span>Bought in the launch slot</span><span class="v ${(res.bundleWallets.length >= 3 || bB >= 20) ? 'flag' : 'good'}">${res.bundleWallets.length} wallets · ${fmt(bB)}</span></li>
+        <li><span>Bought 1–3 slots later</span><span class="v">${res.snipers.length} wallets</span></li>
+      </ul>
+      ${res.bundleWallets.length ? `
+      <h2>Bundle wallets</h2>
+      <div class="rows">
+        <div class="row head"><span>Wallet</span><span class="n">Bought</span><span class="n">Still holds</span></div>
+        ${rowsFor(res.bundleWallets)}
+      </div>` : ''}`;
+  }
+
+  const holderRow = (h, i) => `
+    <div class="row" style="grid-template-columns:1fr 90px"><span>${h.owner === '—' ? '—' : addrLink(h.owner)}${h.role !== 'wallet' ? `<span class="tag" style="background:${ROLE[h.role].c}">${ROLE[h.role].t}</span>` : ''}</span>
+    <span class="n">${fmt(pct(h.amount, sup))}</span></div>`;
+
+  $('out').innerHTML = `
+    <div class="outbar"><span>Scan result</span><button type="button" class="closeres" data-close>Close results ✕</button></div>
+    ${DEMO ? '<div class="demo">This is sample data to show the layout. It is not a real token.</div>' : ''}
+    <div class="verdict ${cls}">
+      <div class="tok">${nm}${esc(res.mint)}</div>
+      <div class="word">${word}</div>
+      <div class="score">${!res.reachedEnd && s < 55 ? `Risk score: unknown (partial checks: ${s} / 100)` : `Risk score: ${s} / 100`}</div>
+    </div>
+    ${marketCard(res)}
+
+    ${inc && !DEMO ? '<button class="alt" id="rescan" type="button" style="margin:0 0 16px">Scan again to fill in the missing checks</button>' : ''}
+    ${flags.length ? `<ul class="facts">${flags.map(f => `<li class="flag"><span>${esc(f)}</span></li>`).join('')}</ul>` : ''}
+
+    ${rugSection(res)}
+
+    <h2>Who holds the supply now</h2>
+    <div class="bar" role="img" aria-label="Supply breakdown">
+      ${seg.map(x => `<span style="width:${x[1] || 0}%;background:${x[2]}"></span>`).join('')}
+    </div>
+    <ul class="legend">
+      ${seg.map(x => `<li><i style="background:${x[2]}"></i>${x[0]}<b>${x[1] === null ? 'unknown' : fmt(x[1])}</b></li>`).join('')}
+    </ul>
+
+    <h2>Bubble map</h2>
+    <button class="bmopen" type="button" data-bm="1"><svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true"><circle cx="15" cy="22" r="9" fill="#F87171"/><circle cx="27" cy="14" r="6" fill="#FB923C"/><circle cx="28" cy="28" r="5" fill="#2DD4BF"/></svg><div><b>Open bubble map</b><br><span>Holders, funding links and dev transfers. Also on the floating button.</span></div></button>
+    ${bundleSection}
+
+    ${extraSections(res)}
+
+    <h2>Holders</h2>
+    <ul class="facts">
+      <li><span>Total holders</span><span class="v">${res.holderSource === 'full' ? res.holderCount.toLocaleString() + (res.holderCountExact ? '' : '+') : 'not available'}</span></li>
+      ${[10, 50, 100].filter(n => res.holderSource === 'full' || n === 10).map(n => `<li><span>Top ${n} wallets hold (excluding pool)</span><span class="v">${fmt(pct(res.holders.filter(h => h.role !== 'pool').slice(0, n).reduce((x, h) => x + h.amount, 0n), sup))}</span></li>`).join('')}
+    </ul>
+    <div class="rows" style="margin-top:12px">${res.holders.slice(0, 10).map(holderRow).join('')}</div>
+    ${res.holders.length > 10 ? `<details class="more"><summary>Show top ${res.holders.length}</summary>
+      <div class="rows">${res.holders.slice(10).map(holderRow).join('')}</div></details>` : ''}
+
+    <h2>Token settings</h2>
+    <ul class="facts">
+      <li><span>Mint authority</span><span class="v ${res.mintAuth ? 'flag' : 'good'}">${res.mintAuth ? 'active' : 'revoked'}</span></li>
+      <li><span>Freeze authority</span><span class="v ${res.freezeAuth ? 'flag' : 'good'}">${res.freezeAuth ? 'active' : 'revoked'}</span></li>
+    </ul>
+
+    <h2>Notes</h2>
+    <div class="notes">
+      ${res.notes.map(n => `<p>${esc(n)}</p>`).join('')}
+      <p>This is an estimate, not a guarantee. Transfers from up to 12 launch buyers to other wallets are followed one step, and what those wallets still hold counts as held by the bundle. Tokens moved further than one step may not show as held. Dev history covers the dev wallet's latest 100 transactions plus up to 300 since launch, and many devs use a fresh wallet for each launch. A shared funding wallet can also be an exchange, so check the address before drawing conclusions. Wallets that are too active to reach their first transaction are skipped.</p>
+      <p>The "pool" label is a guess based on whether a program owns the account.</p>
+      <p>Pool liquidity is read from the pool's own balances through Helius. It shows what is left in the pool now, not the price history. A token that dropped hard but still has liquidity will not be flagged by that part alone.</p>
+      <p>Price history (all-time high vs now) comes from GeckoTerminal's free public API. "Likely rugged" needs the dev and launch buyers to have sold at least 20% of supply and the price to be down at least 70% from its high, or the pool to be emptied. If price history cannot be read, a big insider dump shows as "Bundle exited" instead.</p>
+      <p>This is not financial advice. Do your own research before buying.</p>
+    </div>
+    <button type="button" class="alt closeres-bottom" data-close>Close results and back to Tracer</button>`;
+  showFab(res);
+}
+
+// ---- Bubble map: bubble size = % of supply held now, lines = shared funding wallet
+function drawBubbleMap(res){
+  const svg = $('bmsvg'), info = $('bminfo');
+  if (!svg) return;
+  const sup = res.supply, W = Math.round(svg.clientWidth || 640), H = Math.round(Math.min(520, Math.max(330, W * 0.9))), NS = 'http://www.w3.org/2000/svg';
+  const rank = {dev:6, bundle:5, sniper:4, whale:3, pool:2, funder:1, wallet:0};
+  const nodes = new Map();
+  const add = (id, role, now = 0n, bought = 0n) => {
+    if (!id || id === '—') return;
+    let n = nodes.get(id);
+    if (!n){ n = {id, role, now:0n, bought:0n, funder:null}; nodes.set(id, n); }
+    if (rank[role] > rank[n.role]) n.role = role;
+    if (now > n.now) n.now = now;
+    if (bought > n.bought) n.bought = bought;
+  };
+  if (res.reachedEnd && res.dev) add(res.dev, 'dev', res.devNow || 0n, res.devBought || 0n);
+  (res.bundleWallets || []).slice(0, 15).forEach(h => add(h.owner, 'bundle', h.now, h.bought));
+  (res.snipers || []).slice(0, 10).forEach(h => add(h.owner, 'sniper', h.now, h.bought));
+  res.holders.slice(0, 30).forEach(h => add(h.owner, h.role, h.amount));
+  const links = [];
+  ((res.funding && res.funding.clusters) || []).forEach(c => {
+    add(c.funder, 'funder'); nodes.get(c.funder).held = c.held || 0n;
+    c.wallets.forEach(w => { if (w !== c.funder){ add(w, 'wallet'); nodes.get(w).funder = c.funder; links.push([c.funder, w]); } });
+  });
+  const dh = res.devHistory;
+  if (res.dev && dh){
+    add(res.dev, 'dev', res.devNow || 0n, res.devBought || 0n);
+    const holdNow = new Map(res.holders.map(h => [h.owner, h.amount]));
+    (dh.tokenOut || []).slice(0, 12).forEach(o => { add(o.to, 'wallet', o.now !== undefined ? o.now : (holdNow.get(o.to) || 0n)); nodes.get(o.to).fromDev = o.amount; links.push([res.dev, o.to, 'dev']); });
+    (dh.solOut || []).filter(o => nodes.has(o.to) && o.to !== res.dev).forEach(o => { nodes.get(o.to).solFromDev = o.lamports; if (!links.some(l => l[0] === res.dev && l[1] === o.to)) links.push([res.dev, o.to, 'dev']); });
+  }
+  const list = [...nodes.values()];
+  if (!list.length){ svg.innerHTML = ''; info.textContent = 'No wallets to map for this token.'; return; }
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  list.forEach(n => {
+    n.p = pct(n.now, sup);
+    const ref = (n.fromDev || 0n) > n.bought ? n.fromDev : n.bought;
+    n.sold = n.now === 0n && ref > 0n;
+    n.base = Math.sqrt(Math.max(n.p, n.sold ? pct(ref, sup) * 0.25 : 0.05));
+  });
+  // scale so all bubbles together fill ~30% of the canvas
+  const area = list.filter(n => n.role !== 'funder').reduce((x, n) => x + Math.PI * n.base * n.base, 0) || 1;
+  const k0 = Math.sqrt(0.30 * W * H / area), rMax = Math.min(W, H) * 0.24;
+  list.forEach((n, i) => {
+    n.r = n.role === 'funder' ? 8 : Math.max(6, Math.min(rMax, n.base * k0));
+    const a = i * 2.39996, d = 25 + 14 * Math.sqrt(i);   // golden-angle spiral start
+    n.x = W / 2 + Math.cos(a) * d; n.y = H / 2 + Math.sin(a) * d;
+  });
+  const byId = new Map(list.map(n => [n.id, n]));
+  const L = links.map(([a, b, k]) => [byId.get(a), byId.get(b), k]).filter(x => x[0] && x[1]);
+
+  // simple force layout, computed once (no ongoing animation)
+  for (let it = 0; it < 400; it++){
+    const k = 1 - it / 400;
+    L.forEach(([a, b]) => {
+      const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1;
+      const f = (d - (a.r + b.r + 34)) * 0.05 * k;
+      a.x += dx / d * f; a.y += dy / d * f; b.x -= dx / d * f; b.y -= dy / d * f;
+    });
+    list.forEach(n => { n.x += (W / 2 - n.x) * 0.012 * k; n.y += (H / 2 - n.y) * 0.016 * k; });
+    for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++){
+      const a = list[i], b = list[j];
+      let dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+      if (d < 0.01){ dx = 0.1; dy = 0.1; d = 0.14; }
+      const min = a.r + b.r + 7;
+      if (d < min){ const o = (min - d) / 2; a.x -= dx / d * o; a.y -= dy / d * o; b.x += dx / d * o; b.y += dy / d * o; }
+    }
+    list.forEach(n => { n.x = Math.max(n.r + 2, Math.min(W - n.r - 2, n.x)); n.y = Math.max(n.r + 2, Math.min(H - n.r - 2, n.y)); });
+  }
+
+  // center the finished layout
+  const x0 = Math.min(...list.map(n => n.x - n.r)), x1 = Math.max(...list.map(n => n.x + n.r));
+  const y0 = Math.min(...list.map(n => n.y - n.r)), y1 = Math.max(...list.map(n => n.y + n.r));
+  list.forEach(n => { n.x += (W - x0 - x1) / 2; n.y += (H - y0 - y1) / 2; });
+
+  const color = r => r === 'funder' ? 'var(--violet)' : r === 'wallet' ? 'var(--other)' : ROLE[r].c;
+  const label = r => r === 'funder' ? 'Funder' : r === 'wallet' ? 'Holder' : r === 'pool' ? 'Pool / bonding curve' : r === 'whale' ? 'Big buy' : r[0].toUpperCase() + r.slice(1);
+  svg.innerHTML = '';
+  const lineEls = L.map(([a, b, k]) => {
+    const l = document.createElementNS(NS, 'line');
+    if (k === 'dev') l.setAttribute('class', 'dv');
+    l.setAttribute('x1', a.x); l.setAttribute('y1', a.y); l.setAttribute('x2', b.x); l.setAttribute('y2', b.y);
+    l._a = a.id; l._b = b.id; l._na = a; l._nb = b; svg.appendChild(l); return l;
+  });
+  const circles = [];
+  list.sort((a, b) => b.r - a.r).forEach(n => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('cx', n.x); c.setAttribute('cy', n.y); c.setAttribute('r', n.r);
+    c.setAttribute('class', 'n' + (n.sold ? ' sold' : ''));
+    c.setAttribute('tabindex', '0');
+    c.style.fill = color(n.role);
+    if (n.sold) c.style.stroke = color(n.role);
+    c.setAttribute('aria-label', `${label(n.role)} ${short(n.id)}, holds ${fmt(n.p)}`);
+    const pick = () => {
+      circles.forEach(x => x.classList.remove('sel')); c.classList.add('sel');
+      lineEls.forEach(l => l.classList.toggle('hi', l._a === n.id || l._b === n.id));
+      const kids = L.filter(([a, , k]) => a.id === n.id && k !== 'dev').length;
+      info.innerHTML = `<b>${label(n.role)}</b> ${addrLink(n.id)}<br>` +
+        (n.role === 'funder' ? `First funded <b>${kids}</b> wallet${kids === 1 ? '' : 's'} on this map` + (n.held ? `, together holding <b>${fmt(pct(n.held, sup))}</b>.` : '.')
+          : `Holds <b>${fmt(n.p)}</b> now` + (n.bought > 0n ? `, bought <b>${fmt(pct(n.bought, sup))}</b> at launch` : '') +
+            (n.funder ? `, funded by ${addrLink(n.funder)}` : '') +
+            (n.fromDev ? `, got <b>${fmt(pct(n.fromDev, sup))}</b> from the dev` : '') +
+            (n.solFromDev ? `, got <b>${(n.solFromDev / 1e9).toFixed(2)} SOL</b> from the dev` : ''));
+    };
+    c.addEventListener('click', pick);
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); } });
+    svg.appendChild(c); circles.push(c);
+    n.el = c;
+    if (n.r >= 20 && !n.sold){
+      const t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', n.x); t.setAttribute('y', n.y);
+      t.textContent = n.p >= 10 ? Math.round(n.p) + '%' : n.p.toFixed(1) + '%';
+      svg.appendChild(t); n.tx = t;
+    }
+  });
+  // Gentle floating: each bubble drifts a few pixels around its spot. Lines follow. Off for reduced motion.
+  stopFloat();
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  list.forEach((n, i) => { n.ox = n.x; n.oy = n.y; n.ph = i * 1.7; n.amp = Math.max(1.5, Math.min(5, 60 / (n.r + 6))); });
+  const t0 = performance.now();
+  const tick = now => {
+    if (!svg.isConnected){ stopFloat(); return; }
+    const t = (now - t0) / 1000;
+    list.forEach(n => {
+      n.x = n.ox + Math.sin(t * 0.9 + n.ph) * n.amp;
+      n.y = n.oy + Math.cos(t * 0.7 + n.ph * 1.3) * n.amp;
+      n.el.setAttribute('cx', n.x.toFixed(1)); n.el.setAttribute('cy', n.y.toFixed(1));
+      if (n.tx){ n.tx.setAttribute('x', n.x.toFixed(1)); n.tx.setAttribute('y', n.y.toFixed(1)); }
+    });
+    lineEls.forEach(l => { l.setAttribute('x1', l._na.x.toFixed(1)); l.setAttribute('y1', l._na.y.toFixed(1)); l.setAttribute('x2', l._nb.x.toFixed(1)); l.setAttribute('y2', l._nb.y.toFixed(1)); });
+    BM_RAF = requestAnimationFrame(tick);
+  };
+  BM_RAF = requestAnimationFrame(tick);
+}
+let BM_RAF = 0;
+function stopFloat(){ if (BM_RAF) cancelAnimationFrame(BM_RAF); BM_RAF = 0; }
+
+// ---- Floating bubble button + bubble map window
+let BM_RES = null;
+function bubbleCount(res){
+  const c = (res.funding && res.funding.clusters) || [];
+  return c.filter(x => x.wallets.length >= 2).length + (((res.devHistory && res.devHistory.tokenOut) || []).length ? 1 : 0);
+}
+function showFab(res){
+  BM_RES = res;
+  const n = bubbleCount(res), cnt = $('fabcnt');
+  cnt.hidden = !n; cnt.textContent = n;
+  $('fab').setAttribute('aria-label', n ? `Open bubble map, ${n} linked group${n > 1 ? 's' : ''} found` : 'Open bubble map');
+  $('fab').classList.add('on');
+  if ($('bmdlg').open) drawBubbleMap(res);
+}
+function openBubbleMap(){
+  if (!BM_RES) return;
+  const d = $('bmdlg');
+  $('bminfo').textContent = 'Tap a bubble to see the wallet. Purple lines: same first funder. Orange dashed lines: the dev sent tokens or SOL.';
+  if (d.showModal){ if (!d.open) d.showModal(); } else d.setAttribute('open', '');
+  requestAnimationFrame(() => drawBubbleMap(BM_RES));   // draw after it is visible, so the width is right
+}
+$('fab').addEventListener('click', openBubbleMap);
+$('out').addEventListener('click', e => { if (e.target.closest('[data-bm]')) openBubbleMap(); });
+$('bmclose').addEventListener('click', () => $('bmdlg').close ? $('bmdlg').close() : $('bmdlg').removeAttribute('open'));
+$('bmdlg').addEventListener('close', stopFloat);
+$('bmdlg').addEventListener('click', e => { if (e.target === $('bmdlg')) $('bmdlg').close(); });   // tap outside closes
+
+function demoData(){
+  const P = p => BigInt(Math.round(p * 1e13));
+  const w = (tag, i) => (tag + i + 'x'.repeat(44)).slice(0, 44);
+  const bundle = [[4.1,3.1],[3.3,2.8],[2.9,2.4],[2.4,1.9],[2.0,0.6],[1.6,0.3],[2.2,0.1]]
+    .map((x, i) => ({owner:w('Bnd', i), bought:P(x[0]), now:P(x[1]), role:'bundle'}));
+  const snipers = [[2.2,1.1],[1.9,0.8],[1.2,0.4],[0.7,0.2]]
+    .map((x, i) => ({owner:w('Snp', i), bought:P(x[0]), now:P(x[1]), role:'sniper'}));
+  const dev = w('Dev', 0);
+  const holders = [
+    {owner:w('Pool', 0), amount:P(41.3), role:'pool'},
+    ...bundle.slice(0, 4).map(b => ({owner:b.owner, amount:b.now, role:'bundle'})),
+    {owner:w('Whl', 0), amount:P(2.2), role:'whale'},
+    {owner:w('Whl', 1), amount:P(2.1), role:'whale'},
+    {owner:w('Whl', 2), amount:P(1.3), role:'wallet'},
+    {owner:w('Whl', 3), amount:P(1.1), role:'wallet'},
+    {owner:w('Whl', 4), amount:P(0.9), role:'wallet'}
+  ];
+  return {
+    mint:'DEMOxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxpump', name:'Demo Coin', symbol:'DEMO',
+    supply:P(100), mintAuth:null, freezeAuth:null, reachedEnd:true, launchSlot:1,
+    dev, devBought:P(4.2), devNow:P(0.4),
+    bundleWallets:bundle.map((b, i) => i === 1 ? {...b, movedOut:P(3.0), movedNow:P(2.6)} : b), snipers, holders, notes:[], flags:[],
+    lastTx:Math.floor(Date.now() / 1000) - 1500, market:{ok:true, pools:[{kind:'Liquidity pool', quote:'SOL', amount:0.4, share:41.3}], liquiditySol:0.4, liquidityUsd:0, poolShare:41.3},
+    holderSource:'full', holderCount:1847, holderCountExact:true, price:{ok:true, ath:0.00042, now:0.000031, drop:92.6, stats:{priceUsd:0.0000312, mcap:31200, liqUsd:64, vol24:184000, change24:-61.4}},
+    launchTime:Math.floor(Date.now() / 1000) - 3 * 3600,
+    devHistory:{checked:100, more:true, firstSell:Math.floor(Date.now() / 1000) - 3 * 3600 + 240, lastSell:Math.floor(Date.now() / 1000) - 2400, sold:P(1.4), boughtLater:0n, received:0n, burned:0n, complete:true, sinceLaunch:40, tokenOut:[{to:w('Whl', 1), amount:P(2.4), count:1, now:P(2.1), time:Math.floor(Date.now() / 1000) - 3600}, {to:w('Zzz', 0), amount:P(0.8), count:2, now:0n, time:Math.floor(Date.now() / 1000) - 5400}], solOut:[{to:bundle[5].owner, lamports:1.5e9, count:1, time:Math.floor(Date.now() / 1000) - 7200}], list:[9,21,34,50,77,120].map((d, i) => ({mint:w('Old', i), time:Math.floor(Date.now() / 1000) - d * 86400}))},
+    funding:{traced:8, total:8, clusters:[{funder:w('Fnd', 0), wallets:[dev, ...bundle.slice(0, 5).map(b => b.owner)], includesDev:true, held:P(0.4) + bundle.slice(0, 5).reduce((x, b) => x + b.now, 0n)}]}
+  };
+}
+
+$('demo').addEventListener('click', () => {
+  DEMO = true;
+  setStatus('');
+  render(demoData());
+  $('out').scrollIntoView({behavior:'smooth'});
+});
+
+// Close the result so the rest of the site is easy to reach again
+$('out').addEventListener('click', e => {
+  if (!e.target.closest('[data-close]')) return;
+  if ($('bmdlg').open) $('bmdlg').close();
+  $('out').innerHTML = '';
+  $('fab').classList.remove('on'); stopFloat();
+  setStatus('');
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+$('out').addEventListener('click', e => {
+  if (!e.target.closest('#rescan') || !LAST) return;
+  $('mint').value = LAST;
+  window.scrollTo({top:0, behavior:'smooth'});
+  $('go').click();
+});
+
+$('go').addEventListener('click', async () => {
+  DEMO = false;
+  const key = BUILT_IN_KEY;
+  const mint = $('mint').value.trim();
+  $('out').innerHTML = '';
+  if (!key || key === 'PASTE_YOUR_HELIUS_KEY_HERE'){ setStatus('The scanner is not set up yet. Please try again later.', true); return; }
+  if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(mint)){ setStatus('That is not a valid Solana address.', true); return; }
+  RPC = key.startsWith('http') ? key : 'https://mainnet.helius-rpc.com/?api-key=' + encodeURIComponent(key);
+  $('go').disabled = true;
+  $('fab').classList.remove('on'); stopFloat();
+  $('go').textContent = 'Tracing…';
+  SCANNING = true; $('log').innerHTML = '';
+  try {
+    const res = await analyze(mint);
+    $('testout').textContent = '';
+    setStatus('');
+    render(res);
+    addRecent(res);
+    $('out').scrollIntoView({behavior:'smooth'});
+  } catch(e){
+    const net = e instanceof TypeError && /load failed|failed to fetch|network/i.test(e.message || '');
+    setStatus(net
+      ? 'Could not reach the Solana network. Check your connection, VPN or content blocker, then try again.'
+      : /429|rate|limit|credits/i.test(e.message || '')
+        ? 'Tracer is busy right now. Please try again in a minute.'
+        : (e.message || 'Something went wrong. Try again.'), true);
+  } finally {
+    SCANNING = false;
+    $('status').classList.remove('busy');
+    $('go').disabled = false;
+    $('go').textContent = 'Trace token';
+  }
+});
+$('mint').addEventListener('keydown', e => { if (e.key === 'Enter') $('go').click(); });
+$('key').addEventListener('change', () => saveKey($('key').value));
+$('key').addEventListener('input', () => { clearTimeout(window._kt); window._kt = setTimeout(() => saveKey($('key').value), 400); });
+
+// ---- Connection test
+$('forget').addEventListener('click', () => { storeSet(''); $('key').value = ''; keyStatus(''); $('testout').textContent = 'Saved key removed.'; });
+$('test').addEventListener('click', async () => {
+  const key = $('key').value.trim();
+  const out = $('testout');
+  if (!key){ out.textContent = 'Enter your key first.'; return; }
+  RPC = key.startsWith('http') ? key : 'https://mainnet.helius-rpc.com/?api-key=' + encodeURIComponent(key);
+  out.textContent = 'Testing…';
+  try {
+    const r = await post(JSON.stringify({jsonrpc:'2.0', id:1, method:'getSlot'}));
+    const t = await r.text();
+    out.textContent = r.ok && /"result"/.test(t) ? 'Connected. The network answered (HTTP ' + r.status + ').' : 'HTTP ' + r.status + ': ' + t.slice(0, 160);
+    if (r.ok) saveKey(key);
+  } catch(e){
+    out.textContent = 'Request failed (' + e.name + ': ' + e.message + '). The browser could not reach the server. Check for a VPN, content blocker, or Private Relay.';
+  }
+});
+
+// ---- Recent scans (kept in memory for this session)
+const recent = [];
+const lvl = (s, inc) => s >= 55 ? 'High' : s >= 25 ? 'Medium' : inc ? 'Incomplete' : 'Low';
+const ICON_OK = '<svg viewBox="0 0 24 24" width="22" height="22" role="img" aria-label="OK"><circle cx="12" cy="12" r="10" fill="#22C55E"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const icoWarn = c => `<svg viewBox="0 0 24 24" width="22" height="22" role="img" aria-label="Warning"><path d="M12 3L2 21h20L12 3z" fill="${c}" stroke="${c}" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 10v5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="18" r="1.3" fill="#fff"/></svg>`;
+function addRecent(res){
+  const {s} = score(res);
+  const i = recent.findIndex(r => r.res.mint === res.mint);
+  if (i >= 0) recent.splice(i, 1);
+  recent.unshift({res, s, inc: isIncomplete(res)});
+  if (recent.length > 8) recent.pop();
+  renderRecent();
+}
+function renderRecent(){
+  const box = $('recent');
+  if (!recent.length){ box.innerHTML = '<p class="empty">No scans yet. Tokens you scan will appear here.</p>'; return; }
+  box.innerHTML = '<div class="rs head"><span>Token</span><span class="c">Status</span><span>Risk</span></div>' +
+    recent.map((r, i) => {
+      const L = lvl(r.s, r.inc);
+      const nm = r.res.symbol || r.res.name || 'No name on-chain';
+      const ic = L === 'Low' ? ICON_OK : icoWarn(L === 'High' ? '#EF4444' : '#F59E0B');
+      return `<button class="rs" data-i="${i}"><span class="tk"><b>${esc(nm)}</b><em>${esc(short(r.res.mint))}</em></span><span class="c">${ic}</span><span class="rl ${L.toLowerCase()}">${L}</span></button>`;
+    }).join('');
+}
+$('recent').addEventListener('click', e => {
+  const b = e.target.closest('button[data-i]');
+  if (!b) return;
+  DEMO = false;
+  render(recent[+b.dataset.i].res);
+  $('out').scrollIntoView({behavior:'smooth'});
+});
+renderRecent();
+</script>
+</body>
+</html>
