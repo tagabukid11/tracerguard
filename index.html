@@ -857,7 +857,7 @@ const fmt = n => (Math.round(n*100)/100).toFixed(2) + '%';
 let RPC = '';
 // ===== Tracer's own Helius key. Paste yours between the quotes. =====
 // In the Helius dashboard, lock this key to your domain (Allowed domains) so other sites cannot use it.
-const BUILT_IN_KEY = '5d9c8bfb-8f6a-4b8f-8f52-16735ec408f6';
+const BUILT_IN_KEY = '4e31e368-2d33-4518-a190-537b48c499ea';
 const KEY_STORE = 'cc_helius_key';
 // Key storage: localStorage first, then a cookie (some in-app browsers and file:// pages block localStorage).
 function storeSet(k){
@@ -902,6 +902,7 @@ async function gate(){
 function slower(){ GAP = Math.min(600, Math.round(GAP * 1.6)); lastBad = Date.now(); }
 function faster(){ if (GAP > 100 && Date.now() - lastBad > 8000) GAP = Math.max(100, Math.round(GAP * 0.9)); }
 
+let RPC_OK = false;   // becomes true after the first successful call, so later 403s are treated as method limits, not a blocked site
 async function rpc(method, params, tries = 7){
   let netErr = null;
   for (let i = 0; i < tries; i++){
@@ -916,8 +917,12 @@ async function rpc(method, params, tries = 7){
       await sleep(Math.min(8000, ra > 0 ? ra * 1000 : 600 * 2 ** i));
       continue;
     }
-    if (r.status === 401) throw new Error('Invalid or non-working API key.');
+    if (r.status === 401 || (r.status === 403 && i === 0 && !RPC_OK)){
+      if (r.status === 403){ slower(); await sleep(900); continue; }
+      throw new Error(`The scanner is not allowed to run on this address (${location.hostname || 'a local file'}). If you run this site, add this address to the key's allowed domains.`);
+    }
     if (r.status === 403){
+      if (!RPC_OK) throw new Error(`The scanner is not allowed to run on this address (${location.hostname || 'a local file'}). If you run this site, add this address to the key's allowed domains.`);
       if (i < 1){ slower(); await sleep(900); continue; }
       const err = new Error('The data provider refused this request (HTTP 403).'); err.code = 403; throw err;
     }
@@ -929,7 +934,7 @@ async function rpc(method, params, tries = 7){
       if (j.error.code === -32429 || /rate limit|too many requests/i.test(j.error.message || '')){ slower(); await sleep(600 * 2 ** Math.min(i, 4)); continue; }
       throw new Error(j.error.message);
     }
-    faster();
+    faster(); RPC_OK = true;
     return j.result;
   }
   throw new Error('Rate limited by the RPC. Try again in a few seconds.');
