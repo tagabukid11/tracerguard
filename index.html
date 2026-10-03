@@ -1019,7 +1019,7 @@ let SCANNING = false;
 function setStatus(t, err){
   const s = $('status'), log = $('log');
   // the previous step moves into the log as "done"
-  if (log && s.textContent && !s.classList.contains('err') && t && t !== s.textContent && SCANNING){
+  if (log && !err && s.textContent && !s.classList.contains('err') && t && t !== s.textContent && SCANNING){
     const li = document.createElement('li'); li.textContent = s.textContent; log.appendChild(li);
     while (log.children.length > 6) log.removeChild(log.firstChild);
   }
@@ -1351,6 +1351,7 @@ async function analyze(mint){
   const info = parsed.info;
   const supply = BigInt(info.supply);
   res.supply = supply;
+  res.tokenProgram = mi.value.owner;
   res.decimals = Number(info.decimals) || 0;
   res.mintAuth = info.mintAuthority;
   res.freezeAuth = info.freezeAuthority;
@@ -1541,6 +1542,24 @@ async function analyze(mint){
   } catch(e){
     rows = null;
     res.notes.push('Full holder list is not available right now. Only the top 20 accounts were checked.');
+  }
+  if (!rows){
+    // Fallback 1: read every token account of this mint straight from the token program (owner + amount only)
+    try {
+      setStatus('Reading holders from the token program…');
+      const prog = res.tokenProgram || 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
+      const filters = [{memcmp:{offset:0, bytes:mint}}];
+      if (prog === 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA') filters.unshift({dataSize:165});
+      const accs = await rpc('getProgramAccounts', [prog, {encoding:'base64', commitment:'confirmed', filters, dataSlice:{offset:32, length:40}}]);
+      if (Array.isArray(accs)){
+        rows = accs.map(a => {
+          const b = Uint8Array.from(atob(a.account.data[0]), c => c.charCodeAt(0));
+          return {owner:b58encode(b.slice(0, 32)), acct:a.pubkey, amount:u64le(b, 32)};
+        });
+        res.holderSource = 'full'; res.holderCountExact = true;
+        res.notes = res.notes.filter(n => !/^Full holder list is not available/.test(n));
+      }
+    } catch(e){ rows = null; }
   }
   if (!rows){
     setStatus('Analyzing top holders…');
